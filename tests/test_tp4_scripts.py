@@ -21,6 +21,7 @@ def test_tp4_inputs_are_immutable() -> None:
     assert "dc77ff1c99eeb2df044ee3d4f0094eb033fee410" in CLUSTER
     assert "EXPECTED_SHARDS:-120" in SYNC
     assert "--revision \"$REVISION\"" in SYNC
+    assert 'wait "$pid" || failed=1' in SYNC
 
 
 def test_tp4_dflash_and_graph_defaults() -> None:
