@@ -37,7 +37,7 @@ fi
 if [[ "$ACTION" == status ]]; then
     for ip in "${NODES[@]}"; do
         printf '%s ' "$ip"
-        run_on "$ip" docker inspect -f '{{.State.Status}} {{.Config.Image}}' "$NAME" 2>/dev/null \
+        run_on "$ip" docker inspect -f '{{.State.Status}}' "$NAME" 2>/dev/null \
             || echo stopped
     done
     curl -sS -o /dev/null -w 'API %{http_code}\n' --max-time 5 \
@@ -95,7 +95,7 @@ common_env=(
     -e DFLASH_MODEL_DIR="/root/.cache/huggingface/$dflash_rel"
     -e SPEC_METHOD="${SPEC_METHOD:-dflash}" -e DFLASH_TOKENS="${DFLASH_TOKENS:-7}"
     -e DFLASH_DRAFT_TP="${DFLASH_DRAFT_TP:-4}" -e MTP_TOKENS="${MTP_TOKENS:-2}"
-    -e MAX_MODEL_LEN="${MAX_MODEL_LEN:-1000000}" -e GPU_MEM_UTIL="${GPU_MEM_UTIL:-0.87}"
+    -e MAX_MODEL_LEN="${MAX_MODEL_LEN:-1000000}" -e GPU_MEM_UTIL="${GPU_MEM_UTIL:-0.75}"
     -e MAX_NUM_SEQS="${MAX_NUM_SEQS:-4}"
     -e MAX_NUM_BATCHED_TOKENS="${MAX_NUM_BATCHED_TOKENS:-2048}"
     -e ENFORCE_EAGER="${ENFORCE_EAGER:-0}"
@@ -105,10 +105,11 @@ common_env=(
     -e VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=1
     -e HF_HUB_OFFLINE=1 -e TRANSFORMERS_OFFLINE=1 -e HF_HOME=/root/.cache/huggingface
     -e FLASHINFER_DISABLE_VERSION_CHECK=1 -e VLLM_NO_USAGE_STATS=1 -e DO_NOT_TRACK=1
-    -e PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
-    -e NCCL_IB_DISABLE=0 -e NCCL_IB_ROCE_VERSION_NUM=2 -e NCCL_NET=IB
-    -e NCCL_NET_PLUGIN=none -e NCCL_NVLS_ENABLE=0 -e NCCL_CUMEM_ENABLE=0
-    -e NCCL_IB_MERGE_NICS=0 -e NCCL_CROSS_NIC=0 -e NCCL_IGNORE_CPU_AFFINITY=1
+    -e PYTORCH_CUDA_ALLOC_CONF=expandable_segments:False
+    -e NCCL_IB_DISABLE=0 -e NCCL_NET=IB -e NCCL_NVLS_ENABLE=0 -e NCCL_CUMEM_ENABLE=0
+    # Match the already-proven four-node fabric profile. Mia's two-node-only
+    # NET_PLUGIN/MERGE_NICS settings stall communicator setup here.
+    -e NCCL_CROSS_NIC=1 -e NCCL_IGNORE_CPU_AFFINITY=1
     -e NCCL_DEBUG="${NCCL_DEBUG:-WARN}"
 )
 
@@ -118,12 +119,14 @@ for rank in 1 2 3; do
     vcache="$HOME/.cache/vllm-glm53-exl3-tp4"
     remote_env=$(printf ' %q' "${common_env[@]}")
     ssh -o BatchMode=yes "$ip" "mkdir -p '$vcache/triton' '$vcache/tilelang'; docker run -d --name '$NAME' \
-      --gpus all --network host --ipc=host --shm-size 32g --stop-timeout 60 \
+      --gpus all --network host --ipc=host --shm-size 64g --stop-timeout 60 \
       --device /dev/infiniband --cap-add IPC_LOCK --ulimit memlock=-1 --ulimit stack=67108864 \
+      --ulimit nofile=1048576:1048576 \
       -v '$cache:/root/.cache/huggingface' -v '$vcache:/root/.cache/vllm' \
       -v '$vcache/triton:/root/.triton/cache' -v '$vcache/tilelang:/root/.tilelang/cache' \
       -v '$inner:/start.sh:ro' $remote_env -e NODE_RANK='$rank' \
       -e NCCL_SOCKET_IFNAME='$SOCKET_IF' -e GLOO_SOCKET_IFNAME='$SOCKET_IF' \
+      -e TP_SOCKET_IFNAME='$SOCKET_IF' \
       -e NCCL_IB_HCA='$HCA' -e NCCL_IB_GID_INDEX='${GIDS[$rank]}' -e VLLM_HOST_IP='$ip' \
       --entrypoint bash '$IMAGE' /start.sh" >/dev/null
     echo "worker rank $rank launched on $ip"
@@ -132,12 +135,14 @@ done
 vcache="$HOME/.cache/vllm-glm53-exl3-tp4"
 mkdir -p "$vcache/triton" "$vcache/tilelang"
 docker run -d --name "$NAME" \
-    --gpus all --network host --ipc=host --shm-size 32g --stop-timeout 60 \
+    --gpus all --network host --ipc=host --shm-size 64g --stop-timeout 60 \
     --device /dev/infiniband --cap-add IPC_LOCK --ulimit memlock=-1 --ulimit stack=67108864 \
+    --ulimit nofile=1048576:1048576 \
     -v "$HOME/.cache/huggingface:/root/.cache/huggingface" -v "$vcache:/root/.cache/vllm" \
     -v "$vcache/triton:/root/.triton/cache" -v "$vcache/tilelang:/root/.tilelang/cache" \
     -v "$inner:/start.sh:ro" "${common_env[@]}" -e NODE_RANK=0 \
     -e NCCL_SOCKET_IFNAME="$SOCKET_IF" -e GLOO_SOCKET_IFNAME="$SOCKET_IF" \
+    -e TP_SOCKET_IFNAME="$SOCKET_IF" \
     -e NCCL_IB_HCA="$HCA" -e NCCL_IB_GID_INDEX="${GIDS[0]}" -e VLLM_HOST_IP="$HEAD_IP" \
     --entrypoint bash "$IMAGE" /start.sh >/dev/null
 

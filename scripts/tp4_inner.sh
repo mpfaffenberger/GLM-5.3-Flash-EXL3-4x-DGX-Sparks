@@ -35,9 +35,10 @@ args=(
     --master-addr "$HEAD_IP"
     --master-port "${MASTER_PORT:-29521}"
     --distributed-executor-backend mp
+    --disable-custom-all-reduce
     --quantization exl3
     --max-model-len "${MAX_MODEL_LEN:-1000000}"
-    --gpu-memory-utilization "${GPU_MEM_UTIL:-0.87}"
+    --gpu-memory-utilization "${GPU_MEM_UTIL:-0.75}"
     --max-num-seqs "${MAX_NUM_SEQS:-4}"
     --max-num-batched-tokens "${MAX_NUM_BATCHED_TOKENS:-2048}"
     --kv-cache-dtype fp8

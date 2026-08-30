@@ -33,7 +33,8 @@ target snapshot, draft snapshot, and each GID before touching the cluster.
 - max model length 1,000,000;
 - max sequences 4;
 - max batched tokens 2,048;
-- GPU memory utilization 0.87;
+- GPU memory utilization 0.75. Higher initial trials reached graph capture but
+  exhausted practical GB10 unified-memory headroom at the driver layer;
 - native vLLM multiprocessing; no Ray.
 
 Use `SPEC_METHOD=mtp MTP_TOKENS=2` or `SPEC_METHOD=none` for controlled
@@ -78,3 +79,26 @@ DEPTHS='0' CONCURRENCIES='1' RUNS=3 \
 
 Do not publish a partial CSV as a result. Distributed systems already produce
 enough fiction without our help.
+
+## First TP=4 gates (2026-08-30)
+
+The first successful API-ready run used the initial profile above. CUDA graphs
+were active and the server remained healthy after each gate.
+
+| Gate | Median decode | Acceptance | TTFT median |
+|---|---:|---:|---:|
+| Structured count, 5 × 400 | **105.37 tok/s** | 0.959 / 6.712 per step | 0.305 s |
+| Prose hash-map, 5 × 400 | **42.02 tok/s** | 0.314 / 2.200 per step | 0.421 s |
+| llama-benchy C=1, TG=128 | **51.55 tok/s mean** | mixed workload | — |
+| llama-benchy C=1, PP=2048 | **1,142.36 tok/s mean** | — | — |
+
+For comparison, Mia's published TP=2 medians on the same structured/prose
+microbench protocol are 65.1 and 27.1 tok/s. The TP=4 trial is roughly 62% and
+55% faster respectively. This comparison is promising, but it is not a full
+long-context stability result.
+
+The first 0.87/0.86 memory-utilization attempts also exposed a GB10 unified-
+memory trap: vLLM's nominal graph/cache accounting passed, then the NVIDIA
+driver emitted `NV_ERR_NO_MEMORY` during graph capture. Utilization 0.75 retains
+ample KV capacity for the intended benchmark while preserving real driver
+headroom.

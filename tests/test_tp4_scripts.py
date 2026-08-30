@@ -10,6 +10,7 @@ SYNC = (ROOT / "scripts/tp4_sync_weights.sh").read_text()
 def test_tp4_rank_contract_is_consistent() -> None:
     assert "--tensor-parallel-size 4" in INNER
     assert "--nnodes 4" in INNER
+    assert "--disable-custom-all-reduce" in INNER
     assert '--node-rank "$NODE_RANK"' in INNER
     assert '[[ "$NODE_RANK" != 0 ]]' in INNER
     assert "10.0.0.46 10.0.0.13 10.0.0.150 10.0.0.246" in CLUSTER
@@ -29,6 +30,7 @@ def test_tp4_dflash_and_graph_defaults() -> None:
     assert 'SPEC_METHOD:-dflash' in INNER
     assert "--cudagraph-capture-sizes 1 2 4 8 16 24 32" in INNER
     assert '--enforce-eager' in INNER
+    assert "NCCL_CROSS_NIC=1" in CLUSTER
 
 
 def test_tp4_preflight_happens_before_stop() -> None:
