@@ -42,6 +42,12 @@ comparisons. These are experiments, not support claims.
 ## Launch
 
 Each node must have both pinned snapshots in its normal Hugging Face cache.
+Download once and synchronize over the cluster fabric with:
+
+```bash
+./scripts/tp4_sync_weights.sh
+```
+
 Then, from rank 0:
 
 ```bash

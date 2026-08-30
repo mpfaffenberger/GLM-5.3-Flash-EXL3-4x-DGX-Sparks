@@ -4,6 +4,7 @@ from pathlib import Path
 ROOT = Path(__file__).parents[1]
 INNER = (ROOT / "scripts/tp4_inner.sh").read_text()
 CLUSTER = (ROOT / "scripts/tp4_cluster.sh").read_text()
+SYNC = (ROOT / "scripts/tp4_sync_weights.sh").read_text()
 
 
 def test_tp4_rank_contract_is_consistent() -> None:
@@ -18,6 +19,8 @@ def test_tp4_inputs_are_immutable() -> None:
     assert "@sha256:9bb1557a4234fce" in CLUSTER
     assert "25a44fdbf16862a46b7cc9921142c6c81350af2f" in CLUSTER
     assert "dc77ff1c99eeb2df044ee3d4f0094eb033fee410" in CLUSTER
+    assert "EXPECTED_SHARDS:-120" in SYNC
+    assert "--revision \"$REVISION\"" in SYNC
 
 
 def test_tp4_dflash_and_graph_defaults() -> None:
