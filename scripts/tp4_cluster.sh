@@ -67,6 +67,18 @@ for rank in "${!NODES[@]}"; do
     [[ "$gid" != 0000:0000:0000:0000:0000:0000:0000:0000 ]] || {
         echo "empty RoCE GID on $ip index ${GIDS[$rank]}" >&2; exit 1;
     }
+    python3 - "$gid" "$ip" <<'PY' || {
+import ipaddress
+import sys
+
+gid = ipaddress.IPv6Address(sys.argv[1])
+expected = ipaddress.IPv4Address(sys.argv[2])
+if gid.ipv4_mapped != expected:
+    raise SystemExit(f"GID {gid} does not map to node address {expected}")
+PY
+        echo "wrong RoCE GID on $ip index ${GIDS[$rank]}" >&2
+        exit 1
+    }
 done
 
 stop_cluster

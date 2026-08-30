@@ -31,3 +31,4 @@ def test_tp4_preflight_happens_before_stop() -> None:
     preflight = CLUSTER.index('echo "preflighting immutable image')
     stop = CLUSTER.index("\nstop_cluster\n", preflight)
     assert preflight < stop
+    assert "gid.ipv4_mapped != expected" in CLUSTER
