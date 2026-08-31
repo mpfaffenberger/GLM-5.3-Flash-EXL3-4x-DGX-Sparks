@@ -28,7 +28,7 @@ def test_tp4_inputs_are_immutable() -> None:
 def test_tp4_dflash_and_graph_defaults() -> None:
     assert 'DFLASH_DRAFT_TP:-4' in CLUSTER
     assert 'SPEC_METHOD:-dflash' in INNER
-    assert "--cudagraph-capture-sizes 1 2 4 8 16 24 32" in INNER
+    assert "--cudagraph-capture-sizes 1 2 4 8 10 16 24 32" in INNER
     assert '--enforce-eager' in INNER
     assert "NCCL_CROSS_NIC=1" in CLUSTER
 

@@ -31,7 +31,7 @@ target snapshot, draft snapshot, and each GID before touching the cluster.
 - CUDA graphs enabled;
 - FP8 target KV cache;
 - max model length 1,000,000;
-- max sequences 4;
+- max sequences 10;
 - max batched tokens 2,048;
 - GPU memory utilization 0.75. Higher initial trials reached graph capture but
   exhausted practical GB10 unified-memory headroom at the driver layer;
@@ -102,3 +102,14 @@ memory trap: vLLM's nominal graph/cache accounting passed, then the NVIDIA
 driver emitted `NV_ERR_NO_MEMORY` during graph capture. Utilization 0.75 retains
 ample KV capacity for the intended benchmark while preserving real driver
 headroom.
+
+An initial `max-num-seqs=4` full-matrix attempt wedged on the third 4K × C=5
+batch after two requests emitted their first token. All ranks remained at 96%
+GPU utilization inside `apply_exl3_fused_moe`. This is the same dangerous
+admit-a-waiting-request-while-others-decode shape seen in the FP8 profile.
+Because the measured TP=4 KV capacity is far above the benchmark requirement,
+the profile now admits all benchmark clients together with `max-num-seqs=10`
+rather than manufacturing that avoidable scheduler transition.
+The exact C=10 graph shape is included explicitly in
+`--cudagraph-capture-sizes`; omitting it caused the uncaptured startup warmup
+for that shape to diverge across TP ranks.

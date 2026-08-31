@@ -39,7 +39,7 @@ args=(
     --quantization exl3
     --max-model-len "${MAX_MODEL_LEN:-1000000}"
     --gpu-memory-utilization "${GPU_MEM_UTIL:-0.75}"
-    --max-num-seqs "${MAX_NUM_SEQS:-4}"
+--max-num-seqs "${MAX_NUM_SEQS:-10}"
     --max-num-batched-tokens "${MAX_NUM_BATCHED_TOKENS:-2048}"
     --kv-cache-dtype fp8
     --tool-call-parser glm47
@@ -59,7 +59,7 @@ fi
 if [[ "${ENFORCE_EAGER:-0}" == 1 ]]; then
     args+=(--enforce-eager)
 else
-    args+=(--cudagraph-capture-sizes 1 2 4 8 16 24 32)
+args+=(--cudagraph-capture-sizes 1 2 4 8 10 16 24 32)
 fi
 
 case "${SPEC_METHOD:-dflash}" in
