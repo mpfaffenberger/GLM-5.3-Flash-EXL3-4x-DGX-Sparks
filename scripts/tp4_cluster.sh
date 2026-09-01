@@ -83,10 +83,13 @@ done
 
 stop_cluster
 inner=/tmp/glm53-exl3-tp4-inner.sh
+exl3_overlay=/tmp/glm53-exl3-tp4-exl3.py
 for rank in 1 2 3; do
     scp -q "$ROOT/scripts/tp4_inner.sh" "${NODES[$rank]}:$inner"
+    scp -q "$ROOT/overlay/exl3.py" "${NODES[$rank]}:$exl3_overlay"
 done
 cp "$ROOT/scripts/tp4_inner.sh" "$inner"
+cp "$ROOT/overlay/exl3.py" "$exl3_overlay"
 
 common_env=(
     -e HEAD_IP="$HEAD_IP" -e MASTER_PORT="${MASTER_PORT:-29521}"
@@ -99,7 +102,12 @@ common_env=(
 -e MAX_NUM_SEQS="${MAX_NUM_SEQS:-10}"
     -e MAX_NUM_BATCHED_TOKENS="${MAX_NUM_BATCHED_TOKENS:-2048}"
     -e ENFORCE_EAGER="${ENFORCE_EAGER:-0}"
-    -e EXL3_FUSED_MOE=1 -e EXL3_MOE_ROW_TILE=0 -e EXL3_TEMP_ROWS_FUSED=128
+    -e EXL3_FUSED_MOE="${EXL3_FUSED_MOE:-1}"
+    -e EXL3_FUSED_MOE_DECODE="${EXL3_FUSED_MOE_DECODE:-1}"
+    -e EXL3_MOE_CONCURRENCY="${EXL3_MOE_CONCURRENCY:-6}"
+    -e EXL3_MOE_DECODE_CONCURRENCY="${EXL3_MOE_DECODE_CONCURRENCY:-1}"
+    -e EXL3_MOE_ROW_TILE="${EXL3_MOE_ROW_TILE:-0}"
+    -e EXL3_TEMP_ROWS_FUSED="${EXL3_TEMP_ROWS_FUSED:-128}"
     -e GLM53_SUPPRESS_STOPS_IN_REASONING=1 -e GLM53_MIXED_PREFILL_CHUNK=skip
     -e VLLM_EXECUTE_MODEL_TIMEOUT_SECONDS=1800
     -e VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=1
@@ -125,6 +133,7 @@ for rank in 1 2 3; do
       -v '$cache:/root/.cache/huggingface' -v '$vcache:/root/.cache/vllm' \
       -v '$vcache/triton:/root/.triton/cache' -v '$vcache/tilelang:/root/.tilelang/cache' \
       -v '$inner:/start.sh:ro' $remote_env -e NODE_RANK='$rank' \
+      -v '$exl3_overlay:/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/quantization/exl3.py:ro' \
       -e NCCL_SOCKET_IFNAME='$SOCKET_IF' -e GLOO_SOCKET_IFNAME='$SOCKET_IF' \
       -e TP_SOCKET_IFNAME='$SOCKET_IF' \
       -e NCCL_IB_HCA='$HCA' -e NCCL_IB_GID_INDEX='${GIDS[$rank]}' -e VLLM_HOST_IP='$ip' \
@@ -141,6 +150,7 @@ docker run -d --name "$NAME" \
     -v "$HOME/.cache/huggingface:/root/.cache/huggingface" -v "$vcache:/root/.cache/vllm" \
     -v "$vcache/triton:/root/.triton/cache" -v "$vcache/tilelang:/root/.tilelang/cache" \
     -v "$inner:/start.sh:ro" "${common_env[@]}" -e NODE_RANK=0 \
+    -v "$exl3_overlay:/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/quantization/exl3.py:ro" \
     -e NCCL_SOCKET_IFNAME="$SOCKET_IF" -e GLOO_SOCKET_IFNAME="$SOCKET_IF" \
     -e TP_SOCKET_IFNAME="$SOCKET_IF" \
     -e NCCL_IB_HCA="$HCA" -e NCCL_IB_GID_INDEX="${GIDS[0]}" -e VLLM_HOST_IP="$HEAD_IP" \

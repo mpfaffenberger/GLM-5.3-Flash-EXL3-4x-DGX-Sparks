@@ -82,6 +82,14 @@ def temp_rows_fused() -> int:
     return max(1, int(raw))
 
 
+def fused_moe_concurrency(device_limit: int, env_name: str) -> int:
+    """Clamp fused-kernel expert groups selected by ``env_name``."""
+    raw = os.environ.get(env_name, "").strip()
+    if not raw:
+        return max(1, int(device_limit))
+    return max(1, min(int(raw), int(device_limit)))
+
+
 def fat_expert_log_enabled() -> bool:
     return os.environ.get("EXL3_FAT_EXPERT_LOG", "1") != "0"
 
@@ -254,6 +262,11 @@ def fused_moe_enabled() -> bool:
     return os.environ.get("EXL3_FUSED_MOE", "1") != "0"
 
 
+def fused_moe_decode_enabled() -> bool:
+    """Allow isolating the fused decode kernel without slowing prefill."""
+    return os.environ.get("EXL3_FUSED_MOE_DECODE", "1") != "0"
+
+
 def load_exllamav3_ext():
     import exllamav3_ext
 
@@ -379,21 +392,28 @@ def build_exl3_fused_state(layer: torch.nn.Module, inners: list[dict[str, Any]])
         "down_svh": _ptrs("down", "svh"),
     }
     idx = int(device.index) if device.index is not None else 0
-    concurrency = int(exllamav3_ext.exl3_moe_max_concurrency(idx))
-    if concurrency < 1:
-        concurrency = 1
+    device_limit = int(exllamav3_ext.exl3_moe_max_concurrency(idx))
+    concurrency = fused_moe_concurrency(device_limit, "EXL3_MOE_CONCURRENCY")
+    decode_concurrency = fused_moe_concurrency(
+        device_limit, "EXL3_MOE_DECODE_CONCURRENCY"
+    )
     rows = temp_rows_fused()
-    key = (str(device), hidden, intermediate, concurrency, rows)
-    temps = _FUSED_TEMP_CACHE.get(key)
-    if temps is None:
-        temps = (
-            torch.empty((concurrency, rows, hidden), dtype=torch.float16, device=device),
-            torch.empty((concurrency, rows, hidden), dtype=torch.float16, device=device),
-            torch.empty((concurrency, rows, intermediate), dtype=torch.float16, device=device),
-            torch.empty((concurrency, rows, intermediate), dtype=torch.float16, device=device),
-        )
-        _FUSED_TEMP_CACHE[key] = temps
-    layer._exl3_fused_temps = temps
+
+    def get_temps(groups: int):
+        key = (str(device), hidden, intermediate, groups, rows)
+        temps = _FUSED_TEMP_CACHE.get(key)
+        if temps is None:
+            temps = (
+                torch.empty((groups, rows, hidden), dtype=torch.float16, device=device),
+                torch.empty((groups, rows, hidden), dtype=torch.float16, device=device),
+                torch.empty((groups, rows, intermediate), dtype=torch.float16, device=device),
+                torch.empty((groups, rows, intermediate), dtype=torch.float16, device=device),
+            )
+            _FUSED_TEMP_CACHE[key] = temps
+        return temps
+
+    layer._exl3_fused_temps = get_temps(concurrency)
+    layer._exl3_fused_decode_temps = get_temps(decode_concurrency)
     layer._exl3_fused_concurrency = concurrency
     layer._exl3_k = int(layer._exl3_bits)
 
@@ -526,6 +546,8 @@ def apply_exl3_fused_moe(
     temps = getattr(layer, "_exl3_fused_temps", None)
     if not ptrs or temps is None:
         raise RuntimeError("EXL3 fused pointer tables were not built after weight load")
+    if tokens <= int(temps[0].shape[1]):
+        temps = getattr(layer, "_exl3_fused_decode_temps", temps)
 
     local = map_topk_to_local(ids, n_exp, expert_map)
     topk = int(ids.shape[-1])
@@ -618,6 +640,8 @@ def apply_exl3_experts(
     if fused is True and not have_ptrs:
         raise RuntimeError("EXL3 fused apply requested but pointer tables are missing")
     use_fused = (fused_moe_enabled() if fused is None else bool(fused)) and have_ptrs
+    if use_fused and tokens <= temp_rows_fused() and not fused_moe_decode_enabled():
+        use_fused = False
     if use_fused:
         try:
             import exllamav3_ext

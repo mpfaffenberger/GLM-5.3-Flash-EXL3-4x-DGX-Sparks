@@ -370,6 +370,7 @@ PY
 # Python overlay (exl3.py) is copied AFTER the CUDA compile so edits do not
 # rebuild exllamav3_ext. The aarch64 stub patch must stay in this layer.
 COPY overlay/patch_exl3_ext_aarch64.py /opt/glm53/patch_exl3_ext_aarch64.py
+COPY overlay/patch_exl3_cooperative_launch.py /opt/glm53/patch_exl3_cooperative_launch.py
 
 ARG EXLLAMAV3_COMMIT=c5d9c657966ffeeaa9353f0cc899f18629da4a13
 ENV TORCH_CUDA_ARCH_LIST=12.1a
@@ -418,6 +419,7 @@ RUN set -eux; \
       | tar -xz -C /tmp/exllamav3 --strip-components=1; \
     python3 -c "from pathlib import Path; assert (Path('/tmp/exllamav3')/'exllamav3/modules/quant/exl3.py').is_file()"; \
     python3 /opt/glm53/patch_exl3_ext_aarch64.py /tmp/exllamav3/exllamav3/exllamav3_ext; \
+    python3 /opt/glm53/patch_exl3_cooperative_launch.py /tmp/exllamav3; \
     export CPATH="/usr/local/lib/python3.12/dist-packages/nvidia/cu13/include${CPATH:+:$CPATH}"; \
     export CPLUS_INCLUDE_PATH="/usr/local/lib/python3.12/dist-packages/nvidia/cu13/include${CPLUS_INCLUDE_PATH:+:$CPLUS_INCLUDE_PATH}"; \
     export C_INCLUDE_PATH="/usr/local/lib/python3.12/dist-packages/nvidia/cu13/include${C_INCLUDE_PATH:+:$C_INCLUDE_PATH}"; \

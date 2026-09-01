@@ -12,6 +12,8 @@ TOKENIZER=${GLM53_TOKENIZER:-$HOME/.cache/huggingface/hub/$MODEL_CACHE_DIR/snaps
 DEPTH_VALUES=${DEPTHS:-"0 4096 8192 16384 32768 65535"}
 CONCURRENCY_VALUES=${CONCURRENCIES:-"1 2 5 10"}
 RUN_COUNT=${RUNS:-3}
+PROMPT_TOKENS=${PP:-2048}
+GEN_TOKENS=${TG:-128}
 STAMP=$(date -u +%Y%m%d-%H%M%S)
 RESULT_DIR=${1:-$ROOT/results/llama-benchy-exl3-tp4-$STAMP}
 
@@ -43,8 +45,8 @@ command=(
   --served-model-name "$SERVED_MODEL"
   --tokenizer "$TOKENIZER"
   --depth $DEPTH_VALUES
-  --pp 2048
-  --tg 128
+  --pp "$PROMPT_TOKENS"
+  --tg "$GEN_TOKENS"
   --runs "$RUN_COUNT"
   # GLM defaults to reasoning; the harness's tiny "Paris" gate can consume
   # its whole budget in reasoning_content despite a healthy engine.
@@ -59,6 +61,9 @@ command=(
   --format csv
   --emit-progress "$PROGRESS_FILE"
 )
+if [[ "${NO_WARMUP:-0}" == 1 ]]; then
+  command+=(--no-warmup)
+fi
 
 printf '%q ' "${command[@]}" >"$COMMAND_FILE"
 printf '\n' >>"$COMMAND_FILE"

@@ -5,6 +5,7 @@ ROOT = Path(__file__).parents[1]
 INNER = (ROOT / "scripts/tp4_inner.sh").read_text()
 CLUSTER = (ROOT / "scripts/tp4_cluster.sh").read_text()
 SYNC = (ROOT / "scripts/tp4_sync_weights.sh").read_text()
+BENCH = (ROOT / "scripts/bench_llama_benchy_tp4.sh").read_text()
 
 
 def test_tp4_rank_contract_is_consistent() -> None:
@@ -31,6 +32,13 @@ def test_tp4_dflash_and_graph_defaults() -> None:
     assert "--cudagraph-capture-sizes 1 2 4 8 10 16 24 32" in INNER
     assert '--enforce-eager' in INNER
     assert "NCCL_CROSS_NIC=1" in CLUSTER
+    assert 'EXL3_FUSED_MOE="${EXL3_FUSED_MOE:-1}"' in CLUSTER
+    assert "EXL3_FUSED_MOE_DECODE" in CLUSTER
+    assert "EXL3_MOE_CONCURRENCY" in CLUSTER
+    assert "EXL3_MOE_DECODE_CONCURRENCY" in CLUSTER
+    assert "glm53-exl3-tp4-exl3.py" in CLUSTER
+    assert 'GEN_TOKENS=${TG:-128}' in BENCH
+    assert '"${NO_WARMUP:-0}" == 1' in BENCH
 
 
 def test_tp4_preflight_happens_before_stop() -> None:
