@@ -86,6 +86,55 @@ DEPTHS='0' CONCURRENCIES='1' RUNS=3 \
 Do not publish a partial CSV as a result. Distributed systems already produce
 enough fiction without our help.
 
+## sparkrun / Spark Arena
+
+`recipe.yaml` is a sparkrun v3 recipe for the validated profile. It was
+booted end to end through `sparkrun run` and served a request before being
+committed; the launch is not a paper exercise.
+
+```bash
+sparkrun recipe validate recipe.yaml
+sparkrun run recipe.yaml --hosts 10.0.0.46,10.0.0.13,10.0.0.150,10.0.0.246
+sparkrun arena benchmark recipe.yaml --hosts 10.0.0.46,10.0.0.13,10.0.0.150,10.0.0.246
+```
+
+The Spark Arena v2 profile is the same matrix this profile passed 702/702
+(depths 0–100K × concurrency 1/2/5/10 × 3 runs), in a heat-shuffled order.
+
+Three things sparkrun's `vllm-distributed` runtime gets wrong on this cluster,
+and how the recipe absorbs them:
+
+1. It launches containers as `<image> bash -c ...`. The base image's
+   `ENTRYPOINT ["vllm","serve"]` turns that into `vllm serve bash -c ...`, and
+   argparse abbreviation-matches `-c` to `--compilation-config`.
+   `executor_config.entrypoint: ""` clears it.
+2. It sets `--master-addr` to the head's default-route interface (the
+   management LAN) and puts that NIC first in `NCCL_SOCKET_IFNAME`. Here one
+   worker has no management link and two reach it over Wi-Fi. The command
+   wrapper derives each node's fabric IP from `enp1s0f1np1`, exports
+   `VLLM_HOST_IP` and the `*_SOCKET_IFNAME`s, and appends
+   `--master-addr {master_addr}` last (argparse takes the final occurrence).
+   Override with `-o master_addr=<head fabric IP>`.
+3. It applies the head's `NCCL_IB_GID_INDEX` to every node. On `10.0.0.13`
+   the IPv4 RoCE v2 GID is at index 5, not 3. The wrapper selects the
+   `RoCE v2` GID matching the node's fabric IP from sysfs, reproducing the
+   launcher's `GIDS="3 5 3 3"` without hardcoding it.
+
+One host-state prerequisite: a fabric-only node cannot pull from GHCR, and
+sparkrun's `docker save | docker load` fallback does not attach the digest
+reference on a containerd-store daemon. Seed it once from a node that already
+resolves the digest, then tag it so `name@digest` resolves:
+
+```bash
+R=ghcr.io/mpfaffenberger/glm-5.3-flash-2x-dgx-sparks@sha256:03161bb433140860c6fbe9505de522f819630215d8eca9a8ba2c73652706dd96
+ssh 10.0.0.246 "docker save $R | zstd -1 -T8 -q" | ssh 10.0.0.13 'zstd -d -q | docker load'
+ssh 10.0.0.13 "docker tag sha256:03161bb433140860c6fbe9505de522f819630215d8eca9a8ba2c73652706dd96 \
+  ghcr.io/mpfaffenberger/glm-5.3-flash-2x-dgx-sparks:exl3 && docker image inspect $R >/dev/null && echo ok"
+```
+
+The DFlash draft directory must also be owned by the SSH user on every node,
+or sparkrun's rsync fails with `chgrp ... Operation not permitted`.
+
 ## Validated full matrix (2026-09-04)
 
 `results/exl3-barrier-v2-mem055-full-20260904-012121/` — 702/702 requests,

@@ -1,0 +1,173 @@
+# sparkrun recipe for GLM-5.3-Flash EXL3 4bpw + DFlash2 on four DGX Spark
+# (GB10) nodes, native vLLM TP=4 over RoCE, no Ray.
+#
+# This is the exact profile that passed the full llama-benchy matrix
+# (depths 0..100K x concurrency 1,2,5,10 x 3 runs) 702/702 with zero errors:
+#   results/exl3-barrier-v2-mem055-full-20260904-012121/
+# The Spark Arena v2 profile is the same matrix in a heat-shuffled order.
+#
+# The command mirrors scripts/tp4_inner.sh flag for flag. sparkrun appends
+# --nnodes/--node-rank/--master-addr/--master-port/--headless per node and
+# detects the RoCE HCA, GID index, and socket interfaces itself, so none of
+# those appear here. Every JSON-valued flag is a whole default substituted
+# into the template; sparkrun's substitution does not render placeholders
+# nested inside literal braces.
+#
+# Why the numbers are what they are: docs/exl3-moe-wedge.md and TP4.md.
+recipe_version: "3"
+name: glm-5.3-flash-exl3-dflash2-tp4-gb10
+description: >-
+  GLM-5.3-Flash EXL3 TR3 4bpw with DFlash2 speculative decoding (k=7),
+  native vLLM TP=4 across four GB10 nodes, FP8 KV, 1M context. Full
+  benchmark matrix through 100K x C10 validated 702/702.
+
+model: Mia-AiLab/GLM-5.3-Flash-EXL3-TR3-4bpw
+container: ghcr.io/mpfaffenberger/glm-5.3-flash-2x-dgx-sparks@sha256:03161bb433140860c6fbe9505de522f819630215d8eca9a8ba2c73652706dd96
+runtime: vllm-distributed
+cluster_only: true
+solo_only: false
+min_nodes: 4
+
+defaults:
+  # RoCE fabric identity. sparkrun's vllm runtime bootstraps torch-distributed
+  # over the head's default-route (management) interface and applies the
+  # head's RoCE GID index to every node. On this cluster one worker has no
+  # management link, two reach it over Wi-Fi, and one node's IPv4 GID sits at
+  # a different index, so the wrapper below re-derives all of that per node
+  # from the fabric NIC, exactly as scripts/tp4_cluster.sh does.
+  master_addr: 10.0.0.46
+  roce_if: enp1s0f1np1
+  roce_hca: rocep1s0f1
+  revision: 25a44fdbf16862a46b7cc9921142c6c81350af2f
+  served_model_name: GLM-5.3-Flash-EXL3
+  host: 0.0.0.0
+  port: 8888
+  tensor_parallel: 4
+  quantization: exl3
+  kv_cache_dtype: fp8
+  gpu_memory_utilization: 0.55
+  max_model_len: 1000000
+  max_num_batched_tokens: 2048
+  max_num_seqs: 10
+  # torch.compile stays on; CUDA graph replay is disabled because the EXL3
+  # fused-MoE cooperative kernels are not replay-safe on GB10.
+  compilation_config: '{"cudagraph_mode":"NONE"}'
+  limit_mm_per_prompt: '{"image":4,"video":1}'
+  # Draft revision dc77ff1c99eeb2df044ee3d4f0094eb033fee410. sparkrun reads
+  # the draft model id from this field to distribute it to every node.
+  speculative_config: '{"method":"dflash","model":"incoai/GLM-5.3-Flash-DFlash2","revision":"dc77ff1c99eeb2df044ee3d4f0094eb033fee410","num_speculative_tokens":7,"draft_tensor_parallel_size":4,"kv_cache_dtype":"auto","draft_sample_method":"probabilistic","rejection_sample_method":"standard"}'
+
+env:
+  HF_HUB_OFFLINE: "1"
+  TRANSFORMERS_OFFLINE: "1"
+  VLLM_NO_USAGE_STATS: "1"
+  DO_NOT_TRACK: "1"
+  FLASHINFER_DISABLE_VERSION_CHECK: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:False
+  VLLM_EXECUTE_MODEL_TIMEOUT_SECONDS: "1800"
+  VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS: "1"
+  # ExLlamaV3 kernels share one barrier/lock arena per stream and assume a
+  # single launch stream. vLLM's shared-experts aux stream overlaps two EXL3
+  # cooperative kernels and deadlocks them on GB10.
+  VLLM_DISABLE_SHARED_EXPERTS_STREAM: "1"
+  # Fused EXL3 MoE, six cooperative groups, for both prefill and decode.
+  EXL3_FUSED_MOE: "1"
+  EXL3_FUSED_MOE_DECODE: "1"
+  EXL3_MOE_CONCURRENCY: "6"
+  EXL3_MOE_DECODE_CONCURRENCY: "6"
+  EXL3_MOE_ROW_TILE: "0"
+  EXL3_TEMP_ROWS_FUSED: "128"
+  GLM53_SUPPRESS_STOPS_IN_REASONING: "1"
+  GLM53_MIXED_PREFILL_CHUNK: skip
+  NCCL_NVLS_ENABLE: "0"
+  NCCL_CUMEM_ENABLE: "0"
+  NCCL_DEBUG: WARN
+
+# sparkrun appends --nnodes/--node-rank/--master-addr/--master-port after this
+# text, so `serve` receives them in "$@" and appends the fabric master address
+# last; vLLM's argparse takes the final occurrence. The subshell-body function
+# avoids braces, which sparkrun's placeholder substitution would consume.
+command: |
+  ROCE_IF={roce_if}; ROCE_HCA={roce_hca}; MASTER_ADDR={master_addr}
+  read -r NODE_IP GID_INDEX < <(python3 - "$ROCE_IF" "$ROCE_HCA" <<'PY'
+  import fcntl, os, socket, struct, sys
+  ifname, hca = sys.argv[1], sys.argv[2]
+  s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+  ip = socket.inet_ntoa(fcntl.ioctl(s.fileno(), 0x8915, struct.pack("256s", ifname.encode()))[20:24])
+  want = "0000:0000:0000:0000:0000:ffff:%02x%02x:%02x%02x" % tuple(int(o) for o in ip.split("."))
+  port = "/sys/class/infiniband/%s/ports/1" % hca
+  def is_v2(i):
+      return open("%s/gid_attrs/types/%s" % (port, i)).read().strip() == "RoCE v2"
+  def gid(i):
+      return open("%s/gids/%s" % (port, i)).read().strip()
+  idx = next((i for i in sorted(os.listdir(port + "/gids"), key=int) if gid(i) == want and is_v2(i)), "")
+  print(ip, idx)
+  PY
+  )
+  export VLLM_HOST_IP="$NODE_IP" NCCL_IB_HCA="$ROCE_HCA" NCCL_IB_GID_INDEX="$GID_INDEX"
+  export NCCL_SOCKET_IFNAME="$ROCE_IF" GLOO_SOCKET_IFNAME="$ROCE_IF" TP_SOCKET_IFNAME="$ROCE_IF"
+  echo "[recipe] node_ip=$NODE_IP gid_index=$GID_INDEX master_addr=$MASTER_ADDR"
+  serve() ( exec vllm serve "$@" --master-addr "$MASTER_ADDR" )
+  serve {model} \
+    --revision {revision} \
+    --served-model-name {served_model_name} \
+    --host {host} \
+    --port {port} \
+    --tensor-parallel-size {tensor_parallel} \
+    --distributed-executor-backend mp \
+    --disable-custom-all-reduce \
+    --quantization {quantization} \
+    --kv-cache-dtype {kv_cache_dtype} \
+    --gpu-memory-utilization {gpu_memory_utilization} \
+    --max-model-len {max_model_len} \
+    --max-num-batched-tokens {max_num_batched_tokens} \
+    --max-num-seqs {max_num_seqs} \
+    --enable-prefix-caching \
+    --no-enable-flashinfer-autotune \
+    --reasoning-parser glm45 \
+    --tool-call-parser glm47 \
+    --enable-auto-tool-choice \
+    --chat-template /opt/glm53/chat_template.jinja \
+    --limit-mm-per-prompt '{limit_mm_per_prompt}' \
+    --skip-mm-profiling \
+    --compilation-config '{compilation_config}' \
+    --speculative-config '{speculative_config}'
+
+executor_config:
+  user: root
+  # The image inherits vllm-openai's ENTRYPOINT ["vllm","serve"]. sparkrun
+  # launches containers as `<image> bash -c ...`, which that entrypoint would
+  # swallow as `vllm serve bash -c ...`. Clear it.
+  entrypoint: ""
+  cap_add: [IPC_LOCK]
+  shm_size: 64gb
+
+validation:
+  status: validated-full-matrix-through-100k-c10
+  results: results/exl3-barrier-v2-mem055-full-20260904-012121/results.csv
+  requests: 702
+  request_errors: 0
+  result_rows: 104
+  notes: >-
+    Clean-reset run, depth-major order. Three independent defects had to be
+    fixed to get here (GB10 unified-memory headroom, EXL3 fused-MoE lock
+    arena per CUDA stream, FlashInfer SM120 sparse-MLA named-barrier race);
+    every intermediate candidate that passed an isolated 65K or 100K gate
+    then failed the full matrix.
+
+metadata:
+  architecture: Glm5NextForConditionalGeneration
+  quantization: exl3-4bpw
+  kv_dtype: fp8
+  language_only: true
+  runtime_image_published: true
+  runtime_image_tag: ghcr.io/mpfaffenberger/glm-5.3-flash-2x-dgx-sparks:exl3-tp4-20260904
+  runtime_image_digest: sha256:03161bb433140860c6fbe9505de522f819630215d8eca9a8ba2c73652706dd96
+  notes: |
+    gpu_memory_utilization 0.55 is deliberate. GB10 unified memory is one
+    pool for CPU and GPU; the ~21 GiB of driver, NCCL, cuBLAS/JIT workspace
+    and drafter footprint that vLLM does not meter lives inside the same
+    denominator. 0.60 lost a rank to CUBLAS_STATUS_INTERNAL_ERROR after a
+    100K soak; 0.75 exhausted the driver. 0.55 still yields ~2.1M KV tokens.
+    CUDA graphs off: piecewise is ~15% faster at C=1 but never survived the
+    long-context matrix.
