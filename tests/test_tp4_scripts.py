@@ -20,7 +20,7 @@ def test_tp4_rank_contract_is_consistent() -> None:
 
 
 def test_tp4_inputs_are_immutable() -> None:
-    assert "@sha256:9bb1557a4234fce" in CLUSTER
+    assert "@sha256:03161bb433140860" in CLUSTER
     assert "25a44fdbf16862a46b7cc9921142c6c81350af2f" in CLUSTER
     assert "dc77ff1c99eeb2df044ee3d4f0094eb033fee410" in CLUSTER
     assert "EXPECTED_SHARDS:-120" in SYNC
@@ -32,9 +32,9 @@ def test_tp4_dflash_and_graph_defaults() -> None:
     assert 'DFLASH_DRAFT_TP:-4' in CLUSTER
     assert 'SPEC_METHOD:-dflash' in INNER
     assert "--cudagraph-capture-sizes 1 2 4 8 10 16 24 32" in INNER
-    assert "CUDAGRAPH_MODE:-piecewise" in INNER
+    assert "CUDAGRAPH_MODE:-none" in INNER
     assert "--compilation-config" in INNER
-    assert 'CUDAGRAPH_MODE="${CUDAGRAPH_MODE:-piecewise}"' in CLUSTER
+    assert 'CUDAGRAPH_MODE="${CUDAGRAPH_MODE:-none}"' in CLUSTER
     assert 'GPU_MEM_UTIL="${GPU_MEM_UTIL:-0.55}"' in CLUSTER
     assert 'GPU_MEM_UTIL:-0.55' in INNER
     assert '--enforce-eager' in INNER
@@ -42,7 +42,7 @@ def test_tp4_dflash_and_graph_defaults() -> None:
     assert 'EXL3_FUSED_MOE="${EXL3_FUSED_MOE:-1}"' in CLUSTER
     assert "EXL3_FUSED_MOE_DECODE" in CLUSTER
     assert "EXL3_MOE_CONCURRENCY" in CLUSTER
-    assert "EXL3_MOE_DECODE_CONCURRENCY" in CLUSTER
+    assert 'EXL3_MOE_DECODE_CONCURRENCY="${EXL3_MOE_DECODE_CONCURRENCY:-6}"' in CLUSTER
     assert "glm53-exl3-tp4-exl3.py" in CLUSTER
     # EXL3 cooperative kernels deadlock when vLLM overlaps shared experts on
     # its aux stream; the launcher must pin the stream off by default.

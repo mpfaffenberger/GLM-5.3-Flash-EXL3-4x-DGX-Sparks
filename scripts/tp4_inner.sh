@@ -58,7 +58,7 @@ fi
 
 if [[ "${ENFORCE_EAGER:-0}" == 1 ]]; then
     args+=(--enforce-eager)
-elif [[ "${CUDAGRAPH_MODE:-piecewise}" == none ]]; then
+elif [[ "${CUDAGRAPH_MODE:-none}" == none ]]; then
     # Keep torch.compile while excluding the EXL3 extension from CUDA graph
     # replay. Cooperative software-barrier kernels are not replay-safe here.
     args+=(--compilation-config '{"cudagraph_mode":"NONE"}')
@@ -94,5 +94,5 @@ PY
     *) say "FATAL: unknown SPEC_METHOD=${SPEC_METHOD}"; exit 2 ;;
 esac
 
-say "starting TP=4 node (spec=${SPEC_METHOD:-dflash}, cudagraph=${CUDAGRAPH_MODE:-piecewise}, eager=${ENFORCE_EAGER:-0})"
+say "starting TP=4 node (spec=${SPEC_METHOD:-dflash}, cudagraph=${CUDAGRAPH_MODE:-none}, eager=${ENFORCE_EAGER:-0})"
 exec vllm serve "$MODEL_DIR" "${args[@]}"

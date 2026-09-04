@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-IMAGE=${IMAGE:-ghcr.io/miaai-lab/glm-5.3-flash-2x-dgx-sparks@sha256:9bb1557a4234fce63d59599e44d10747eabd742beb337eebf9e7070be8a0fd58}
+IMAGE=${IMAGE:-ghcr.io/mpfaffenberger/glm-5.3-flash-2x-dgx-sparks@sha256:03161bb433140860c6fbe9505de522f819630215d8eca9a8ba2c73652706dd96}
 MODEL=${MODEL:-Mia-AiLab/GLM-5.3-Flash-EXL3-TR3-4bpw}
 REVISION=${MODEL_REVISION:-25a44fdbf16862a46b7cc9921142c6c81350af2f}
 MODEL_CACHE=${MODEL_CACHE:-models--Mia-AiLab--GLM-5.3-Flash-EXL3-TR3-4bpw}

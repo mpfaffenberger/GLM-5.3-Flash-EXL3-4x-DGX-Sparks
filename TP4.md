@@ -10,7 +10,7 @@ two-node launcher remains intact so the upstream recipe stays reviewable.
 - DFlash2 draft: `incoai/GLM-5.3-Flash-DFlash2`
 - draft revision: `dc77ff1c99eeb2df044ee3d4f0094eb033fee410`
 - runtime digest:
-  `ghcr.io/miaai-lab/glm-5.3-flash-2x-dgx-sparks@sha256:9bb1557a4234fce63d59599e44d10747eabd742beb337eebf9e7070be8a0fd58`
+  `ghcr.io/mpfaffenberger/glm-5.3-flash-2x-dgx-sparks@sha256:03161bb433140860c6fbe9505de522f819630215d8eca9a8ba2c73652706dd96`
 
 Default topology:
 
@@ -24,11 +24,15 @@ Default topology:
 All ranks use `enp1s0f1np1` / `rocep1s0f1`. The launcher verifies the image,
 target snapshot, draft snapshot, and each GID before touching the cluster.
 
-## Initial trial profile
+## Validated profile
 
 - target TP=4;
 - DFlash2 draft TP=4 and seven draft tokens;
-- CUDA graphs enabled;
+- `torch.compile` on, CUDA graphs **off** (`CUDAGRAPH_MODE=none`). Piecewise
+  graphs are ~15% faster at C=1 but never survived the full long-context
+  matrix; opt in with `CUDAGRAPH_MODE=piecewise` at your own risk;
+- fused EXL3 MoE with six groups for both prefill and decode
+  (`EXL3_MOE_CONCURRENCY=6 EXL3_MOE_DECODE_CONCURRENCY=6`);
 - FP8 target KV cache;
 - max model length 1,000,000;
 - max sequences 10;
@@ -82,7 +86,29 @@ DEPTHS='0' CONCURRENCIES='1' RUNS=3 \
 Do not publish a partial CSV as a result. Distributed systems already produce
 enough fiction without our help.
 
-## First TP=4 gates (2026-08-30)
+## Validated full matrix (2026-09-04)
+
+`results/exl3-barrier-v2-mem055-full-20260904-012121/` — 702/702 requests,
+zero errors, depths 0 through 100,000 at concurrency 1, 2, 5, 10, run from a
+clean reset with the validated profile above. llama-benchy PP=2048 / TG=128.
+
+| Cell | Prefill tok/s | Decode tok/s per request | TTFT |
+|---|---:|---:|---:|
+| C=1, no context | **959** | **44.7** | 2.4 s |
+| C=1 @ 32K | 849 | 48.1 | 2.4 s |
+| C=1 @ 65K | 705 | 43.6 | 2.9 s |
+| C=1 @ 100K | 626 | 33.7 | 3.3 s |
+| C=10, no context | 490 aggregate | 46.7 | 23 s |
+| C=10 @ 65K | 36 aggregate | 43.0 | 312 s |
+| C=10 @ 100K | 25 aggregate | 42.4 | 440 s |
+
+Per-request decode holds 42–48 tok/s across concurrency thanks to DFlash.
+The C=10 long-context prefill cells are TTFT-bound: ten 65–100K requests
+queue through 2,048-token batches behind `max-num-seqs=10`. They are stability
+cells, not a throughput target. The full diagnosis of what had to be fixed to
+get here is in `docs/exl3-moe-wedge.md`.
+
+## First TP=4 gates (2026-08-30, superseded)
 
 The first successful API-ready run used the initial profile above. CUDA graphs
 were active and the server remained healthy after each gate.
