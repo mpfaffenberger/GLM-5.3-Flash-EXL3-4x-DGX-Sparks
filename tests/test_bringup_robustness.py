@@ -49,9 +49,22 @@ def test_worker_cache_writability_preflight_wired() -> None:
     assert "test -w '$WORKER_CACHE_DIR/hub'" in src
 
 
+def test_shared_expert_aux_stream_is_disabled_on_both_ranks() -> None:
+    src = _source()
+    assignment = (
+        'VLLM_DISABLE_SHARED_EXPERTS_STREAM="'
+        '${VLLM_DISABLE_SHARED_EXPERTS_STREAM:-1}"'
+    )
+    assert assignment in src
+    # Worker gets it through serve_env; head gets an explicit docker env.
+    assert "EXL3_FUSED_MOE VLLM_DISABLE_SHARED_EXPERTS_STREAM" in src
+    assert '-e VLLM_DISABLE_SHARED_EXPERTS_STREAM=' in src
+
+
 if __name__ == "__main__":
     test_worker_death_detection_wired()
     test_sync_revision_marker_wired()
     test_hf_cli_fallback_wired()
     test_worker_cache_writability_preflight_wired()
+    test_shared_expert_aux_stream_is_disabled_on_both_ranks()
     print("start.sh bring-up robustness anchors OK")

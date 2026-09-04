@@ -3,7 +3,10 @@ set -euo pipefail
 
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 HEAD_IP=${HEAD_IP:-10.0.0.46}
-NODES=(10.0.0.46 10.0.0.13 10.0.0.150 10.0.0.246)
+# Rank order; override with WORKER_NODES="ip ip ip" to move a node between
+# ranks when isolating rank-specific versus node-specific failures.
+read -r -a _workers <<<"${WORKER_NODES:-10.0.0.13 10.0.0.150 10.0.0.246}"
+NODES=("$HEAD_IP" "${_workers[@]}")
 IFS=' ' read -r -a GIDS <<< "${GIDS:-3 5 3 3}"
 SOCKET_IF=${SOCKET_IF:-enp1s0f1np1}
 HCA=${HCA:-rocep1s0f1}
@@ -13,6 +16,9 @@ MODEL_REVISION=${MODEL_REVISION:-25a44fdbf16862a46b7cc9921142c6c81350af2f}
 DFLASH_REVISION=${DFLASH_REVISION:-dc77ff1c99eeb2df044ee3d4f0094eb033fee410}
 MODEL_CACHE=models--Mia-AiLab--GLM-5.3-Flash-EXL3-TR3-4bpw
 DFLASH_CACHE=models--incoai--GLM-5.3-Flash-DFlash2
+# Diagnostic passthrough, e.g. EXTRA_DOCKER_ARGS="--cap-add SYS_PTRACE" so
+# cuda-gdb can attach to a wedged rank inside the container.
+EXTRA_DOCKER_ARGS=${EXTRA_DOCKER_ARGS:-}
 ACTION=${1:-start}
 
 run_on() {
@@ -98,16 +104,25 @@ common_env=(
     -e DFLASH_MODEL_DIR="/root/.cache/huggingface/$dflash_rel"
     -e SPEC_METHOD="${SPEC_METHOD:-dflash}" -e DFLASH_TOKENS="${DFLASH_TOKENS:-7}"
     -e DFLASH_DRAFT_TP="${DFLASH_DRAFT_TP:-4}" -e MTP_TOKENS="${MTP_TOKENS:-2}"
-    -e MAX_MODEL_LEN="${MAX_MODEL_LEN:-1000000}" -e GPU_MEM_UTIL="${GPU_MEM_UTIL:-0.75}"
+-e MAX_MODEL_LEN="${MAX_MODEL_LEN:-1000000}" -e GPU_MEM_UTIL="${GPU_MEM_UTIL:-0.55}"
 -e MAX_NUM_SEQS="${MAX_NUM_SEQS:-10}"
     -e MAX_NUM_BATCHED_TOKENS="${MAX_NUM_BATCHED_TOKENS:-2048}"
     -e ENFORCE_EAGER="${ENFORCE_EAGER:-0}"
+    -e CUDAGRAPH_MODE="${CUDAGRAPH_MODE:-piecewise}"
     -e EXL3_FUSED_MOE="${EXL3_FUSED_MOE:-1}"
     -e EXL3_FUSED_MOE_DECODE="${EXL3_FUSED_MOE_DECODE:-1}"
     -e EXL3_MOE_CONCURRENCY="${EXL3_MOE_CONCURRENCY:-6}"
     -e EXL3_MOE_DECODE_CONCURRENCY="${EXL3_MOE_DECODE_CONCURRENCY:-1}"
     -e EXL3_MOE_ROW_TILE="${EXL3_MOE_ROW_TILE:-0}"
     -e EXL3_TEMP_ROWS_FUSED="${EXL3_TEMP_ROWS_FUSED:-128}"
+    # ExLlamaV3 kernels share one per-device barrier/lock arena and assume a
+    # single stream. vLLM's shared-experts aux stream (batches <= 256 tokens)
+    # overlaps two EXL3 cooperative kernels and deadlocks them on GB10.
+    # Reproducer: scripts/repro_exl3_gemm_wedge.py dual-iso.
+    -e VLLM_DISABLE_SHARED_EXPERTS_STREAM="${VLLM_DISABLE_SHARED_EXPERTS_STREAM:-1}"
+    # Diagnostic only: synchronous launches make a wedged rank's Python stack
+    # point at the exact op that never returns instead of the next host sync.
+    -e CUDA_LAUNCH_BLOCKING="${CUDA_LAUNCH_BLOCKING:-0}"
     -e GLM53_SUPPRESS_STOPS_IN_REASONING=1 -e GLM53_MIXED_PREFILL_CHUNK=skip
     -e VLLM_EXECUTE_MODEL_TIMEOUT_SECONDS=1800
     -e VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=1
@@ -129,7 +144,7 @@ for rank in 1 2 3; do
     ssh -o BatchMode=yes "$ip" "mkdir -p '$vcache/triton' '$vcache/tilelang'; docker run -d --name '$NAME' \
       --gpus all --network host --ipc=host --shm-size 64g --stop-timeout 60 \
       --device /dev/infiniband --cap-add IPC_LOCK --ulimit memlock=-1 --ulimit stack=67108864 \
-      --ulimit nofile=1048576:1048576 \
+      --ulimit nofile=1048576:1048576 $EXTRA_DOCKER_ARGS \
       -v '$cache:/root/.cache/huggingface' -v '$vcache:/root/.cache/vllm' \
       -v '$vcache/triton:/root/.triton/cache' -v '$vcache/tilelang:/root/.tilelang/cache' \
       -v '$inner:/start.sh:ro' $remote_env -e NODE_RANK='$rank' \
@@ -146,7 +161,7 @@ mkdir -p "$vcache/triton" "$vcache/tilelang"
 docker run -d --name "$NAME" \
     --gpus all --network host --ipc=host --shm-size 64g --stop-timeout 60 \
     --device /dev/infiniband --cap-add IPC_LOCK --ulimit memlock=-1 --ulimit stack=67108864 \
-    --ulimit nofile=1048576:1048576 \
+    --ulimit nofile=1048576:1048576 $EXTRA_DOCKER_ARGS \
     -v "$HOME/.cache/huggingface:/root/.cache/huggingface" -v "$vcache:/root/.cache/vllm" \
     -v "$vcache/triton:/root/.triton/cache" -v "$vcache/tilelang:/root/.tilelang/cache" \
     -v "$inner:/start.sh:ro" "${common_env[@]}" -e NODE_RANK=0 \

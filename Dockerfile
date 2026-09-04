@@ -371,6 +371,8 @@ PY
 # rebuild exllamav3_ext. The aarch64 stub patch must stay in this layer.
 COPY overlay/patch_exl3_ext_aarch64.py /opt/glm53/patch_exl3_ext_aarch64.py
 COPY overlay/patch_exl3_cooperative_launch.py /opt/glm53/patch_exl3_cooperative_launch.py
+COPY overlay/patch_flashinfer_sparse_mla_barrier.py /opt/glm53/patch_flashinfer_sparse_mla_barrier.py
+RUN python3 /opt/glm53/patch_flashinfer_sparse_mla_barrier.py
 
 ARG EXLLAMAV3_COMMIT=c5d9c657966ffeeaa9353f0cc899f18629da4a13
 ENV TORCH_CUDA_ARCH_LIST=12.1a
@@ -474,3 +476,7 @@ RUN EXL3_SELFCHECK_GPU=0 python3 /opt/glm53/test_exl3_overlay.py \
     && python3 /opt/glm53/test_xgrammar_termination.py \
     && python3 /opt/glm53/test_kpool_tail_slotmap.py \
     && python3 /opt/glm53/test_ablit.py
+
+# The base image ships this generated module. Header edits do not invalidate it,
+# so remove it and let FlashInfer JIT one corrected module on first startup.
+RUN rm -rf /usr/local/lib/python3.12/dist-packages/flashinfer_jit_cache/jit_cache/sparse_mla_sm120

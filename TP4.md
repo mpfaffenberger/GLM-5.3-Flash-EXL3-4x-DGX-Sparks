@@ -33,8 +33,10 @@ target snapshot, draft snapshot, and each GID before touching the cluster.
 - max model length 1,000,000;
 - max sequences 10;
 - max batched tokens 2,048;
-- GPU memory utilization 0.75. Higher initial trials reached graph capture but
-  exhausted practical GB10 unified-memory headroom at the driver layer;
+- GPU memory utilization 0.55. Trials at 0.75 and above reached graph capture
+  but exhausted practical GB10 unified-memory headroom under sustained
+  long-context load at the driver layer, and 0.60 still produced a rank-local
+  `CUBLAS_STATUS_INTERNAL_ERROR` after a 100K soak;
 - native vLLM multiprocessing; no Ray.
 
 Use `SPEC_METHOD=mtp MTP_TOKENS=2` or `SPEC_METHOD=none` for controlled
@@ -99,9 +101,13 @@ long-context stability result.
 
 The first 0.87/0.86 memory-utilization attempts also exposed a GB10 unified-
 memory trap: vLLM's nominal graph/cache accounting passed, then the NVIDIA
-driver emitted `NV_ERR_NO_MEMORY` during graph capture. Utilization 0.75 retains
-ample KV capacity for the intended benchmark while preserving real driver
-headroom.
+driver emitted `NV_ERR_NO_MEMORY` during graph capture. A later sustained 65K
+x C10 run showed that 0.75 still left only about 9 GiB available, entered swap,
+and hit the same driver allocation failure. At 0.60 a warm engine that had just
+completed a 100K x C10 soak lost one rank to `CUBLAS_STATUS_INTERNAL_ERROR`
+with no Xid logged. Utilization 0.55 provides about 2.1 million KV tokens—still
+2.1x one 1M-token request—and is the setting under which the full matrix
+through 100K x C10 passed 702/702 (`results/exl3-barrier-v2-mem055-full-*`).
 
 An initial `max-num-seqs=4` full-matrix attempt wedged on the third 4K × C=5
 batch after two requests emitted their first token. All ranks remained at 96%

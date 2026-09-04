@@ -14,7 +14,9 @@ def test_tp4_rank_contract_is_consistent() -> None:
     assert "--disable-custom-all-reduce" in INNER
     assert '--node-rank "$NODE_RANK"' in INNER
     assert '[[ "$NODE_RANK" != 0 ]]' in INNER
-    assert "10.0.0.46 10.0.0.13 10.0.0.150 10.0.0.246" in CLUSTER
+    assert 'HEAD_IP=${HEAD_IP:-10.0.0.46}' in CLUSTER
+    assert 'WORKER_NODES:-10.0.0.13 10.0.0.150 10.0.0.246' in CLUSTER
+    assert 'NODES=("$HEAD_IP" "${_workers[@]}")' in CLUSTER
 
 
 def test_tp4_inputs_are_immutable() -> None:
@@ -30,6 +32,11 @@ def test_tp4_dflash_and_graph_defaults() -> None:
     assert 'DFLASH_DRAFT_TP:-4' in CLUSTER
     assert 'SPEC_METHOD:-dflash' in INNER
     assert "--cudagraph-capture-sizes 1 2 4 8 10 16 24 32" in INNER
+    assert "CUDAGRAPH_MODE:-piecewise" in INNER
+    assert "--compilation-config" in INNER
+    assert 'CUDAGRAPH_MODE="${CUDAGRAPH_MODE:-piecewise}"' in CLUSTER
+    assert 'GPU_MEM_UTIL="${GPU_MEM_UTIL:-0.55}"' in CLUSTER
+    assert 'GPU_MEM_UTIL:-0.55' in INNER
     assert '--enforce-eager' in INNER
     assert "NCCL_CROSS_NIC=1" in CLUSTER
     assert 'EXL3_FUSED_MOE="${EXL3_FUSED_MOE:-1}"' in CLUSTER
@@ -37,7 +44,11 @@ def test_tp4_dflash_and_graph_defaults() -> None:
     assert "EXL3_MOE_CONCURRENCY" in CLUSTER
     assert "EXL3_MOE_DECODE_CONCURRENCY" in CLUSTER
     assert "glm53-exl3-tp4-exl3.py" in CLUSTER
+    # EXL3 cooperative kernels deadlock when vLLM overlaps shared experts on
+    # its aux stream; the launcher must pin the stream off by default.
+    assert 'VLLM_DISABLE_SHARED_EXPERTS_STREAM="${VLLM_DISABLE_SHARED_EXPERTS_STREAM:-1}"' in CLUSTER
     assert 'GEN_TOKENS=${TG:-128}' in BENCH
+    assert "65535 100000" in BENCH
     assert '"${NO_WARMUP:-0}" == 1' in BENCH
 
 

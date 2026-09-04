@@ -38,7 +38,7 @@ args=(
     --disable-custom-all-reduce
     --quantization exl3
     --max-model-len "${MAX_MODEL_LEN:-1000000}"
-    --gpu-memory-utilization "${GPU_MEM_UTIL:-0.75}"
+--gpu-memory-utilization "${GPU_MEM_UTIL:-0.55}"
 --max-num-seqs "${MAX_NUM_SEQS:-10}"
     --max-num-batched-tokens "${MAX_NUM_BATCHED_TOKENS:-2048}"
     --kv-cache-dtype fp8
@@ -58,8 +58,12 @@ fi
 
 if [[ "${ENFORCE_EAGER:-0}" == 1 ]]; then
     args+=(--enforce-eager)
+elif [[ "${CUDAGRAPH_MODE:-piecewise}" == none ]]; then
+    # Keep torch.compile while excluding the EXL3 extension from CUDA graph
+    # replay. Cooperative software-barrier kernels are not replay-safe here.
+    args+=(--compilation-config '{"cudagraph_mode":"NONE"}')
 else
-args+=(--cudagraph-capture-sizes 1 2 4 8 10 16 24 32)
+    args+=(--cudagraph-capture-sizes 1 2 4 8 10 16 24 32)
 fi
 
 case "${SPEC_METHOD:-dflash}" in
@@ -90,5 +94,5 @@ PY
     *) say "FATAL: unknown SPEC_METHOD=${SPEC_METHOD}"; exit 2 ;;
 esac
 
-say "starting TP=4 node (spec=${SPEC_METHOD:-dflash}, graphs=$((1 - ${ENFORCE_EAGER:-0})))"
+say "starting TP=4 node (spec=${SPEC_METHOD:-dflash}, cudagraph=${CUDAGRAPH_MODE:-piecewise}, eager=${ENFORCE_EAGER:-0})"
 exec vllm serve "$MODEL_DIR" "${args[@]}"
