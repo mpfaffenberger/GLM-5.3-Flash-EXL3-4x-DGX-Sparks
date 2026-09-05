@@ -1,0 +1,18 @@
+[suppress-stops-in-reasoning] skipped: /usr/local/lib/python3.12/dist-packages/vllm/v1/engine/detokenizer.py
+scheduler.py: # [glm53-decode-floor] already present — skipping
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: disabled GB10 persistent_topk (use top_k_per_row_decode)
+glm53: overlay install ok aligned=True
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+Traceback (most recent call last):
+  File "/opt/glm53/patch_glm5_drafter_group.py", line 826, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/opt/glm53/patch_glm5_drafter_group.py", line 822, in main
+    return patch_file(args.kv_file, dry_run=args.dry_run)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/glm53/patch_glm5_drafter_group.py", line 748, in patch_file
+    raise AssertionError(
+AssertionError: /usr/local/lib/python3.12/dist-packages/vllm/v1/core/kv_cache_utils.py: DFLASH2-DRAFTER-GROUP present but neither padded slot-share, compact-64, nor keep-as-is standalone block found

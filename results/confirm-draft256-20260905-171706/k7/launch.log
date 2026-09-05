@@ -1,0 +1,5 @@
+preflighting immutable image, snapshots, RoCE, and disk on all four nodes
+worker rank 1 launched on 10.0.0.13
+worker rank 2 launched on 10.0.0.150
+worker rank 3 launched on 10.0.0.246
+EXL3 TP4 launch dispatched; logs: docker logs -f glm53-decode-screen

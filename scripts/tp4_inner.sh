@@ -17,6 +17,10 @@ for patcher in \
     patch_hybrid_prefix_hit.py \
     patch_xgrammar_termination.py \
     patch_kpool_tail_slotmap.py; do
+    if [[ "$patcher" == patch_glm5_drafter_group.py && "${TRIAL_STANDALONE_KV:-0}" == 1 ]]; then
+        say "isolated standalone cache trial: retaining mounted cache source"
+        continue
+    fi
     [[ -f "/opt/glm53/$patcher" ]] && python3 "/opt/glm53/$patcher"
 done
 
@@ -56,6 +60,10 @@ if [[ "$NODE_RANK" != 0 ]]; then
     args+=(--headless)
 fi
 
+if [[ "${PROFILE_DECODE:-0}" == 1 ]]; then
+    args+=(--profiler-config '{"profiler":"torch","torch_profiler_dir":"/root/.cache/vllm/decode-profile","torch_profiler_with_stack":false,"torch_profiler_record_shapes":true,"ignore_frontend":true}')
+fi
+
 if [[ "${ENFORCE_EAGER:-0}" == 1 ]]; then
     args+=(--enforce-eager)
 elif [[ "${CUDAGRAPH_MODE:-none}" == none ]]; then
@@ -78,7 +86,7 @@ print(json.dumps({
     "model": os.environ["DFLASH_MODEL_DIR"],
     "num_speculative_tokens": int(os.environ.get("DFLASH_TOKENS", "7")),
     "draft_tensor_parallel_size": int(os.environ.get("DFLASH_DRAFT_TP", "4")),
-    "kv_cache_dtype": "auto",
+    "kv_cache_dtype": os.environ.get("DFLASH_KV_DTYPE", "auto"),
     "draft_sample_method": "probabilistic",
     "rejection_sample_method": "standard",
 }, separators=(",", ":")))

@@ -1,0 +1,8 @@
+DFLASH_TOKENS=7
+GPU_MEM_UTIL=0.55
+DRAFT_TP=4
+DECODE_GROUPS=6
+SPEC_METHOD=dflash
+DFLASH_KV_DTYPE=auto
+NCCL_ALGO=auto
+EXTRA_DOCKER_ARGS=-v /tmp/glm-draft256-Q1hL/kv_cache_utils.py:/usr/local/lib/python3.12/dist-packages/vllm/v1/core/kv_cache_utils.py:ro

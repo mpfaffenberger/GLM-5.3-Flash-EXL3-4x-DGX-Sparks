@@ -1,0 +1,480 @@
+[suppress-stops-in-reasoning] skipped: /usr/local/lib/python3.12/dist-packages/vllm/v1/engine/detokenizer.py
+scheduler.py: # [glm53-decode-floor] already present — skipping
+[patch_glm5_drafter_group] /usr/local/lib/python3.12/dist-packages/vllm/v1/core/kv_cache_utils.py: already patched (DFLASH2-DRAFTER-GROUP + padded slot-share); no-op.
+kv_cache_coordinator.py: # [glm53-hybrid-apc] already present — skipping
+backend_xgrammar.py: termination fix already present (#52805)
+__init__.py: reasoning fix already present (#53046)
+block_table.py: kpool tail slot-map already present
+[glm53-exl3-tp4 rank=1] starting TP=4 node (spec=dflash, cudagraph=none, eager=0)
+INFO 09-05 15:56:35 [model.py:679] Resolved architecture: Glm5NextForConditionalGeneration
+INFO 09-05 15:56:35 [model.py:1973] Using max model len 1000000
+INFO 09-05 15:56:38 [cache.py:282] Using fp8 data type to store kv cache. It reduces the GPU memory footprint and boosts the performance. Meanwhile, it may cause accuracy drop without a proper scaling factor
+INFO 09-05 15:56:38 [arg_utils.py:2168] Inferred data_parallel_rank 0 from node_rank 1
+INFO 09-05 15:56:38 [model.py:679] Resolved architecture: DFlash2DraftModel
+INFO 09-05 15:56:38 [model.py:1973] Using max model len 1048576
+INFO 09-05 15:56:38 [speculative.py:1256] Overriding draft model max model len from 1048576 to 1000000
+INFO 09-05 15:56:38 [config.py:605] Mamba cache mode is set to 'align' for Glm5NextForConditionalGeneration by default when prefix caching is enabled
+INFO 09-05 15:56:38 [vllm.py:1319] Auto-enabling VLLM_USE_BREAKABLE_CUDAGRAPH=1. Set VLLM_USE_BREAKABLE_CUDAGRAPH=0 to opt out.
+INFO 09-05 15:56:38 [kernel.py:306] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+WARNING 09-05 15:56:38 [vllm.py:1849] max_num_scheduled_tokens is set to 2048 based on the speculative decoding settings. This may lead to suboptimal performance. Consider increasing max_num_batched_tokens to accommodate the additional draft token slots, or decrease num_speculative_tokens.
+INFO 09-05 15:56:38 [compilation.py:329] Enabled custom fusions: norm_quant, act_quant
+INFO 09-05 15:56:38 [serve.py:216] Launching vLLM (v0.1.dev20051+g487ecf187) headless multiproc executor, with head node address 10.0.0.46:29521 for torch.distributed process group.
+(Worker pid=1043) INFO 09-05 15:56:45 [parallel_state.py:1638] world_size=4 rank=1 local_rank=0 distributed_init_method=tcp://10.0.0.46:29521 backend=nccl
+(Worker pid=1043) WARNING 09-05 15:57:08 [symm_mem.py:67] SymmMemCommunicator: Device capability 12.1 not supported, communicator is not available.
+(Worker pid=1043) INFO 09-05 15:57:12 [parallel_state.py:1982] rank 1 in world size 4 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 1, EP rank 1, EPLB rank N/A
+(Worker pid=1043) INFO 09-05 15:57:12 [gpu_worker.py:386] Using V2 Model Runner
+(Worker_TP1 pid=1043) INFO 09-05 15:57:13 [model_runner.py:353] Loading model from scratch...
+(Worker_TP1 pid=1043) INFO 09-05 15:57:13 [cuda.py:595] Using backend AttentionBackendEnum.FLASH_ATTN for vit attention
+(Worker_TP1 pid=1043) INFO 09-05 15:57:13 [mm_encoder_attention.py:375] Using AttentionBackendEnum.FLASH_ATTN for MMEncoderAttention.
+(Worker_TP1 pid=1043) INFO 09-05 15:57:13 [kernel.py:306] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+(Worker_TP1 pid=1043) WARNING 09-05 15:57:13 [vllm.py:1849] max_num_scheduled_tokens is set to 2048 based on the speculative decoding settings. This may lead to suboptimal performance. Consider increasing max_num_batched_tokens to accommodate the additional draft token slots, or decrease num_speculative_tokens.
+(Worker_TP1 pid=1043) INFO 09-05 15:57:13 [cuda.py:536] Using FLASHINFER_MLA_SPARSE_SM120 attention backend out of potential backends: ['FLASHINFER_MLA_SPARSE_SM120'].
+(Worker_TP1 pid=1043) INFO 09-05 15:57:13 [mla_attention.py:475] Using fp8_ds_mla KV cache format for FLASHINFER_MLA_SPARSE_SM120 backend.
+(Worker_TP1 pid=1043) WARNING 09-05 15:57:13 [mla_attention.py:551] Sparse MLA impl has no dense-MHA prefill path; using the top-k MQA path only.
+(Worker_TP1 pid=1043) INFO 09-05 15:57:13 [deep_gemm.py:191] deep_gemm not found in site-packages, trying vendored vllm.third_party.deep_gemm
+(Worker_TP1 pid=1043) INFO 09-05 15:57:13 [deep_gemm.py:136] DeepGEMM E8M0 enabled on current platform.
+(Worker_TP1 pid=1043) INFO 09-05 15:57:15 [weight_utils.py:858] Filesystem type for checkpoints: EXT4. Checkpoint size: 163.58 GiB. Available RAM: 64.80 GiB.
+(Worker_TP1 pid=1043) INFO 09-05 15:57:15 [weight_utils.py:888] Auto-prefetch is disabled because the filesystem (EXT4) is not a recognized network FS (NFS/Lustre) and the checkpoint size (163.58 GiB) exceeds 90% of available RAM (64.80 GiB).
+(Worker_TP1 pid=1043) INFO 09-05 15:59:02 [default_loader.py:430] Loading weights took 107.72 seconds
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:03 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:06 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:06 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:06 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:06 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:06 [eagle3_utils.py:28] Using Eagle3 auxiliary layers from config: (6, 15, 25, 34, 43)
+(Worker_TP1 pid=1043) INFO 09-05 15:59:06 [kernel.py:306] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+(Worker_TP1 pid=1043) INFO 09-05 15:59:15 [cuda.py:536] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(Worker_TP1 pid=1043) INFO 09-05 15:59:15 [flash_attn.py:867] Using FlashAttention version 2
+(Worker_TP1 pid=1043) INFO 09-05 15:59:15 [weight_utils.py:858] Filesystem type for checkpoints: EXT4. Checkpoint size: 2.18 GiB. Available RAM: 64.12 GiB.
+(Worker_TP1 pid=1043) INFO 09-05 15:59:15 [weight_utils.py:881] Auto-prefetch is disabled because the filesystem (EXT4) is not a recognized network FS (NFS/Lustre). If you want to force prefetching, start vLLM with --safetensors-load-strategy=prefetch.
+(Worker_TP1 pid=1043) INFO 09-05 15:59:19 [default_loader.py:430] Loading weights took 3.81 seconds
+(Worker_TP1 pid=1043) WARNING 09-05 15:59:19 [speculator.py:191] Draft model DFlash2Qwen3ForCausalLM does not support external multimodal embeddings. Embeddings from the target model will not be passed to the drafter; using text-only draft inputs instead.
+(Worker_TP1 pid=1043) INFO 09-05 15:59:19 [model_runner.py:374] Model loading took 41.89 GiB and 126.600876 seconds
+(Worker_TP1 pid=1043) INFO 09-05 15:59:19 [interface.py:635] Setting kv cache block size to 64 for DEEPSEEK_V32_INDEXER backend.
+(Worker_TP1 pid=1043) INFO 09-05 15:59:19 [interface.py:926] Setting attention block size to 1792 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP1 pid=1043) INFO 09-05 15:59:19 [interface.py:950] Padding mamba page size by 0.35% to ensure that mamba page size and attention page size are exactly equal.
+INFO 09-05 16:01:23 [torch_utils.py:262] Reducing Torch threads from 20 to 1 for serving. Set OMP_NUM_THREADS in the external environment to override.
+(Worker_TP1 pid=1043) INFO 09-05 16:01:39 [exl3.py:134] exl3 fat-expert P0: layers=42 fat_layers=42 (100.0%) fat_expert_slots=336 max_rows=2048 avg_max_rows=2048.0 hist_le128=0 hist_gt128=42 hist=[0, 0, 0, 0, 0, 0, 0, 42, 0]
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033] WorkerProc hit an exception.
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033] Traceback (most recent call last):
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/multiproc_executor.py", line 1025, in worker_busy_loop
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     output = func(*args, **kwargs)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return func(*args, **kwargs)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu_worker.py", line 505, in determine_available_memory
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     self.model_runner.profile_run()
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return func(*args, **kwargs)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_runner.py", line 805, in profile_run
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     hidden_states, sample_hidden_states = self._dummy_run(
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]                                           ^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return func(*args, **kwargs)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/eplb_utils.py", line 27, in wrapper
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     result = fn(self, *args, **kwargs)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]              ^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_runner.py", line 735, in _dummy_run
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     self.speculator.propose(
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return func(*args, **kwargs)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/spec_decode/dflash/speculator.py", line 360, in propose
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     self._generate_draft(
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/spec_decode/dflash2/speculator.py", line 234, in _generate_draft
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     candidate_ids, unary_logits = self.model.compute_candidates(
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/models/qwen3_dflash2.py", line 291, in compute_candidates
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     logits = self.candidate_logits_processor(self.lm_head, hidden_states)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return self._call_impl(*args, **kwargs)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return forward_call(*args, **kwargs)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/logits_processor.py", line 73, in forward
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     logits = self._get_logits(hidden_states, lm_head, embedding_bias)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/logits_processor.py", line 148, in _get_logits
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     logits = self._gather_logits(logits)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/logits_processor.py", line 92, in _gather_logits
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     logits = tensor_model_parallel_all_gather(logits)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/communication_op.py", line 21, in tensor_model_parallel_all_gather
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return get_tp_group().all_gather(input_, dim)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/parallel_state.py", line 701, in all_gather
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return torch.ops.vllm.all_gather(
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/torch/_ops.py", line 1279, in __call__
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return self._op(*args, **kwargs)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/parallel_state.py", line 189, in all_gather
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return group._all_gather_out_place(tensor, dim)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/parallel_state.py", line 710, in _all_gather_out_place
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return self.device_communicator.all_gather(input_, dim)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/device_communicators/cuda_communicator.py", line 382, in all_gather
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     pynccl_comm.all_gather(output_tensor, input_.contiguous())
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/device_communicators/pynccl.py", line 213, in all_gather
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     self.nccl.ncclAllGather(
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/device_communicators/pynccl_wrapper.py", line 535, in ncclAllGather
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     self.NCCL_CHECK(
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/device_communicators/pynccl_wrapper.py", line 417, in NCCL_CHECK
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     raise RuntimeError(f"NCCL error: {error_str}")
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033] RuntimeError: NCCL error: invalid usage (run with NCCL_DEBUG=WARN for details)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033] Traceback (most recent call last):
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/multiproc_executor.py", line 1025, in worker_busy_loop
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     output = func(*args, **kwargs)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return func(*args, **kwargs)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu_worker.py", line 505, in determine_available_memory
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     self.model_runner.profile_run()
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return func(*args, **kwargs)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_runner.py", line 805, in profile_run
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     hidden_states, sample_hidden_states = self._dummy_run(
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]                                           ^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return func(*args, **kwargs)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/eplb_utils.py", line 27, in wrapper
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     result = fn(self, *args, **kwargs)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]              ^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_runner.py", line 735, in _dummy_run
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     self.speculator.propose(
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return func(*args, **kwargs)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: disabled GB10 persistent_topk (use top_k_per_row_decode)
+glm53: overlay install ok aligned=True
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+[W905 15:56:45.085135728 socket.cpp:207] [c10d] The hostname of the client socket cannot be retrieved. err=-3
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/spec_decode/dflash/speculator.py", line 360, in propose
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     self._generate_draft(
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/spec_decode/dflash2/speculator.py", line 234, in _generate_draft
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     candidate_ids, unary_logits = self.model.compute_candidates(
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/models/qwen3_dflash2.py", line 291, in compute_candidates
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     logits = self.candidate_logits_processor(self.lm_head, hidden_states)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return self._call_impl(*args, **kwargs)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return forward_call(*args, **kwargs)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/logits_processor.py", line 73, in forward
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     logits = self._get_logits(hidden_states, lm_head, embedding_bias)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/logits_processor.py", line 148, in _get_logits
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     logits = self._gather_logits(logits)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/logits_processor.py", line 92, in _gather_logits
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     logits = tensor_model_parallel_all_gather(logits)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/communication_op.py", line 21, in tensor_model_parallel_all_gather
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return get_tp_group().all_gather(input_, dim)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/parallel_state.py", line 701, in all_gather
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return torch.ops.vllm.all_gather(
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/torch/_ops.py", line 1279, in __call__
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return self._op(*args, **kwargs)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/parallel_state.py", line 189, in all_gather
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return group._all_gather_out_place(tensor, dim)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/parallel_state.py", line 710, in _all_gather_out_place
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     return self.device_communicator.all_gather(input_, dim)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/device_communicators/cuda_communicator.py", line 382, in all_gather
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     pynccl_comm.all_gather(output_tensor, input_.contiguous())
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/device_communicators/pynccl.py", line 213, in all_gather
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     self.nccl.ncclAllGather(
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/device_communicators/pynccl_wrapper.py", line 535, in ncclAllGather
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     self.NCCL_CHECK(
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]   File "/usr/local/lib/python3.12/dist-packages/vllm/distributed/device_communicators/pynccl_wrapper.py", line 417, in NCCL_CHECK
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033]     raise RuntimeError(f"NCCL error: {error_str}")
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033] RuntimeError: NCCL error: invalid usage (run with NCCL_DEBUG=WARN for details)
+(Worker_TP1 pid=1043) ERROR 09-05 16:01:39 [multiproc_executor.py:1033] 
+
+[2026-09-05 16:01:39] gx10-2515:1043:1043 [0] enqueue.cc:2064 (topoGetAlgoInfo) NCCL WARN No algorithm/protocol available for function AllGather with datatype ncclInt8. NCCL_ALGO was set to Tree.
+[rank1]:[W905 16:01:47.622657552 TCPStore.cpp:125] [c10d] recvValue failed on SocketImpl(fd=48, addr=[::]:14681, remote=[a00::ffff]:4653): Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+Exception raised from recvBytes at /__w/pytorch/pytorch/torch/csrc/distributed/c10d/Utils.hpp:787 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xe1c21133e158 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: c10::DistError::DistError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133ed48 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #2: c10::DistNetworkError::DistNetworkError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133f0c8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #3: <unknown function> + 0x70b84d4 (0xe1c22eca84d4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #4: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x258 (0xe1c22ecaab38 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #5: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x330 (0xe1c212287350 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #6: <unknown function> + 0xe1ae0 (0xe1c2c2701ae0 in /usr/lib/aarch64-linux-gnu/libstdc++.so.6)
+frame #7: <unknown function> + 0x8582c (0xe1c2c334582c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+frame #8: <unknown function> + 0xeb79c (0xe1c2c33ab79c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+
+[rank1]:[W905 16:01:47.624821376 ProcessGroupNCCL.cpp:1876] [PG ID 0 PG GUID 0 Rank 1] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+[rank1]:[W905 16:01:48.625318544 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=48, addr=[::]:14681, remote=[a00::ffff]:4653): Broken pipe
+Exception raised from sendBytes at /__w/pytorch/pytorch/torch/csrc/distributed/c10d/Utils.hpp:758 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xe1c21133e158 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: c10::DistError::DistError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133ed48 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #2: c10::DistNetworkError::DistNetworkError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133f0c8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #3: <unknown function> + 0x70b77ec (0xe1c22eca77ec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #4: <unknown function> + 0x70b9aa4 (0xe1c22eca9aa4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #5: <unknown function> + 0x70b9c18 (0xe1c22eca9c18 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x23c (0xe1c22ecaab1c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #7: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x330 (0xe1c212287350 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #8: <unknown function> + 0xe1ae0 (0xe1c2c2701ae0 in /usr/lib/aarch64-linux-gnu/libstdc++.so.6)
+frame #9: <unknown function> + 0x8582c (0xe1c2c334582c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+frame #10: <unknown function> + 0xeb79c (0xe1c2c33ab79c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+
+[rank1]:[W905 16:01:48.627493792 ProcessGroupNCCL.cpp:1876] [PG ID 0 PG GUID 0 Rank 1] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank1]:[W905 16:01:49.627848944 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=48, addr=[::]:14681, remote=[a00::ffff]:4653): Broken pipe
+Exception raised from sendBytes at /__w/pytorch/pytorch/torch/csrc/distributed/c10d/Utils.hpp:758 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xe1c21133e158 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: c10::DistError::DistError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133ed48 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #2: c10::DistNetworkError::DistNetworkError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133f0c8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #3: <unknown function> + 0x70b77ec (0xe1c22eca77ec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #4: <unknown function> + 0x70b9aa4 (0xe1c22eca9aa4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #5: <unknown function> + 0x70b9c18 (0xe1c22eca9c18 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x23c (0xe1c22ecaab1c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #7: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x330 (0xe1c212287350 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #8: <unknown function> + 0xe1ae0 (0xe1c2c2701ae0 in /usr/lib/aarch64-linux-gnu/libstdc++.so.6)
+frame #9: <unknown function> + 0x8582c (0xe1c2c334582c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+frame #10: <unknown function> + 0xeb79c (0xe1c2c33ab79c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+
+[rank1]:[W905 16:01:49.629983584 ProcessGroupNCCL.cpp:1876] [PG ID 0 PG GUID 0 Rank 1] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank1]:[W905 16:01:50.630117184 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=48, addr=[::]:14681, remote=[a00::ffff]:4653): Broken pipe
+Exception raised from sendBytes at /__w/pytorch/pytorch/torch/csrc/distributed/c10d/Utils.hpp:758 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xe1c21133e158 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: c10::DistError::DistError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133ed48 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #2: c10::DistNetworkError::DistNetworkError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133f0c8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #3: <unknown function> + 0x70b77ec (0xe1c22eca77ec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #4: <unknown function> + 0x70b9aa4 (0xe1c22eca9aa4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #5: <unknown function> + 0x70b9c18 (0xe1c22eca9c18 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x23c (0xe1c22ecaab1c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #7: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x330 (0xe1c212287350 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #8: <unknown function> + 0xe1ae0 (0xe1c2c2701ae0 in /usr/lib/aarch64-linux-gnu/libstdc++.so.6)
+frame #9: <unknown function> + 0x8582c (0xe1c2c334582c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+frame #10: <unknown function> + 0xeb79c (0xe1c2c33ab79c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+
+[rank1]:[W905 16:01:50.632249984 ProcessGroupNCCL.cpp:1876] [PG ID 0 PG GUID 0 Rank 1] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank1]:[W905 16:01:51.633138304 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=48, addr=[::]:14681, remote=[a00::ffff]:4653): Broken pipe
+Exception raised from sendBytes at /__w/pytorch/pytorch/torch/csrc/distributed/c10d/Utils.hpp:758 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xe1c21133e158 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: c10::DistError::DistError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133ed48 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #2: c10::DistNetworkError::DistNetworkError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133f0c8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #3: <unknown function> + 0x70b77ec (0xe1c22eca77ec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #4: <unknown function> + 0x70b9aa4 (0xe1c22eca9aa4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #5: <unknown function> + 0x70b9c18 (0xe1c22eca9c18 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x23c (0xe1c22ecaab1c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #7: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x330 (0xe1c212287350 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #8: <unknown function> + 0xe1ae0 (0xe1c2c2701ae0 in /usr/lib/aarch64-linux-gnu/libstdc++.so.6)
+frame #9: <unknown function> + 0x8582c (0xe1c2c334582c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+frame #10: <unknown function> + 0xeb79c (0xe1c2c33ab79c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+
+[rank1]:[W905 16:01:51.635279920 ProcessGroupNCCL.cpp:1876] [PG ID 0 PG GUID 0 Rank 1] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank1]:[W905 16:01:52.635404160 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=48, addr=[::]:14681, remote=[a00::ffff]:4653): Broken pipe
+Exception raised from sendBytes at /__w/pytorch/pytorch/torch/csrc/distributed/c10d/Utils.hpp:758 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xe1c21133e158 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: c10::DistError::DistError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133ed48 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #2: c10::DistNetworkError::DistNetworkError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133f0c8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #3: <unknown function> + 0x70b77ec (0xe1c22eca77ec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #4: <unknown function> + 0x70b9aa4 (0xe1c22eca9aa4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #5: <unknown function> + 0x70b9c18 (0xe1c22eca9c18 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x23c (0xe1c22ecaab1c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #7: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x330 (0xe1c212287350 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #8: <unknown function> + 0xe1ae0 (0xe1c2c2701ae0 in /usr/lib/aarch64-linux-gnu/libstdc++.so.6)
+frame #9: <unknown function> + 0x8582c (0xe1c2c334582c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+frame #10: <unknown function> + 0xeb79c (0xe1c2c33ab79c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+
+[rank1]:[W905 16:01:52.637540848 ProcessGroupNCCL.cpp:1876] [PG ID 0 PG GUID 0 Rank 1] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank1]:[W905 16:01:53.637663264 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=48, addr=[::]:14681, remote=[a00::ffff]:4653): Broken pipe
+Exception raised from sendBytes at /__w/pytorch/pytorch/torch/csrc/distributed/c10d/Utils.hpp:758 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xe1c21133e158 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: c10::DistError::DistError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133ed48 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #2: c10::DistNetworkError::DistNetworkError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133f0c8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #3: <unknown function> + 0x70b77ec (0xe1c22eca77ec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #4: <unknown function> + 0x70b9aa4 (0xe1c22eca9aa4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #5: <unknown function> + 0x70b9c18 (0xe1c22eca9c18 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x23c (0xe1c22ecaab1c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #7: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x330 (0xe1c212287350 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #8: <unknown function> + 0xe1ae0 (0xe1c2c2701ae0 in /usr/lib/aarch64-linux-gnu/libstdc++.so.6)
+frame #9: <unknown function> + 0x8582c (0xe1c2c334582c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+frame #10: <unknown function> + 0xeb79c (0xe1c2c33ab79c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+
+[rank1]:[W905 16:01:53.639800160 ProcessGroupNCCL.cpp:1876] [PG ID 0 PG GUID 0 Rank 1] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank1]:[W905 16:01:54.639924720 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=48, addr=[::]:14681, remote=[a00::ffff]:4653): Broken pipe
+Exception raised from sendBytes at /__w/pytorch/pytorch/torch/csrc/distributed/c10d/Utils.hpp:758 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xe1c21133e158 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: c10::DistError::DistError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133ed48 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #2: c10::DistNetworkError::DistNetworkError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133f0c8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #3: <unknown function> + 0x70b77ec (0xe1c22eca77ec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #4: <unknown function> + 0x70b9aa4 (0xe1c22eca9aa4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #5: <unknown function> + 0x70b9c18 (0xe1c22eca9c18 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x23c (0xe1c22ecaab1c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #7: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x330 (0xe1c212287350 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #8: <unknown function> + 0xe1ae0 (0xe1c2c2701ae0 in /usr/lib/aarch64-linux-gnu/libstdc++.so.6)
+frame #9: <unknown function> + 0x8582c (0xe1c2c334582c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+frame #10: <unknown function> + 0xeb79c (0xe1c2c33ab79c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+
+[rank1]:[W905 16:01:54.642064944 ProcessGroupNCCL.cpp:1876] [PG ID 0 PG GUID 0 Rank 1] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank1]:[W905 16:01:55.642187728 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=48, addr=[::]:14681, remote=[a00::ffff]:4653): Broken pipe
+Exception raised from sendBytes at /__w/pytorch/pytorch/torch/csrc/distributed/c10d/Utils.hpp:758 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xe1c21133e158 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: c10::DistError::DistError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133ed48 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #2: c10::DistNetworkError::DistNetworkError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133f0c8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #3: <unknown function> + 0x70b77ec (0xe1c22eca77ec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #4: <unknown function> + 0x70b9aa4 (0xe1c22eca9aa4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #5: <unknown function> + 0x70b9c18 (0xe1c22eca9c18 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x23c (0xe1c22ecaab1c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #7: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x330 (0xe1c212287350 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #8: <unknown function> + 0xe1ae0 (0xe1c2c2701ae0 in /usr/lib/aarch64-linux-gnu/libstdc++.so.6)
+frame #9: <unknown function> + 0x8582c (0xe1c2c334582c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+frame #10: <unknown function> + 0xeb79c (0xe1c2c33ab79c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+
+[rank1]:[W905 16:01:55.644319712 ProcessGroupNCCL.cpp:1876] [PG ID 0 PG GUID 0 Rank 1] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank1]:[W905 16:01:56.645114128 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=48, addr=[::]:14681, remote=[a00::ffff]:4653): Broken pipe
+Exception raised from sendBytes at /__w/pytorch/pytorch/torch/csrc/distributed/c10d/Utils.hpp:758 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xe1c21133e158 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: c10::DistError::DistError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133ed48 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #2: c10::DistNetworkError::DistNetworkError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133f0c8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #3: <unknown function> + 0x70b77ec (0xe1c22eca77ec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #4: <unknown function> + 0x70b9aa4 (0xe1c22eca9aa4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #5: <unknown function> + 0x70b9c18 (0xe1c22eca9c18 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x23c (0xe1c22ecaab1c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #7: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x330 (0xe1c212287350 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #8: <unknown function> + 0xe1ae0 (0xe1c2c2701ae0 in /usr/lib/aarch64-linux-gnu/libstdc++.so.6)
+frame #9: <unknown function> + 0x8582c (0xe1c2c334582c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+frame #10: <unknown function> + 0xeb79c (0xe1c2c33ab79c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+
+[rank1]:[W905 16:01:56.647249056 ProcessGroupNCCL.cpp:1876] [PG ID 0 PG GUID 0 Rank 1] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank1]:[W905 16:01:57.647831104 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=48, addr=[::]:14681, remote=[a00::ffff]:4653): Broken pipe
+Exception raised from sendBytes at /__w/pytorch/pytorch/torch/csrc/distributed/c10d/Utils.hpp:758 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xe1c21133e158 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: c10::DistError::DistError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133ed48 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #2: c10::DistNetworkError::DistNetworkError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133f0c8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #3: <unknown function> + 0x70b77ec (0xe1c22eca77ec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #4: <unknown function> + 0x70b9aa4 (0xe1c22eca9aa4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #5: <unknown function> + 0x70b9c18 (0xe1c22eca9c18 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x23c (0xe1c22ecaab1c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #7: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x330 (0xe1c212287350 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #8: <unknown function> + 0xe1ae0 (0xe1c2c2701ae0 in /usr/lib/aarch64-linux-gnu/libstdc++.so.6)
+frame #9: <unknown function> + 0x8582c (0xe1c2c334582c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+frame #10: <unknown function> + 0xeb79c (0xe1c2c33ab79c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+
+[rank1]:[W905 16:01:57.649981536 ProcessGroupNCCL.cpp:1876] [PG ID 0 PG GUID 0 Rank 1] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank1]:[W905 16:01:58.650650032 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=48, addr=[::]:14681, remote=[a00::ffff]:4653): Broken pipe
+Exception raised from sendBytes at /__w/pytorch/pytorch/torch/csrc/distributed/c10d/Utils.hpp:758 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xe1c21133e158 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: c10::DistError::DistError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133ed48 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #2: c10::DistNetworkError::DistNetworkError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133f0c8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #3: <unknown function> + 0x70b77ec (0xe1c22eca77ec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #4: <unknown function> + 0x70b9aa4 (0xe1c22eca9aa4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #5: <unknown function> + 0x70b9c18 (0xe1c22eca9c18 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x23c (0xe1c22ecaab1c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #7: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x330 (0xe1c212287350 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #8: <unknown function> + 0xe1ae0 (0xe1c2c2701ae0 in /usr/lib/aarch64-linux-gnu/libstdc++.so.6)
+frame #9: <unknown function> + 0x8582c (0xe1c2c334582c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+frame #10: <unknown function> + 0xeb79c (0xe1c2c33ab79c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+
+[rank1]:[W905 16:01:58.652778160 ProcessGroupNCCL.cpp:1876] [PG ID 0 PG GUID 0 Rank 1] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank1]:[W905 16:01:59.653364416 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=48, addr=[::]:14681, remote=[a00::ffff]:4653): Broken pipe
+Exception raised from sendBytes at /__w/pytorch/pytorch/torch/csrc/distributed/c10d/Utils.hpp:758 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xe1c21133e158 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: c10::DistError::DistError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133ed48 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #2: c10::DistNetworkError::DistNetworkError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133f0c8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #3: <unknown function> + 0x70b77ec (0xe1c22eca77ec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #4: <unknown function> + 0x70b9aa4 (0xe1c22eca9aa4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #5: <unknown function> + 0x70b9c18 (0xe1c22eca9c18 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x23c (0xe1c22ecaab1c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #7: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x330 (0xe1c212287350 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #8: <unknown function> + 0xe1ae0 (0xe1c2c2701ae0 in /usr/lib/aarch64-linux-gnu/libstdc++.so.6)
+frame #9: <unknown function> + 0x8582c (0xe1c2c334582c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+frame #10: <unknown function> + 0xeb79c (0xe1c2c33ab79c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+
+[rank1]:[W905 16:01:59.655517664 ProcessGroupNCCL.cpp:1876] [PG ID 0 PG GUID 0 Rank 1] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank1]:[W905 16:02:00.656286224 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=48, addr=[::]:14681, remote=[a00::ffff]:4653): Broken pipe
+Exception raised from sendBytes at /__w/pytorch/pytorch/torch/csrc/distributed/c10d/Utils.hpp:758 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xe1c21133e158 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: c10::DistError::DistError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133ed48 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #2: c10::DistNetworkError::DistNetworkError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133f0c8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #3: <unknown function> + 0x70b77ec (0xe1c22eca77ec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #4: <unknown function> + 0x70b9aa4 (0xe1c22eca9aa4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #5: <unknown function> + 0x70b9c18 (0xe1c22eca9c18 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x23c (0xe1c22ecaab1c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #7: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x330 (0xe1c212287350 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #8: <unknown function> + 0xe1ae0 (0xe1c2c2701ae0 in /usr/lib/aarch64-linux-gnu/libstdc++.so.6)
+frame #9: <unknown function> + 0x8582c (0xe1c2c334582c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+frame #10: <unknown function> + 0xeb79c (0xe1c2c33ab79c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+
+[rank1]:[W905 16:02:00.658439264 ProcessGroupNCCL.cpp:1876] [PG ID 0 PG GUID 0 Rank 1] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe
+[rank1]:[W905 16:02:01.658919856 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=48, addr=[::]:14681, remote=[a00::ffff]:4653): Broken pipe
+Exception raised from sendBytes at /__w/pytorch/pytorch/torch/csrc/distributed/c10d/Utils.hpp:758 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xc8 (0xe1c21133e158 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #1: c10::DistError::DistError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133ed48 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #2: c10::DistNetworkError::DistNetworkError(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x78 (0xe1c21133f0c8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+frame #3: <unknown function> + 0x70b77ec (0xe1c22eca77ec in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #4: <unknown function> + 0x70b9aa4 (0xe1c22eca9aa4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #5: <unknown function> + 0x70b9c18 (0xe1c22eca9c18 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #6: c10d::TCPStore::check(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) + 0x23c (0xe1c22ecaab1c in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+frame #7: c10d::ProcessGroupNCCL::HeartbeatMonitor::runLoop() + 0x330 (0xe1c212287350 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cuda.so)
+frame #8: <unknown function> + 0xe1ae0 (0xe1c2c2701ae0 in /usr/lib/aarch64-linux-gnu/libstdc++.so.6)
+frame #9: <unknown function> + 0x8582c (0xe1c2c334582c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+frame #10: <unknown function> + 0xeb79c (0xe1c2c33ab79c in /usr/lib/aarch64-linux-gnu/libc.so.6)
+
+[rank1]:[W905 16:02:01.661076608 ProcessGroupNCCL.cpp:1876] [PG ID 0 PG GUID 0 Rank 1] Failed to check the "should dump" flag on TCPStore, (maybe TCPStore server has shut down too early), with error: Broken pipe

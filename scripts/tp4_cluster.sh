@@ -104,6 +104,9 @@ common_env=(
     -e DFLASH_MODEL_DIR="/root/.cache/huggingface/$dflash_rel"
     -e SPEC_METHOD="${SPEC_METHOD:-dflash}" -e DFLASH_TOKENS="${DFLASH_TOKENS:-7}"
     -e DFLASH_DRAFT_TP="${DFLASH_DRAFT_TP:-4}" -e MTP_TOKENS="${MTP_TOKENS:-2}"
+    -e DFLASH_KV_DTYPE="${DFLASH_KV_DTYPE:-auto}"
+    -e PROFILE_DECODE="${PROFILE_DECODE:-0}"
+    -e TRIAL_STANDALONE_KV="${TRIAL_STANDALONE_KV:-0}"
 -e MAX_MODEL_LEN="${MAX_MODEL_LEN:-1000000}" -e GPU_MEM_UTIL="${GPU_MEM_UTIL:-0.55}"
 -e MAX_NUM_SEQS="${MAX_NUM_SEQS:-10}"
     -e MAX_NUM_BATCHED_TOKENS="${MAX_NUM_BATCHED_TOKENS:-2048}"
@@ -135,6 +138,10 @@ common_env=(
     -e NCCL_CROSS_NIC=1 -e NCCL_IGNORE_CPU_AFFINITY=1
     -e NCCL_DEBUG="${NCCL_DEBUG:-WARN}"
 )
+
+if [[ -n "${NCCL_ALGO:-}" ]]; then
+    common_env+=(-e NCCL_ALGO="$NCCL_ALGO")
+fi
 
 for rank in 1 2 3; do
     ip=${NODES[$rank]}

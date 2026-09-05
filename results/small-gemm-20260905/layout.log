@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/bench.py", line 61, in <module>
+    main()
+  File "/bench.py", line 36, in main
+    torch.testing.assert_close(a @ contiguous_b, reference, rtol=0.02, atol=0.1)
+  File "/usr/local/lib/python3.12/dist-packages/torch/testing/_comparison.py", line 1631, in assert_close
+    raise error_metas[0].to_error(msg)
+AssertionError: Tensor-likes are not close!
+
+Mismatched elements: 621 / 51328 (1.2%)
+Greatest absolute difference: 0.5 at index (2, 6186) (up to 0.1 allowed)
+Greatest relative difference: 38.0 at index (6, 600) (up to 0.02 allowed)
