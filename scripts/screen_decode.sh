@@ -8,7 +8,7 @@ mkdir -p "$OUT"
 exec 9>"$HOME/.glm53-decode-screen.lock"
 flock -n 9 || { echo "another decode screen owns the lock" >&2; exit 2; }
 export CONTAINER_NAME=glm53-decode-screen
-export GPU_MEM_UTIL=0.55 CUDAGRAPH_MODE=none
+export GPU_MEM_UTIL=${SCREEN_GPU_MEM_UTIL:-0.55} CUDAGRAPH_MODE=none
 export DFLASH_DRAFT_TP=${DFLASH_DRAFT_TP:-4}
 export EXL3_MOE_DECODE_CONCURRENCY=${EXL3_MOE_DECODE_CONCURRENCY:-6}
 for host in 10.0.0.46 10.0.0.13 10.0.0.150 10.0.0.246; do
@@ -32,8 +32,8 @@ for k in ${DRAFT_LENGTHS:-7 3 11}; do
     dir="$OUT/k$k"
     mkdir "$dir"
     export DFLASH_TOKENS=$k
-    printf 'DFLASH_TOKENS=%s\nGPU_MEM_UTIL=0.55\nDRAFT_TP=%s\nDECODE_GROUPS=%s\n' \
-        "$k" "$DFLASH_DRAFT_TP" "$EXL3_MOE_DECODE_CONCURRENCY" > "$dir/settings.txt"
+    printf 'DFLASH_TOKENS=%s\nGPU_MEM_UTIL=%s\nDRAFT_TP=%s\nDECODE_GROUPS=%s\n' \
+        "$k" "$GPU_MEM_UTIL" "$DFLASH_DRAFT_TP" "$EXL3_MOE_DECODE_CONCURRENCY" > "$dir/settings.txt"
     printf 'SPEC_METHOD=%s\nDFLASH_KV_DTYPE=%s\n' "${SPEC_METHOD:-dflash}" "${DFLASH_KV_DTYPE:-auto}" >> "$dir/settings.txt"
     printf 'NCCL_ALGO=%s\nEXTRA_DOCKER_ARGS=%s\n' "${NCCL_ALGO:-auto}" "${EXTRA_DOCKER_ARGS:-}" >> "$dir/settings.txt"
     printf 'MAX_NUM_BATCHED_TOKENS=%s\nPP=%s\nSCREEN_RUNS=%s\n' \
@@ -54,7 +54,7 @@ for k in ${DRAFT_LENGTHS:-7 3 11}; do
     done
     if [[ "$ready" != 1 ]]; then capture "$dir"; echo "startup failed k=$k"; exit 1; fi
     # Identical inputs, repetitions and warmup; these are screens, not gates.
-    if ! DEPTHS="${SCREEN_DEPTHS:-0 32768}" CONCURRENCIES='1 2' RUNS="${SCREEN_RUNS:-3}" \
+    if ! DEPTHS="${SCREEN_DEPTHS:-0 32768}" CONCURRENCIES="${SCREEN_CONCURRENCIES:-1 2}" RUNS="${SCREEN_RUNS:-3}" \
         timeout 1800 bash "$ROOT/scripts/bench_llama_benchy_tp4.sh" "$dir/bench"; then
         capture "$dir"; echo "screen failed k=$k"; exit 1
     fi
