@@ -100,3 +100,16 @@ Keep shared-expert stream disabled and memory at 0.55 until separately
 qualified. Any replacement still requires correctness tests, 65K/C10,
 100K/C10 and the full matrix. Next deeper work: cache pooling/layout and
 EXL3/linear-kernel profiling rather than repeating the rejected knobs.
+
+## Warm-cache diagnostic follow-up
+
+`TRIAL_TIMING=graph` now selects Triton's CUDA-graph microbenchmark; the
+default remains the cold-cache benchmark. This does not enable serving
+graphs. One initial run and three repeats found contiguous B at shape
+[8,4096] x [4096,1024] about 2.04–2.07x faster in isolation. The dominant
+[8,4096] x [4096,6416] shape instead fell to 0.62–0.64x, and the vocabulary
+projection remained around parity. No global weight-layout change is
+justified. The earlier cold-cache result for the smaller projection was
+only around parity, so inter-layer cache eviction is a critical unresolved
+condition. These are kernel diagnostics, not measured decode improvements;
+numerical and end-to-end qualification remain outstanding.

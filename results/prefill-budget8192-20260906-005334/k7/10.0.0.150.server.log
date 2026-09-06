@@ -1,0 +1,132 @@
+[suppress-stops-in-reasoning] skipped: /usr/local/lib/python3.12/dist-packages/vllm/v1/engine/detokenizer.py
+scheduler.py: # [glm53-decode-floor] already present — skipping
+[patch_glm5_drafter_group] /usr/local/lib/python3.12/dist-packages/vllm/v1/core/kv_cache_utils.py: already patched (DFLASH2-DRAFTER-GROUP + padded slot-share); no-op.
+kv_cache_coordinator.py: # [glm53-hybrid-apc] already present — skipping
+backend_xgrammar.py: termination fix already present (#52805)
+__init__.py: reasoning fix already present (#53046)
+block_table.py: kpool tail slot-map already present
+[glm53-exl3-tp4 rank=2] starting TP=4 node (spec=dflash, cudagraph=none, eager=0)
+INFO 09-06 00:54:33 [model.py:679] Resolved architecture: Glm5NextForConditionalGeneration
+INFO 09-06 00:54:33 [model.py:1973] Using max model len 1000000
+INFO 09-06 00:54:36 [cache.py:282] Using fp8 data type to store kv cache. It reduces the GPU memory footprint and boosts the performance. Meanwhile, it may cause accuracy drop without a proper scaling factor
+INFO 09-06 00:54:36 [arg_utils.py:2168] Inferred data_parallel_rank 0 from node_rank 2
+INFO 09-06 00:54:36 [model.py:679] Resolved architecture: DFlash2DraftModel
+INFO 09-06 00:54:36 [model.py:1973] Using max model len 1048576
+INFO 09-06 00:54:36 [speculative.py:1256] Overriding draft model max model len from 1048576 to 1000000
+INFO 09-06 00:54:36 [scheduler.py:242] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 09-06 00:54:36 [config.py:605] Mamba cache mode is set to 'align' for Glm5NextForConditionalGeneration by default when prefix caching is enabled
+INFO 09-06 00:54:36 [vllm.py:1319] Auto-enabling VLLM_USE_BREAKABLE_CUDAGRAPH=1. Set VLLM_USE_BREAKABLE_CUDAGRAPH=0 to opt out.
+INFO 09-06 00:54:36 [kernel.py:306] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+INFO 09-06 00:54:36 [compilation.py:329] Enabled custom fusions: norm_quant, act_quant
+INFO 09-06 00:54:36 [serve.py:216] Launching vLLM (v0.1.dev20051+g487ecf187) headless multiproc executor, with head node address 10.0.0.46:29521 for torch.distributed process group.
+(Worker pid=1025) INFO 09-06 00:54:43 [parallel_state.py:1638] world_size=4 rank=2 local_rank=0 distributed_init_method=tcp://10.0.0.46:29521 backend=nccl
+(Worker pid=1025) WARNING 09-06 00:55:01 [symm_mem.py:67] SymmMemCommunicator: Device capability 12.1 not supported, communicator is not available.
+(Worker pid=1025) INFO 09-06 00:55:06 [parallel_state.py:1982] rank 2 in world size 4 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 2, EP rank 2, EPLB rank N/A
+(Worker pid=1025) INFO 09-06 00:55:06 [gpu_worker.py:386] Using V2 Model Runner
+(Worker_TP2 pid=1025) INFO 09-06 00:55:06 [model_runner.py:353] Loading model from scratch...
+(Worker_TP2 pid=1025) INFO 09-06 00:55:06 [cuda.py:595] Using backend AttentionBackendEnum.FLASH_ATTN for vit attention
+(Worker_TP2 pid=1025) INFO 09-06 00:55:06 [mm_encoder_attention.py:375] Using AttentionBackendEnum.FLASH_ATTN for MMEncoderAttention.
+(Worker_TP2 pid=1025) INFO 09-06 00:55:06 [kernel.py:306] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+(Worker_TP2 pid=1025) INFO 09-06 00:55:06 [cuda.py:536] Using FLASHINFER_MLA_SPARSE_SM120 attention backend out of potential backends: ['FLASHINFER_MLA_SPARSE_SM120'].
+(Worker_TP2 pid=1025) INFO 09-06 00:55:06 [mla_attention.py:475] Using fp8_ds_mla KV cache format for FLASHINFER_MLA_SPARSE_SM120 backend.
+(Worker_TP2 pid=1025) WARNING 09-06 00:55:06 [mla_attention.py:551] Sparse MLA impl has no dense-MHA prefill path; using the top-k MQA path only.
+(Worker_TP2 pid=1025) INFO 09-06 00:55:06 [deep_gemm.py:191] deep_gemm not found in site-packages, trying vendored vllm.third_party.deep_gemm
+(Worker_TP2 pid=1025) INFO 09-06 00:55:06 [deep_gemm.py:136] DeepGEMM E8M0 enabled on current platform.
+(Worker_TP2 pid=1025) INFO 09-06 00:55:07 [weight_utils.py:858] Filesystem type for checkpoints: EXT4. Checkpoint size: 163.58 GiB. Available RAM: 64.77 GiB.
+(Worker_TP2 pid=1025) INFO 09-06 00:55:07 [weight_utils.py:888] Auto-prefetch is disabled because the filesystem (EXT4) is not a recognized network FS (NFS/Lustre) and the checkpoint size (163.58 GiB) exceeds 90% of available RAM (64.77 GiB).
+(Worker_TP2 pid=1025) INFO 09-06 00:56:47 [default_loader.py:430] Loading weights took 99.74 seconds
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:50 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:50 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:50 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:50 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:50 [eagle3_utils.py:28] Using Eagle3 auxiliary layers from config: (6, 15, 25, 34, 43)
+(Worker_TP2 pid=1025) INFO 09-06 00:56:50 [kernel.py:306] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+(Worker_TP2 pid=1025) INFO 09-06 00:56:52 [cuda.py:536] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(Worker_TP2 pid=1025) INFO 09-06 00:56:52 [flash_attn.py:867] Using FlashAttention version 2
+(Worker_TP2 pid=1025) INFO 09-06 00:56:52 [weight_utils.py:858] Filesystem type for checkpoints: EXT4. Checkpoint size: 2.18 GiB. Available RAM: 64.17 GiB.
+(Worker_TP2 pid=1025) INFO 09-06 00:56:52 [weight_utils.py:881] Auto-prefetch is disabled because the filesystem (EXT4) is not a recognized network FS (NFS/Lustre). If you want to force prefetching, start vLLM with --safetensors-load-strategy=prefetch.
+(Worker_TP2 pid=1025) INFO 09-06 00:56:55 [default_loader.py:430] Loading weights took 3.29 seconds
+(Worker_TP2 pid=1025) WARNING 09-06 00:56:55 [speculator.py:191] Draft model DFlash2Qwen3ForCausalLM does not support external multimodal embeddings. Embeddings from the target model will not be passed to the drafter; using text-only draft inputs instead.
+(Worker_TP2 pid=1025) INFO 09-06 00:56:56 [model_runner.py:374] Model loading took 41.94 GiB and 109.651756 seconds
+(Worker_TP2 pid=1025) INFO 09-06 00:56:56 [interface.py:635] Setting kv cache block size to 64 for DEEPSEEK_V32_INDEXER backend.
+(Worker_TP2 pid=1025) INFO 09-06 00:56:56 [interface.py:926] Setting attention block size to 1792 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP2 pid=1025) INFO 09-06 00:56:56 [interface.py:950] Padding mamba page size by 0.35% to ensure that mamba page size and attention page size are exactly equal.
+INFO 09-06 00:59:15 [torch_utils.py:262] Reducing Torch threads from 20 to 1 for serving. Set OMP_NUM_THREADS in the external environment to override.
+(Worker_TP2 pid=1025) INFO 09-06 00:59:29 [exl3.py:134] exl3 fat-expert P0: layers=42 fat_layers=42 (100.0%) fat_expert_slots=336 max_rows=8192 avg_max_rows=8192.0 hist_le128=0 hist_gt128=42 hist=[0, 0, 0, 0, 0, 0, 0, 0, 42]
+(Worker_TP2 pid=1025) INFO 09-06 00:59:30 [gpu_worker.py:564] Available KV cache memory: 17.86 GiB
+(Worker_TP2 pid=1025) INFO 09-06 00:59:30 [indexer.py:729] DSA indexer decode path: use_flattening=True supports_varlen=False (next_n=8, use_fp4_indexer_cache=False)
+(Worker_TP2 pid=1025) INFO 09-06 00:59:30 [kernel.py:306] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+(Worker_TP2 pid=1025) INFO 09-06 00:59:34 [spec_decode_rejection_warmup.py:64] Warming up spec-decode rejection sampler kernels (vocab=154880, num_spec=7, dtype_pairs=[('torch.float32', 'torch.float32'), ('torch.bfloat16', 'torch.float32'), ('torch.bfloat16', 'torch.bfloat16'), ('torch.float32', 'torch.bfloat16')], block_verify=False).
+(Worker_TP2 pid=1025) INFO 09-06 00:59:37 [kernel_warmup.py:95] Warming up ll_bf16 router GEMM kernels for shapes: ((4096, 288),).
+(Worker_TP2 pid=1025) INFO 09-06 00:59:38 [kernel_warmup.py:170] Skipping FlashInfer autotune because it is disabled.
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: disabled GB10 persistent_topk (use top_k_per_row_decode)
+glm53: overlay install ok aligned=True
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+(Worker_TP2 pid=1025) WARNING 09-06 00:59:38 [model_runner.py:967] Skipping CUDA graph capture. To turn on CUDA graph capture, ensure `cudagraph_mode` was not manually set to `NONE`
+(Worker_TP2 pid=1025) INFO 09-06 00:59:38 [gpu_worker.py:790] Free memory on device (106.43/121.63 GiB) on startup. Desired GPU memory utilization is (0.55, 66.89 GiB). Actual usage is 46.9 GiB for consumed memory (weights + non-torch), 2.14 GiB for peak activation, and 0.0 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=19020607284` (17.71 GiB) to fit into requested memory, or `--kv-cache-memory=61472188416` (57.25 GiB) to fully utilize gpu memory. Current kv cache memory in use is 17.86 GiB.
+(Worker_TP2 pid=1025) INFO 09-06 01:01:16 [jit_monitor.py:79] Kernel JIT monitor activated; monitored JIT compilations during inference will use mode=warn.
+(Worker_TP2 pid=1025) INFO 09-06 01:01:16 [torch_utils.py:262] Reducing Torch threads from 20 to 1 for serving. Set OMP_NUM_THREADS in the external environment to override.
+(Worker_TP2 pid=1025) WARNING 09-06 01:01:38 [jit_monitor.py:135] Triton kernel JIT compilation during inference: _prepare_dflash_inputs_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP2 pid=1025) WARNING 09-06 01:01:39 [jit_monitor.py:135] Triton kernel JIT compilation during inference: _kpool_tail_seed_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP2 pid=1025) INFO 09-06 01:01:48 [exl3.py:134] exl3 fat-expert P0: layers=84 fat_layers=84 (100.0%) fat_expert_slots=7006 max_rows=8192 avg_max_rows=5704.0 hist_le128=0 hist_gt128=84 hist=[0, 0, 0, 0, 0, 0, 2, 8, 74]
+(Worker_TP2 pid=1025) WARNING 09-06 01:01:49 [jit_monitor.py:135] Triton kernel JIT compilation during inference: _topk_topp_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP2 pid=1025) INFO 09-06 01:01:58 [exl3.py:134] exl3 fat-expert P0: layers=126 fat_layers=126 (100.0%) fat_expert_slots=13499 max_rows=8192 avg_max_rows=4830.5 hist_le128=0 hist_gt128=126 hist=[0, 0, 0, 0, 0, 0, 4, 17, 105]
+(Worker_TP2 pid=1025) INFO 09-06 01:02:07 [exl3.py:134] exl3 fat-expert P0: layers=168 fat_layers=168 (100.0%) fat_expert_slots=19677 max_rows=8192 avg_max_rows=4518.6 hist_le128=0 hist_gt128=168 hist=[0, 0, 0, 0, 0, 0, 6, 21, 141]
+(Worker_TP2 pid=1025) INFO 09-06 01:02:17 [exl3.py:134] exl3 fat-expert P0: layers=210 fat_layers=210 (100.0%) fat_expert_slots=26053 max_rows=8192 avg_max_rows=4316.8 hist_le128=0 hist_gt128=210 hist=[0, 0, 0, 0, 0, 0, 8, 26, 176]
+(Worker_TP2 pid=1025) INFO 09-06 01:02:27 [exl3.py:134] exl3 fat-expert P0: layers=252 fat_layers=252 (100.0%) fat_expert_slots=32625 max_rows=8192 avg_max_rows=4154.5 hist_le128=0 hist_gt128=252 hist=[0, 0, 0, 0, 0, 0, 10, 33, 209]
+(Worker_TP2 pid=1025) INFO 09-06 01:02:36 [exl3.py:134] exl3 fat-expert P0: layers=294 fat_layers=294 (100.0%) fat_expert_slots=39318 max_rows=8192 avg_max_rows=4023.6 hist_le128=0 hist_gt128=294 hist=[0, 0, 0, 0, 0, 0, 12, 38, 244]
+(Worker_TP2 pid=1025) INFO 09-06 01:02:45 [exl3.py:134] exl3 fat-expert P0: layers=336 fat_layers=336 (100.0%) fat_expert_slots=45844 max_rows=8192 avg_max_rows=3949.4 hist_le128=0 hist_gt128=336 hist=[0, 0, 0, 0, 0, 0, 14, 43, 279]
+(Worker_TP2 pid=1025) INFO 09-06 01:02:52 [exl3.py:134] exl3 fat-expert P0: layers=378 fat_layers=378 (100.0%) fat_expert_slots=52421 max_rows=8192 avg_max_rows=3862.0 hist_le128=0 hist_gt128=378 hist=[0, 0, 0, 0, 0, 0, 16, 50, 312]
+(Worker_TP2 pid=1025) INFO 09-06 01:03:04 [exl3.py:134] exl3 fat-expert P0: layers=420 fat_layers=420 (100.0%) fat_expert_slots=59089 max_rows=8192 avg_max_rows=3799.2 hist_le128=0 hist_gt128=420 hist=[0, 0, 0, 0, 0, 0, 18, 55, 347]
+(Worker_TP2 pid=1025) INFO 09-06 01:03:10 [exl3.py:134] exl3 fat-expert P0: layers=462 fat_layers=462 (100.0%) fat_expert_slots=65551 max_rows=8192 avg_max_rows=3754.4 hist_le128=0 hist_gt128=462 hist=[0, 0, 0, 0, 0, 0, 20, 61, 381]
+(Worker_TP2 pid=1025) INFO 09-06 01:03:22 [exl3.py:134] exl3 fat-expert P0: layers=504 fat_layers=504 (100.0%) fat_expert_slots=71887 max_rows=8192 avg_max_rows=3725.6 hist_le128=0 hist_gt128=504 hist=[0, 0, 0, 0, 0, 0, 22, 66, 416]
+(Worker_TP2 pid=1025) INFO 09-06 01:03:32 [exl3.py:134] exl3 fat-expert P0: layers=546 fat_layers=546 (100.0%) fat_expert_slots=78354 max_rows=8192 avg_max_rows=3695.4 hist_le128=0 hist_gt128=546 hist=[0, 0, 0, 0, 0, 0, 24, 72, 450]
+(Worker_TP2 pid=1025) /usr/local/lib/python3.12/dist-packages/triton/language/core.py:2284: UserWarning: tl.make_block_ptr is deprecated. Use TensorDescriptor or tl.make_tensor_descriptor instead.
+(Worker_TP2 pid=1025)   warn("tl.make_block_ptr is deprecated. Use TensorDescriptor or tl.make_tensor_descriptor instead.")

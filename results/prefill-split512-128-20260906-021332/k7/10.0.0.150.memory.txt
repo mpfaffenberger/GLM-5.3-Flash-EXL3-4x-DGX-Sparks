@@ -1,0 +1,243 @@
+MemTotal:       127535276 kB
+MemFree:        29929348 kB
+MemAvailable:   41629212 kB
+Buffers:           41864 kB
+Cached:         19770924 kB
+SwapCached:       412656 kB
+Active:          9008560 kB
+Inactive:       14383992 kB
+Active(anon):    6916908 kB
+Inactive(anon):  4069800 kB
+Active(file):    2091652 kB
+Inactive(file): 10314192 kB
+Unevictable:       25820 kB
+Mlocked:           25820 kB
+SwapTotal:      16777212 kB
+SwapFree:       14057488 kB
+Zswap:                 0 kB
+Zswapped:              0 kB
+Dirty:              1816 kB
+Writeback:             0 kB
+AnonPages:       3585324 kB
+Mapped:          8267860 kB
+Shmem:           7399144 kB
+KReclaimable:     435172 kB
+Slab:            1478756 kB
+SReclaimable:     435172 kB
+SUnreclaim:      1043584 kB
+KernelStack:       12704 kB
+ShadowCallStack:    3252 kB
+PageTables:        48644 kB
+SecPageTables:     56652 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:    80544848 kB
+Committed_AS:   34559604 kB
+VmallocTotal:   135288315904 kB
+VmallocUsed:      560008 kB
+VmallocChunk:          0 kB
+Percpu:            20720 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:      6144 kB
+ShmemHugePages:        0 kB
+ShmemPmdMapped:        0 kB
+FileHugePages:    196608 kB
+FilePmdMapped:         0 kB
+CmaTotal:         131072 kB
+CmaFree:           69320 kB
+Balloon:               0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+Hugetlb:               0 kB
+nr_free_pages 7482337
+nr_free_pages_blocks 1547264
+nr_zone_inactive_anon 1017450
+nr_zone_active_anon 1729227
+nr_zone_inactive_file 2578548
+nr_zone_active_file 522913
+nr_zone_unevictable 6455
+nr_zone_write_pending 454
+nr_mlock 6455
+nr_zspages 0
+nr_free_cma 17330
+numa_hit 2666782134
+numa_miss 0
+numa_foreign 0
+numa_interleave 3311
+numa_local 2666782134
+numa_other 0
+nr_inactive_anon 1017450
+nr_active_anon 1729227
+nr_inactive_file 2578548
+nr_active_file 522913
+nr_unevictable 6455
+nr_slab_reclaimable 108793
+nr_slab_unreclaimable 260896
+nr_isolated_anon 0
+nr_isolated_file 0
+workingset_nodes 432480
+workingset_refault_anon 5432245
+workingset_refault_file 15767300
+workingset_activate_anon 3604377
+workingset_activate_file 11742722
+workingset_restore_anon 80259
+workingset_restore_file 690464
+workingset_nodereclaim 2159900
+nr_anon_pages 896338
+nr_mapped 2066742
+nr_file_pages 5056361
+nr_dirty 454
+nr_writeback 0
+nr_shmem 1849786
+nr_shmem_hugepages 0
+nr_shmem_pmdmapped 0
+nr_file_hugepages 96
+nr_file_pmdmapped 0
+nr_anon_transparent_hugepages 3
+nr_vmscan_write 35097785
+nr_vmscan_immediate_reclaim 4
+nr_dirtied 44530114
+nr_written 68838467
+nr_throttled_written 0
+nr_kernel_misc_reclaimable 0
+nr_foll_pin_acquired 185793633
+nr_foll_pin_released 182078290
+nr_kernel_stack 12704
+nr_shadow_call_stack 3252
+nr_page_table_pages 12161
+nr_sec_page_table_pages 14163
+nr_iommu_pages 14163
+nr_swapcached 103164
+pgpromote_success 0
+pgpromote_candidate 0
+pgdemote_kswapd 0
+pgdemote_direct 0
+pgdemote_khugepaged 0
+pgdemote_proactive 0
+nr_hugetlb 0
+nr_balloon_pages 0
+nr_dirty_threshold 2076466
+nr_dirty_background_threshold 1036965
+nr_memmap_pages 0
+nr_memmap_boot_pages 523776
+pgpgin 6967484126
+pgpgout 278426553
+pswpin 5472445
+pswpout 32815496
+pgalloc_dma 1982883
+pgalloc_dma32 0
+pgalloc_normal 4375038465
+pgalloc_movable 0
+pgalloc_device 0
+allocstall_dma 0
+allocstall_dma32 0
+allocstall_normal 140012
+allocstall_movable 79777
+allocstall_device 0
+pgskip_dma 0
+pgskip_dma32 0
+pgskip_normal 34682
+pgskip_movable 0
+pgskip_device 0
+pgfree 4530520036
+pgactivate 54713884
+pgdeactivate 8789
+pglazyfree 130
+pgfault 1560420082
+pgmajfault 22374991
+pglazyfreed 0
+pgrefill 81844768
+pgreuse 6710185
+pgsteal_kswapd 1537806413
+pgsteal_direct 61677865
+pgsteal_khugepaged 0
+pgsteal_proactive 0
+pgscan_kswapd 1596108330
+pgscan_direct 86729665
+pgscan_khugepaged 0
+pgscan_proactive 0
+pgscan_direct_throttle 0
+pgscan_anon 114549661
+pgscan_file 1568288334
+pgsteal_anon 35216826
+pgsteal_file 1564267452
+zone_reclaim_success 0
+zone_reclaim_failed 0
+pginodesteal 8
+slabs_scanned 19341961
+kswapd_inodesteal 79394
+kswapd_low_wmark_hit_quickly 11264
+kswapd_high_wmark_hit_quickly 4457
+pageoutrun 22751
+pgrotated 25582315
+drop_pagecache 55
+drop_slab 55
+oom_kill 0
+numa_pte_updates 0
+numa_huge_pte_updates 0
+numa_hint_faults 0
+numa_hint_faults_local 0
+numa_pages_migrated 0
+pgmigrate_success 111299757
+pgmigrate_fail 40873992
+thp_migration_success 0
+thp_migration_fail 0
+thp_migration_split 0
+compact_migrate_scanned 1268898924
+compact_free_scanned 820282450
+compact_isolated 275202505
+compact_stall 249851
+compact_fail 109501
+compact_success 140350
+compact_daemon_wake 11863
+compact_daemon_migrate_scanned 944123339
+compact_daemon_free_scanned 686433073
+htlb_buddy_alloc_success 0
+htlb_buddy_alloc_fail 0
+cma_alloc_success 32
+cma_alloc_fail 0
+unevictable_pgs_culled 91916132
+unevictable_pgs_scanned 0
+unevictable_pgs_rescued 91877019
+unevictable_pgs_mlocked 91883593
+unevictable_pgs_munlocked 91866091
+unevictable_pgs_cleared 0
+unevictable_pgs_stranded 11047
+thp_fault_alloc 15904
+thp_fault_fallback 1403
+thp_fault_fallback_charge 0
+thp_collapse_alloc 79
+thp_collapse_alloc_failed 0
+thp_file_alloc 0
+thp_file_fallback 0
+thp_file_fallback_charge 0
+thp_file_mapped 0
+thp_split_page 115
+thp_split_page_failed 0
+thp_deferred_split_page 1350
+thp_underused_split_page 0
+thp_split_pmd 1460
+thp_scan_exceed_none_pte 835
+thp_scan_exceed_swap_pte 0
+thp_scan_exceed_share_pte 0
+thp_zero_page_alloc 0
+thp_zero_page_alloc_failed 0
+thp_swpout 0
+thp_swpout_fallback 109
+balloon_inflate 0
+balloon_deflate 0
+balloon_migrate 0
+swap_ra 2920847
+swap_ra_hit 2641785
+swpin_zero 63869
+swpout_zero 2231181
+ksm_swpin_copy 0
+cow_ksm 0
+zswpin 0
+zswpout 0
+zswpwb 0
+nr_unstable 0

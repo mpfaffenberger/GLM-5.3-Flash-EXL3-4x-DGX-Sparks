@@ -28,16 +28,22 @@ def split_gemm(A, B, P, M: tl.constexpr, N: tl.constexpr, K: tl.constexpr,
 
 def main():
     torch.manual_seed(42)
+    timing = os.environ.get("TRIAL_TIMING", "cold")
+    if timing not in ("cold", "graph"):
+        raise ValueError("TRIAL_TIMING must be cold or graph")
+    bench = (triton.testing.do_bench_cudagraph if timing == "graph"
+             else triton.testing.do_bench)
+    print(json.dumps(dict(timing=timing, serving_change=False)), flush=True)
     for n, k in [(6416, 4096), (4096, 2048), (1024, 4096), (38720, 4096)]:
         a = torch.randn((8, k), device="cuda", dtype=torch.bfloat16)
         w = torch.randn((n, k), device="cuda", dtype=torch.bfloat16)
         reference = a @ w.T
-        baseline = triton.testing.do_bench(lambda: a @ w.T)
+        baseline = bench(lambda: a @ w.T)
         previous_backend = torch.backends.cuda.preferred_blas_library()
         torch.backends.cuda.preferred_blas_library("cublaslt")
         lt_result = a @ w.T
         lt_error = ((lt_result.float() - reference.float()).norm() / reference.float().norm()).item()
-        lt_time = triton.testing.do_bench(lambda: a @ w.T)
+        lt_time = bench(lambda: a @ w.T)
         torch.backends.cuda.preferred_blas_library(previous_backend)
         print(json.dumps(dict(n=n, k=k, variant="cublaslt", torch_ms=baseline,
                               trial_ms=lt_time, speedup=baseline / lt_time,
@@ -50,7 +56,7 @@ def main():
             padded_result = (a @ padded_w.T)[:, :n]
             error = ((padded_result.float() - reference.float()).norm()
                      / reference.float().norm()).item()
-            elapsed = triton.testing.do_bench(lambda: (a @ padded_w.T)[:, :n])
+            elapsed = bench(lambda: (a @ padded_w.T)[:, :n])
             print(json.dumps(dict(n=n, k=k, variant="padded_N", padded_n=padded_n,
                                   torch_ms=baseline, trial_ms=elapsed,
                                   speedup=baseline / elapsed, relative_l2=error)), flush=True)
@@ -59,7 +65,7 @@ def main():
         truth = a.float() @ w.float().T
         layout_error = ((layout_result.float() - truth).norm() / truth.norm()).item()
         reference_error = ((reference.float() - truth).norm() / truth.norm()).item()
-        layout_ms = triton.testing.do_bench(lambda: a @ contiguous_b)
+        layout_ms = bench(lambda: a @ contiguous_b)
         print(json.dumps(dict(n=n, k=k, variant="contiguous_B",
                               torch_ms=baseline, trial_ms=layout_ms,
                               speedup=baseline / layout_ms,
@@ -78,7 +84,7 @@ def main():
             relative_l2 = ((result.float() - reference.float()).norm()
                            / reference.float().norm()).item()
             assert relative_l2 < 0.01, relative_l2
-            elapsed = triton.testing.do_bench(run)
+            elapsed = bench(run)
             print(json.dumps(dict(n=n, k=k, splits=splits, bn=bn,
                                   torch_ms=baseline, trial_ms=elapsed,
                                   speedup=baseline / elapsed,

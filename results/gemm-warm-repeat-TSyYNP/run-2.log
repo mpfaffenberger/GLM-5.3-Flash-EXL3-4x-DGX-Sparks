@@ -1,0 +1,35 @@
+{"timing": "graph", "serving_change": false}
+[W905 23:42:01.932914257 Context.cpp:597] Warning: torch.backends.cuda.preferred_blas_library is an experimental feature. If you see any error or unexpected behavior when this flag is set please file an issue on GitHub. (function operator())
+{"n": 6416, "k": 4096, "variant": "cublaslt", "torch_ms": 0.23399733361743746, "trial_ms": 0.23322289330618723, "speedup": 1.003320601593916, "relative_l2": 0.0}
+{"n": 6416, "k": 4096, "variant": "padded_N", "padded_n": 6464, "torch_ms": 0.23399733361743746, "trial_ms": 0.22445946578141096, "speedup": 1.0424926068625455, "relative_l2": 0.0}
+{"n": 6416, "k": 4096, "variant": "padded_N", "padded_n": 6528, "torch_ms": 0.23399733361743746, "trial_ms": 0.23026139395577566, "speedup": 1.0162247765353984, "relative_l2": 0.0}
+{"n": 6416, "k": 4096, "variant": "padded_N", "padded_n": 6656, "torch_ms": 0.23399733361743746, "trial_ms": 0.2362205467601814, "speedup": 0.9905884006567769, "relative_l2": 0.0}
+{"n": 6416, "k": 4096, "variant": "contiguous_B", "torch_ms": 0.23399733361743746, "trial_ms": 0.37194412019517686, "speedup": 0.6291195932729031, "reference_error": 0.001675330218859017, "layout_error": 0.002372455783188343, "numerically_qualified": false}
+{"n": 6416, "k": 4096, "splits": 1, "bn": 64, "torch_ms": 0.23399733361743746, "trial_ms": 0.28560231803120045, "speedup": 0.8193117451934496, "relative_l2": 0.0}
+{"n": 6416, "k": 4096, "splits": 2, "bn": 64, "torch_ms": 0.23399733361743746, "trial_ms": 0.2621356379191081, "speedup": 0.8926574634222235, "relative_l2": 0.000110647662950214}
+{"n": 6416, "k": 4096, "splits": 4, "bn": 64, "torch_ms": 0.23399733361743746, "trial_ms": 0.263626547117491, "speedup": 0.8876091432216474, "relative_l2": 0.00013329382636584342}
+{"n": 6416, "k": 4096, "splits": 8, "bn": 64, "torch_ms": 0.23399733361743746, "trial_ms": 0.27532741001674105, "speedup": 0.8498875342749546, "relative_l2": 0.00013943249359726906}
+{"n": 6416, "k": 4096, "splits": 16, "bn": 64, "torch_ms": 0.23399733361743746, "trial_ms": 0.2940122262755437, "speedup": 0.7958762007337028, "relative_l2": 0.00014338055916596204}
+{"n": 4096, "k": 2048, "variant": "cublaslt", "torch_ms": 0.014593467030677114, "trial_ms": 0.014569704829694365, "speedup": 1.0016309322158896, "relative_l2": 0.0}
+{"n": 4096, "k": 2048, "variant": "contiguous_B", "torch_ms": 0.014593467030677114, "trial_ms": 0.016504901720129923, "speedup": 0.8841898775367102, "reference_error": 0.0016513183945789933, "layout_error": 0.0016513183945789933, "numerically_qualified": false}
+{"n": 4096, "k": 2048, "splits": 1, "bn": 64, "torch_ms": 0.014593467030677114, "trial_ms": 0.014726847034316879, "speedup": 0.990943071294965, "relative_l2": 0.0}
+{"n": 4096, "k": 2048, "splits": 2, "bn": 64, "torch_ms": 0.014593467030677114, "trial_ms": 0.0142951155549104, "speedup": 1.0208708684180052, "relative_l2": 5.7456611102679744e-05}
+{"n": 4096, "k": 2048, "splits": 4, "bn": 64, "torch_ms": 0.014593467030677114, "trial_ms": 0.014700101518052677, "speedup": 0.9927460033357859, "relative_l2": 6.486135680461302e-05}
+{"n": 4096, "k": 2048, "splits": 8, "bn": 64, "torch_ms": 0.014593467030677114, "trial_ms": 0.014468352241267867, "speedup": 1.0086474801914473, "relative_l2": 6.483415199909359e-05}
+{"n": 4096, "k": 2048, "splits": 16, "bn": 64, "torch_ms": 0.014593467030677114, "trial_ms": 0.015111949684914578, "speedup": 0.9656905518448731, "relative_l2": 6.486220809165388e-05}
+{"n": 1024, "k": 4096, "variant": "cublaslt", "torch_ms": 0.017137181014516924, "trial_ms": 0.017056557319683734, "speedup": 1.004726844539733, "relative_l2": 0.0}
+{"n": 1024, "k": 4096, "variant": "contiguous_B", "torch_ms": 0.017137181014516924, "trial_ms": 0.008374257584692726, "speedup": 2.046411976369334, "reference_error": 0.0016565682599321008, "layout_error": 0.0016565609257668257, "numerically_qualified": false}
+{"n": 1024, "k": 4096, "splits": 1, "bn": 64, "torch_ms": 0.017137181014516924, "trial_ms": 0.015432908739978912, "speedup": 1.1104310472673955, "relative_l2": 0.0}
+{"n": 1024, "k": 4096, "splits": 2, "bn": 64, "torch_ms": 0.017137181014516924, "trial_ms": 0.009915993743762782, "speedup": 1.728236368169989, "relative_l2": 0.00015571224503219128}
+{"n": 1024, "k": 4096, "splits": 4, "bn": 64, "torch_ms": 0.017137181014516924, "trial_ms": 0.009128152717978268, "speedup": 1.8773985869851355, "relative_l2": 0.00015717300993856043}
+{"n": 1024, "k": 4096, "splits": 8, "bn": 64, "torch_ms": 0.017137181014516924, "trial_ms": 0.009014739510266994, "speedup": 1.9010178824356692, "relative_l2": 0.00023301529290620238}
+{"n": 1024, "k": 4096, "splits": 16, "bn": 64, "torch_ms": 0.017137181014516924, "trial_ms": 0.00948805242224374, "speedup": 1.8061853214829007, "relative_l2": 0.00023301149485632777}
+{"n": 38720, "k": 4096, "variant": "cublaslt", "torch_ms": 1.375649054845174, "trial_ms": 1.3697524751935686, "speedup": 1.0043048505174428, "relative_l2": 0.0}
+{"n": 38720, "k": 4096, "variant": "padded_N", "padded_n": 38784, "torch_ms": 1.375649054845174, "trial_ms": 1.4233065196446009, "speedup": 0.9665163728672255, "relative_l2": 0.0}
+{"n": 38720, "k": 4096, "variant": "padded_N", "padded_n": 38912, "torch_ms": 1.375649054845174, "trial_ms": 1.432685947418213, "speedup": 0.9601888378427785, "relative_l2": 0.0}
+{"n": 38720, "k": 4096, "variant": "contiguous_B", "torch_ms": 1.375649054845174, "trial_ms": 1.4351188523428782, "speedup": 0.9585610645413669, "reference_error": 0.001662354450672865, "layout_error": 0.0016623486299067736, "numerically_qualified": false}
+{"n": 38720, "k": 4096, "splits": 1, "bn": 64, "torch_ms": 1.375649054845174, "trial_ms": 1.556008545557658, "speedup": 0.8840883674916805, "relative_l2": 0.0}
+{"n": 38720, "k": 4096, "splits": 2, "bn": 64, "torch_ms": 1.375649054845174, "trial_ms": 1.5483194986979167, "speedup": 0.8884788029873986, "relative_l2": 0.00011573768279049546}
+{"n": 38720, "k": 4096, "splits": 4, "bn": 64, "torch_ms": 1.375649054845174, "trial_ms": 1.6187861601511637, "speedup": 0.8498028267777596, "relative_l2": 0.00013666074664797634}
+{"n": 38720, "k": 4096, "splits": 8, "bn": 64, "torch_ms": 1.375649054845174, "trial_ms": 1.717764663696289, "speedup": 0.8008367408635884, "relative_l2": 0.00014294746506493539}
+{"n": 38720, "k": 4096, "splits": 16, "bn": 64, "torch_ms": 1.375649054845174, "trial_ms": 1.7800948403098367, "speedup": 0.7727953722992275, "relative_l2": 0.0001472040021326393}

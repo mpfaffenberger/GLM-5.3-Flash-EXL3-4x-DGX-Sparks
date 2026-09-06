@@ -45,3 +45,12 @@ def test_standalone_patch_rejects_invalid_block_and_source():
         standalone("pass", 512)
     with pytest.raises(ValueError):
         standalone("pass", 256)
+
+
+def test_separate_scratch_rows_preserve_default_and_check_capacity():
+    source = (ROOT / "overlay/exl3.py").read_text()
+    assert 'os.environ.get("EXL3_TEMP_ROWS_DECODE", rows)' in source
+    assert "if not 1 <= decode_rows <= rows:" in source
+    assert "get_temps(decode_concurrency, decode_rows)" in source
+    assert "if tokens <= int(decode_temps[0].shape[1]):" in source
+    compile(source, "exl3.py", "exec")

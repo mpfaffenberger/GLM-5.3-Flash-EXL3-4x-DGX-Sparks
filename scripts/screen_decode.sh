@@ -36,6 +36,10 @@ for k in ${DRAFT_LENGTHS:-7 3 11}; do
         "$k" "$DFLASH_DRAFT_TP" "$EXL3_MOE_DECODE_CONCURRENCY" > "$dir/settings.txt"
     printf 'SPEC_METHOD=%s\nDFLASH_KV_DTYPE=%s\n' "${SPEC_METHOD:-dflash}" "${DFLASH_KV_DTYPE:-auto}" >> "$dir/settings.txt"
     printf 'NCCL_ALGO=%s\nEXTRA_DOCKER_ARGS=%s\n' "${NCCL_ALGO:-auto}" "${EXTRA_DOCKER_ARGS:-}" >> "$dir/settings.txt"
+    printf 'MAX_NUM_BATCHED_TOKENS=%s\nPP=%s\nSCREEN_RUNS=%s\n' \
+        "${MAX_NUM_BATCHED_TOKENS:-2048}" "${PP:-2048}" "${SCREEN_RUNS:-3}" >> "$dir/settings.txt"
+    printf 'EXL3_TEMP_ROWS_FUSED=%s\nEXL3_MOE_CONCURRENCY=%s\n' \
+        "${EXL3_TEMP_ROWS_FUSED:-128}" "${EXL3_MOE_CONCURRENCY:-6}" >> "$dir/settings.txt"
     bash "$ROOT/scripts/tp4_cluster.sh" start > "$dir/launch.log" 2>&1
     ready=0
     for ((i=0; i<120; i++)); do

@@ -1,0 +1,411 @@
+[suppress-stops-in-reasoning] skipped: /usr/local/lib/python3.12/dist-packages/vllm/v1/engine/detokenizer.py
+scheduler.py: # [glm53-decode-floor] already present — skipping
+[patch_glm5_drafter_group] /usr/local/lib/python3.12/dist-packages/vllm/v1/core/kv_cache_utils.py: already patched (DFLASH2-DRAFTER-GROUP + padded slot-share); no-op.
+kv_cache_coordinator.py: # [glm53-hybrid-apc] already present — skipping
+backend_xgrammar.py: termination fix already present (#52805)
+__init__.py: reasoning fix already present (#53046)
+block_table.py: kpool tail slot-map already present
+[glm53-exl3-tp4 rank=0] starting TP=4 node (spec=dflash, cudagraph=none, eager=0)
+(APIServer pid=1) INFO 09-06 00:33:18 [api_utils.py:345] 
+(APIServer pid=1) INFO 09-06 00:33:18 [api_utils.py:345]        █     █     █▄   ▄█
+(APIServer pid=1) INFO 09-06 00:33:18 [api_utils.py:345]  ▄▄ ▄█ █     █     █ ▀▄▀ █  version 0.1.dev20051+g487ecf187
+(APIServer pid=1) INFO 09-06 00:33:18 [api_utils.py:345]   █▄█▀ █     █     █     █  model   /root/.cache/huggingface/hub/models--Mia-AiLab--GLM-5.3-Flash-EXL3-TR3-4bpw/snapshots/25a44fdbf16862a46b7cc9921142c6c81350af2f
+(APIServer pid=1) INFO 09-06 00:33:18 [api_utils.py:345]    ▀▀  ▀▀▀▀▀ ▀▀▀▀▀ ▀     ▀
+(APIServer pid=1) INFO 09-06 00:33:18 [api_utils.py:345] 
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: disabled GB10 persistent_topk (use top_k_per_row_decode)
+glm53: overlay install ok aligned=True
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+(APIServer pid=1) INFO 09-06 00:33:18 [api_utils.py:273] non-default args: {'model_tag': '/root/.cache/huggingface/hub/models--Mia-AiLab--GLM-5.3-Flash-EXL3-TR3-4bpw/snapshots/25a44fdbf16862a46b7cc9921142c6c81350af2f', 'chat_template': '/opt/glm53/chat_template.jinja', 'enable_auto_tool_choice': True, 'tool_call_parser': 'glm47', 'host': '0.0.0.0', 'port': 8888, 'model': '/root/.cache/huggingface/hub/models--Mia-AiLab--GLM-5.3-Flash-EXL3-TR3-4bpw/snapshots/25a44fdbf16862a46b7cc9921142c6c81350af2f', 'max_model_len': 1000000, 'quantization': 'exl3', 'served_model_name': ['GLM-5.3-Flash-EXL3'], 'reasoning_parser': 'glm45', 'distributed_executor_backend': 'mp', 'master_addr': '10.0.0.46', 'master_port': 29521, 'nnodes': 4, 'tensor_parallel_size': 4, 'disable_custom_all_reduce': True, 'gpu_memory_utilization': 0.55, 'kv_cache_dtype': 'fp8', 'enable_prefix_caching': True, 'limit_mm_per_prompt': {'image': 4, 'video': 1}, 'skip_mm_profiling': True, 'max_num_batched_tokens': 2048, 'max_num_seqs': 10, 'enable_flashinfer_autotune': False, 'speculative_config': {'method': 'dflash', 'model': '/root/.cache/huggingface/hub/models--incoai--GLM-5.3-Flash-DFlash2/snapshots/dc77ff1c99eeb2df044ee3d4f0094eb033fee410', 'num_speculative_tokens': 7, 'draft_tensor_parallel_size': 4, 'kv_cache_dtype': 'auto', 'draft_sample_method': 'probabilistic', 'rejection_sample_method': 'standard'}, 'compilation_config': {'mode': None, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': [], 'ir_enable_torch_wrap': None, 'splitting_ops': None, 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': None, 'compile_ranges_endpoints': None, 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.NONE: 0>, 'cudagraph_num_of_warmups': 0, 'cudagraph_capture_sizes': None, 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': None, 'pass_config': {}, 'max_cudagraph_capture_size': None, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': None, 'static_all_moe_layers': []}}
+(APIServer pid=1) INFO 09-06 00:33:18 [model.py:679] Resolved architecture: Glm5NextForConditionalGeneration
+(APIServer pid=1) INFO 09-06 00:33:18 [model.py:1973] Using max model len 1000000
+(APIServer pid=1) INFO 09-06 00:33:21 [cache.py:282] Using fp8 data type to store kv cache. It reduces the GPU memory footprint and boosts the performance. Meanwhile, it may cause accuracy drop without a proper scaling factor
+(APIServer pid=1) INFO 09-06 00:33:21 [arg_utils.py:2168] Inferred data_parallel_rank 0 from node_rank 0
+(APIServer pid=1) INFO 09-06 00:33:21 [model.py:679] Resolved architecture: DFlash2DraftModel
+(APIServer pid=1) INFO 09-06 00:33:21 [model.py:1973] Using max model len 1048576
+(APIServer pid=1) INFO 09-06 00:33:21 [speculative.py:1256] Overriding draft model max model len from 1048576 to 1000000
+(APIServer pid=1) INFO 09-06 00:33:21 [config.py:605] Mamba cache mode is set to 'align' for Glm5NextForConditionalGeneration by default when prefix caching is enabled
+(APIServer pid=1) INFO 09-06 00:33:21 [vllm.py:1319] Auto-enabling VLLM_USE_BREAKABLE_CUDAGRAPH=1. Set VLLM_USE_BREAKABLE_CUDAGRAPH=0 to opt out.
+(APIServer pid=1) INFO 09-06 00:33:21 [kernel.py:306] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+(APIServer pid=1) WARNING 09-06 00:33:21 [vllm.py:1849] max_num_scheduled_tokens is set to 2048 based on the speculative decoding settings. This may lead to suboptimal performance. Consider increasing max_num_batched_tokens to accommodate the additional draft token slots, or decrease num_speculative_tokens.
+(APIServer pid=1) INFO 09-06 00:33:21 [compilation.py:329] Enabled custom fusions: norm_quant, act_quant
+(APIServer pid=1) [transformers] The following generation flags are not valid and may be ignored: ['top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+(EngineCore pid=1052) INFO 09-06 00:33:29 [core.py:122] Initializing a V1 LLM engine (v0.1.dev20051+g487ecf187) with config: model='/root/.cache/huggingface/hub/models--Mia-AiLab--GLM-5.3-Flash-EXL3-TR3-4bpw/snapshots/25a44fdbf16862a46b7cc9921142c6c81350af2f', speculative_config=SpeculativeConfig(method='dflash', model='/root/.cache/huggingface/hub/models--incoai--GLM-5.3-Flash-DFlash2/snapshots/dc77ff1c99eeb2df044ee3d4f0094eb033fee410', num_spec_tokens=7), tokenizer='/root/.cache/huggingface/hub/models--Mia-AiLab--GLM-5.3-Flash-EXL3-TR3-4bpw/snapshots/25a44fdbf16862a46b7cc9921142c6c81350af2f', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=1000000, download_dir=None, load_format=auto, tensor_parallel_size=4, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=True, quantization=exl3, quantization_config=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=fp8, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='glm45', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False, jit_monitor_mode='warn', jit_monitor_verbose=False), seed=0, served_model_name=GLM-5.3-Flash-EXL3, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.NONE: 0>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['all'], 'ir_enable_torch_wrap': False, 'splitting_ops': [], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': [], 'compile_ranges_endpoints': [2048], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.NONE: 0>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': True, 'fuse_act_quant': True, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False, 'enable_qk_norm_rope_fusion': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False, 'fuse_qk_norm_rope_kvcache': False}, 'max_cudagraph_capture_size': 0, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native']), enable_flashinfer_autotune=False, enable_cutedsl_warmup=True, enable_jit_warmup=True, enable_bf16x3_router_gemm=False, moe_backend='auto', linear_backend='auto')
+(EngineCore pid=1052) INFO 09-06 00:33:29 [multiproc_executor.py:149] DP group leader: node_rank=0, node_rank_within_dp=0, master_addr=10.0.0.46, mq_connect_ip=10.0.0.46 (local), world_size=4, local_world_size=1
+(Worker pid=1249) INFO 09-06 00:33:35 [parallel_state.py:1638] world_size=4 rank=0 local_rank=0 distributed_init_method=tcp://10.0.0.46:29521 backend=nccl
+(Worker pid=1249) INFO 09-06 00:33:39 [pynccl.py:113] vLLM is using nccl==2.30.7
+(Worker pid=1249) WARNING 09-06 00:33:44 [symm_mem.py:67] SymmMemCommunicator: Device capability 12.1 not supported, communicator is not available.
+(Worker pid=1249) INFO 09-06 00:33:44 [cuda_communicator.py:266] Using ['PYNCCL'] all-reduce backends (in dispatch order) for group 'tp:0' out of potential backends: ['NCCL_SYMM_MEM', 'QUICK_REDUCE', 'FLASHINFER', 'AITER_CUSTOM', 'CUSTOM', 'SYMM_MEM', 'PYNCCL'].
+(Worker pid=1249) INFO 09-06 00:33:50 [cuda_communicator.py:266] Using ['PYNCCL'] all-reduce backends (in dispatch order) for group 'ep:0' out of potential backends: ['NCCL_SYMM_MEM', 'QUICK_REDUCE', 'FLASHINFER', 'AITER_CUSTOM', 'CUSTOM', 'SYMM_MEM', 'PYNCCL'].
+(Worker pid=1249) INFO 09-06 00:33:50 [parallel_state.py:1982] rank 0 in world size 4 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0, EPLB rank N/A
+(Worker pid=1249) INFO 09-06 00:33:50 [gpu_worker.py:386] Using V2 Model Runner
+(Worker_TP0 pid=1249) INFO 09-06 00:33:50 [model_runner.py:353] Loading model from scratch...
+(Worker_TP0 pid=1249) INFO 09-06 00:33:50 [cuda.py:595] Using backend AttentionBackendEnum.FLASH_ATTN for vit attention
+(Worker_TP0 pid=1249) INFO 09-06 00:33:50 [mm_encoder_attention.py:375] Using AttentionBackendEnum.FLASH_ATTN for MMEncoderAttention.
+(Worker_TP0 pid=1249) INFO 09-06 00:33:50 [kernel.py:306] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+(Worker_TP0 pid=1249) WARNING 09-06 00:33:50 [vllm.py:1849] max_num_scheduled_tokens is set to 2048 based on the speculative decoding settings. This may lead to suboptimal performance. Consider increasing max_num_batched_tokens to accommodate the additional draft token slots, or decrease num_speculative_tokens.
+(Worker_TP0 pid=1249) INFO 09-06 00:33:50 [compilation.py:329] Enabled custom fusions: norm_quant, act_quant
+(Worker_TP0 pid=1249) INFO 09-06 00:33:50 [cuda.py:536] Using FLASHINFER_MLA_SPARSE_SM120 attention backend out of potential backends: ['FLASHINFER_MLA_SPARSE_SM120'].
+(Worker_TP0 pid=1249) INFO 09-06 00:33:50 [mla_attention.py:475] Using fp8_ds_mla KV cache format for FLASHINFER_MLA_SPARSE_SM120 backend.
+(Worker_TP0 pid=1249) WARNING 09-06 00:33:50 [mla_attention.py:551] Sparse MLA impl has no dense-MHA prefill path; using the top-k MQA path only.
+(Worker_TP0 pid=1249) INFO 09-06 00:33:50 [deep_gemm.py:191] deep_gemm not found in site-packages, trying vendored vllm.third_party.deep_gemm
+(Worker_TP0 pid=1249) INFO 09-06 00:33:50 [deep_gemm.py:136] DeepGEMM E8M0 enabled on current platform.
+(Worker_TP0 pid=1249) INFO 09-06 00:33:52 [weight_utils.py:858] Filesystem type for checkpoints: EXT4. Checkpoint size: 163.58 GiB. Available RAM: 63.90 GiB.
+(Worker_TP0 pid=1249) INFO 09-06 00:33:52 [weight_utils.py:888] Auto-prefetch is disabled because the filesystem (EXT4) is not a recognized network FS (NFS/Lustre) and the checkpoint size (163.58 GiB) exceeds 90% of available RAM (63.90 GiB).
+glm53: video placeholders aligned to encoder grid_t (Glm5Next→glm46v)
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:   0% Completed | 0/120 [00:00<?, ?it/s]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:   1% Completed | 1/120 [00:02<04:55,  2.48s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:   2% Completed | 2/120 [00:04<04:28,  2.28s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:   2% Completed | 3/120 [00:06<04:14,  2.18s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:   3% Completed | 4/120 [00:08<04:06,  2.13s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:   4% Completed | 5/120 [00:10<04:00,  2.09s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:   5% Completed | 6/120 [00:12<03:56,  2.08s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:   6% Completed | 7/120 [00:15<04:10,  2.21s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:   7% Completed | 8/120 [00:17<04:01,  2.16s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:   8% Completed | 9/120 [00:19<03:49,  2.07s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:   8% Completed | 10/120 [00:21<03:43,  2.03s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:   9% Completed | 11/120 [00:23<03:39,  2.02s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  10% Completed | 12/120 [00:25<03:36,  2.01s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  11% Completed | 13/120 [00:27<03:35,  2.02s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  12% Completed | 14/120 [00:29<03:31,  1.99s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  12% Completed | 15/120 [00:31<03:29,  1.99s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  13% Completed | 16/120 [00:33<03:26,  1.98s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  14% Completed | 17/120 [00:35<03:24,  1.98s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  15% Completed | 18/120 [00:37<03:33,  2.09s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  16% Completed | 19/120 [00:39<03:29,  2.07s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  17% Completed | 20/120 [00:40<03:07,  1.87s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  18% Completed | 21/120 [00:41<02:40,  1.62s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  18% Completed | 22/120 [00:43<02:49,  1.73s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  19% Completed | 23/120 [00:45<02:52,  1.78s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  20% Completed | 24/120 [00:47<02:56,  1.84s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  21% Completed | 25/120 [00:49<02:59,  1.89s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  22% Completed | 26/120 [00:51<03:00,  1.92s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  22% Completed | 27/120 [00:53<03:01,  1.95s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  23% Completed | 28/120 [00:55<03:00,  1.96s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  24% Completed | 29/120 [00:58<03:29,  2.30s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  25% Completed | 30/120 [01:00<03:18,  2.20s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  26% Completed | 31/120 [01:02<03:09,  2.13s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  27% Completed | 32/120 [01:04<03:03,  2.09s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  28% Completed | 33/120 [01:06<02:58,  2.05s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  28% Completed | 34/120 [01:08<02:54,  2.03s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  29% Completed | 35/120 [01:10<02:52,  2.02s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  30% Completed | 36/120 [01:12<02:50,  2.04s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  31% Completed | 37/120 [01:14<02:47,  2.02s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  32% Completed | 38/120 [01:16<02:44,  2.00s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  32% Completed | 39/120 [01:18<02:43,  2.01s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  33% Completed | 40/120 [01:21<02:50,  2.13s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  34% Completed | 41/120 [01:23<02:46,  2.11s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  35% Completed | 42/120 [01:25<02:42,  2.08s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  36% Completed | 43/120 [01:27<02:36,  2.04s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  37% Completed | 44/120 [01:29<02:32,  2.01s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  38% Completed | 45/120 [01:31<02:30,  2.00s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  38% Completed | 46/120 [01:33<02:27,  1.99s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  39% Completed | 47/120 [01:35<02:25,  1.99s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  40% Completed | 48/120 [01:36<02:20,  1.96s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  41% Completed | 49/120 [01:38<02:18,  1.96s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  42% Completed | 50/120 [01:40<02:18,  1.97s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  42% Completed | 51/120 [01:43<02:24,  2.10s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  43% Completed | 52/120 [01:45<02:19,  2.06s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  44% Completed | 53/120 [01:47<02:16,  2.04s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  45% Completed | 54/120 [01:49<02:11,  2.00s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  46% Completed | 55/120 [01:51<02:08,  1.98s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  47% Completed | 56/120 [01:52<01:56,  1.83s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  48% Completed | 57/120 [01:54<01:56,  1.86s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  48% Completed | 58/120 [01:56<01:58,  1.91s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  49% Completed | 59/120 [01:58<02:05,  2.05s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  50% Completed | 60/120 [02:00<02:02,  2.05s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  51% Completed | 61/120 [02:02<02:01,  2.05s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  52% Completed | 62/120 [02:04<01:56,  2.01s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  52% Completed | 63/120 [02:06<01:54,  2.01s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  53% Completed | 64/120 [02:08<01:52,  2.02s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  54% Completed | 65/120 [02:11<01:55,  2.10s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  55% Completed | 66/120 [02:13<01:51,  2.07s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  56% Completed | 67/120 [02:15<01:47,  2.03s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  57% Completed | 68/120 [02:17<01:44,  2.01s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  57% Completed | 69/120 [02:19<01:43,  2.03s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  58% Completed | 70/120 [02:21<01:40,  2.01s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  59% Completed | 71/120 [02:23<01:37,  2.00s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  60% Completed | 72/120 [02:25<01:35,  2.00s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  61% Completed | 73/120 [02:27<01:33,  1.98s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  62% Completed | 74/120 [02:29<01:31,  2.00s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  62% Completed | 75/120 [02:31<01:30,  2.01s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  63% Completed | 76/120 [02:33<01:32,  2.11s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  64% Completed | 77/120 [02:35<01:28,  2.07s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  65% Completed | 78/120 [02:37<01:26,  2.05s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  66% Completed | 79/120 [02:39<01:22,  2.02s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  67% Completed | 80/120 [02:41<01:20,  2.01s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  68% Completed | 81/120 [02:43<01:17,  1.98s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  68% Completed | 82/120 [02:45<01:15,  1.98s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  69% Completed | 83/120 [02:47<01:13,  1.99s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  70% Completed | 84/120 [02:49<01:12,  2.00s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  71% Completed | 85/120 [02:51<01:10,  2.01s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  72% Completed | 86/120 [02:53<01:07,  2.00s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  72% Completed | 87/120 [02:55<01:09,  2.10s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  73% Completed | 88/120 [02:57<01:06,  2.09s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  74% Completed | 89/120 [02:59<01:04,  2.07s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  75% Completed | 90/120 [03:01<01:01,  2.04s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  76% Completed | 91/120 [03:03<00:58,  2.03s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  77% Completed | 92/120 [03:05<00:56,  2.03s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  78% Completed | 93/120 [03:07<00:54,  2.03s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  78% Completed | 94/120 [03:09<00:52,  2.03s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  79% Completed | 95/120 [03:11<00:49,  1.99s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  80% Completed | 96/120 [03:13<00:47,  2.00s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  81% Completed | 97/120 [03:15<00:46,  2.01s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  82% Completed | 98/120 [03:17<00:44,  2.02s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  82% Completed | 99/120 [03:19<00:42,  2.03s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  83% Completed | 100/120 [03:21<00:40,  2.03s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  84% Completed | 101/120 [03:24<00:40,  2.13s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  85% Completed | 102/120 [03:26<00:37,  2.10s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  86% Completed | 103/120 [03:27<00:31,  1.85s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  87% Completed | 104/120 [03:27<00:21,  1.35s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  88% Completed | 105/120 [03:27<00:14,  1.02it/s]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  88% Completed | 106/120 [03:28<00:11,  1.17it/s]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  89% Completed | 107/120 [03:30<00:15,  1.18s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  90% Completed | 108/120 [03:32<00:17,  1.43s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  91% Completed | 109/120 [03:34<00:17,  1.61s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  92% Completed | 110/120 [03:36<00:17,  1.73s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  92% Completed | 111/120 [03:38<00:16,  1.83s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  93% Completed | 112/120 [03:40<00:15,  1.88s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  94% Completed | 113/120 [03:42<00:13,  1.92s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  95% Completed | 114/120 [03:44<00:10,  1.83s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  96% Completed | 115/120 [03:45<00:07,  1.58s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  97% Completed | 116/120 [03:47<00:06,  1.71s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  98% Completed | 117/120 [03:49<00:05,  1.81s/it]
+(Worker_TP0 pid=1249) INFO 09-06 00:37:48 [default_loader.py:430] Loading weights took 236.75 seconds
+(Worker_TP0 pid=1249) INFO 09-06 00:37:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:48 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  98% Completed | 118/120 [03:51<00:03,  1.88s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:  99% Completed | 119/120 [03:53<00:01,  1.90s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards: 100% Completed | 120/120 [03:56<00:00,  2.37s/it]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards: 100% Completed | 120/120 [03:56<00:00,  1.97s/it]
+(Worker_TP0 pid=1249) 
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [exl3.py:960] EXL3 MCG trellis engaged for routed experts: bits=4 experts_local=288 hidden=4096 intermediate_local=512 fused_moe=exl3_moe concurrency=6 (no BF16 expert reconstruct at load)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [eagle3_utils.py:28] Using Eagle3 auxiliary layers from config: (6, 15, 25, 34, 43)
+(Worker_TP0 pid=1249) INFO 09-06 00:37:49 [kernel.py:306] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+(Worker_TP0 pid=1249) INFO 09-06 00:37:50 [cuda.py:536] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(Worker_TP0 pid=1249) INFO 09-06 00:37:50 [flash_attn.py:867] Using FlashAttention version 2
+(Worker_TP0 pid=1249) INFO 09-06 00:37:51 [weight_utils.py:858] Filesystem type for checkpoints: EXT4. Checkpoint size: 2.18 GiB. Available RAM: 63.01 GiB.
+(Worker_TP0 pid=1249) INFO 09-06 00:37:51 [weight_utils.py:881] Auto-prefetch is disabled because the filesystem (EXT4) is not a recognized network FS (NFS/Lustre). If you want to force prefetching, start vLLM with --safetensors-load-strategy=prefetch.
+(Worker_TP0 pid=1249) INFO 09-06 00:37:55 [default_loader.py:430] Loading weights took 4.79 seconds
+(Worker_TP0 pid=1249) WARNING 09-06 00:37:55 [speculator.py:191] Draft model DFlash2Qwen3ForCausalLM does not support external multimodal embeddings. Embeddings from the target model will not be passed to the drafter; using text-only draft inputs instead.
+(Worker_TP0 pid=1249) INFO 09-06 00:37:56 [model_runner.py:374] Model loading took 41.89 GiB and 245.860195 seconds
+(Worker_TP0 pid=1249) INFO 09-06 00:37:56 [topk_topp_sampler.py:62] Using FlashInfer for top-p & top-k sampling.
+(Worker_TP0 pid=1249) INFO 09-06 00:37:56 [interface.py:635] Setting kv cache block size to 64 for DEEPSEEK_V32_INDEXER backend.
+(Worker_TP0 pid=1249) INFO 09-06 00:37:56 [interface.py:926] Setting attention block size to 1792 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP0 pid=1249) INFO 09-06 00:37:56 [interface.py:950] Padding mamba page size by 0.35% to ensure that mamba page size and attention page size are exactly equal.
+(EngineCore pid=1052) INFO 09-06 00:37:56 [torch_utils.py:262] Reducing Torch threads from 20 to 1 for serving. Set OMP_NUM_THREADS in the external environment to override.
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+(Worker_TP0 pid=1249) Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:00<00:00, 52.34it/s]
+(Worker_TP0 pid=1249) 
+(Worker_TP0 pid=1249) INFO 09-06 00:38:11 [exl3.py:134] exl3 fat-expert P0: layers=42 fat_layers=42 (100.0%) fat_expert_slots=336 max_rows=2048 avg_max_rows=2048.0 hist_le128=0 hist_gt128=42 hist=[0, 0, 0, 0, 0, 0, 0, 42, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:38:12 [gpu_worker.py:564] Available KV cache memory: 19.73 GiB
+(EngineCore pid=1052) INFO 09-06 00:38:14 [kv_cache_utils.py:1554] DFlash2 drafter KV: padded slot-share block=64 mla_page=1175552 (was block=16); exact-fit page mismatch draft_bytes/token=1024
+(EngineCore pid=1052) INFO 09-06 00:38:14 [kv_cache_utils.py:2300] GPU KV cache size: 2,150,072 tokens, Maximum concurrency for 1,000,000 tokens per request: 2.15x
+(Worker_TP0 pid=1249) INFO 09-06 00:38:14 [indexer.py:729] DSA indexer decode path: use_flattening=True supports_varlen=False (next_n=8, use_fp4_indexer_cache=False)
+(Worker_TP0 pid=1249) INFO 09-06 00:38:14 [kernel.py:306] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+(Worker_TP0 pid=1249) INFO 09-06 00:38:18 [spec_decode_rejection_warmup.py:64] Warming up spec-decode rejection sampler kernels (vocab=154880, num_spec=7, dtype_pairs=[('torch.float32', 'torch.float32'), ('torch.bfloat16', 'torch.bfloat16'), ('torch.float32', 'torch.bfloat16'), ('torch.bfloat16', 'torch.float32')], block_verify=False).
+(Worker_TP0 pid=1249) INFO 09-06 00:38:20 [kernel_warmup.py:95] Warming up ll_bf16 router GEMM kernels for shapes: ((4096, 288),).
+(Worker_TP0 pid=1249) INFO 09-06 00:38:21 [kernel_warmup.py:170] Skipping FlashInfer autotune because it is disabled.
+(Worker_TP0 pid=1249) WARNING 09-06 00:38:21 [model_runner.py:967] Skipping CUDA graph capture. To turn on CUDA graph capture, ensure `cudagraph_mode` was not manually set to `NONE`
+(Worker_TP0 pid=1249) INFO 09-06 00:38:21 [gpu_worker.py:790] Free memory on device (104.01/121.63 GiB) on startup. Desired GPU memory utilization is (0.55, 66.89 GiB). Actual usage is 45.87 GiB for consumed memory (weights + non-torch), 1.29 GiB for peak activation, and 0.0 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=21024746292` (19.58 GiB) to fit into requested memory, or `--kv-cache-memory=60881338368` (56.7 GiB) to fully utilize gpu memory. Current kv cache memory in use is 19.73 GiB.
+(EngineCore pid=1052) INFO 09-06 00:39:17 [shm_broadcast.py:801] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(Worker_TP0 pid=1249) INFO 09-06 00:39:59 [jit_monitor.py:79] Kernel JIT monitor activated; monitored JIT compilations during inference will use mode=warn.
+(Worker_TP0 pid=1249) INFO 09-06 00:40:00 [torch_utils.py:262] Reducing Torch threads from 20 to 1 for serving. Set OMP_NUM_THREADS in the external environment to override.
+(EngineCore pid=1052) INFO 09-06 00:40:00 [core.py:363] init engine (profile, create kv cache, warmup model) took 123.68 s
+(EngineCore pid=1052) WARNING 09-06 00:40:05 [kv_cache_coordinator.py:635] Disabling fine-grained prefix-cache hits because these KV cache managers require block-aligned lookups: KpoolTailManager.
+(Worker_TP0 pid=1249) /usr/local/lib/python3.12/dist-packages/triton/language/core.py:2284: UserWarning: tl.make_block_ptr is deprecated. Use TensorDescriptor or tl.make_tensor_descriptor instead.
+(Worker_TP0 pid=1249)   warn("tl.make_block_ptr is deprecated. Use TensorDescriptor or tl.make_tensor_descriptor instead.")
+(EngineCore pid=1052) INFO 09-06 00:40:05 [kv_cache_coordinator.py:709] hybrid APC groups: [('MLAAttentionSpec', [0], 'FullAttentionManager', False), ('MambaSpec', [2, 3, 4, 5], 'MambaManager', False), ('SlidingWindowSpec', [6], 'SlidingWindowManager', True)]; eagle_group_ids=[6]
+(EngineCore pid=1052) INFO 09-06 00:40:05 [kernel.py:306] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+(EngineCore pid=1052) WARNING 09-06 00:40:05 [vllm.py:1849] max_num_scheduled_tokens is set to 2048 based on the speculative decoding settings. This may lead to suboptimal performance. Consider increasing max_num_batched_tokens to accommodate the additional draft token slots, or decrease num_speculative_tokens.
+(EngineCore pid=1052) INFO 09-06 00:40:05 [compilation.py:329] Enabled custom fusions: norm_quant, act_quant
+(APIServer pid=1) INFO 09-06 00:40:06 [api_server.py:678] Supported tasks: ['generate']
+(APIServer pid=1) INFO 09-06 00:40:07 [parser_manager.py:37] "auto" tool choice has been enabled.
+(APIServer pid=1) INFO 09-06 00:40:07 [hf.py:551] Detected the chat template content format to be 'openai'. You can set `--chat-template-content-format` to override this.
+(APIServer pid=1) INFO 09-06 00:40:11 [base.py:235] Multi-modal warmup completed in 3.678s
+(APIServer pid=1) INFO 09-06 00:40:13 [base.py:235] Readonly multi-modal warmup completed in 2.553s
+(APIServer pid=1) WARNING 09-06 00:40:13 [model.py:1721] Default vLLM sampling parameters have been overridden by the model's `generation_config.json`: `{'temperature': 1.0, 'top_p': 0.95}`. If this is not intended, please relaunch vLLM instance with `--generation-config vllm`.
+(APIServer pid=1) INFO 09-06 00:40:13 [api_server.py:682] Starting vLLM server on http://0.0.0.0:8888
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:51] Available routes are:
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /openapi.json, Methods: HEAD, GET
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /docs, Methods: HEAD, GET
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /docs/oauth2-redirect, Methods: HEAD, GET
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /redoc, Methods: HEAD, GET
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /load, Methods: GET
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /version, Methods: GET
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /health, Methods: GET
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /metrics, Methods: GET
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /tokenize, Methods: POST
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /detokenize, Methods: POST
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /v1/models, Methods: GET
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /ping, Methods: GET
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /ping, Methods: POST
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /invocations, Methods: POST
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /v1/chat/completions, Methods: POST
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /v1/chat/completions/batch, Methods: POST
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /v1/responses, Methods: POST
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /v1/responses/{response_id}, Methods: GET
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /v1/responses/{response_id}/cancel, Methods: POST
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /v1/completions, Methods: POST
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /v1/messages, Methods: POST
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /v1/messages/count_tokens, Methods: POST
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /generative_scoring, Methods: POST
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /scale_elastic_ep, Methods: POST
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /is_scaling_elastic_ep, Methods: POST
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /v1/chat/completions/render, Methods: POST
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /v1/completions/render, Methods: POST
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /v1/chat/completions/derender, Methods: POST
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /v1/completions/derender, Methods: POST
+(APIServer pid=1) INFO 09-06 00:40:13 [launcher.py:60] Route: /inference/v1/generate, Methods: POST
+(APIServer pid=1) INFO:     127.0.0.1:48990 - "GET /health HTTP/1.1" 200 OK
+(Worker_TP0 pid=1249) WARNING 09-06 00:40:23 [jit_monitor.py:135] Triton kernel JIT compilation during inference: _prepare_dflash_inputs_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(APIServer pid=1) INFO:     127.0.0.1:48996 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1) INFO:     127.0.0.1:49002 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1) INFO:     127.0.0.1:49014 - "GET /v1/models HTTP/1.1" 200 OK
+(APIServer pid=1) INFO:     127.0.0.1:49030 - "GET /v1/models HTTP/1.1" 200 OK
+(APIServer pid=1) INFO:     127.0.0.1:49032 - "GET /v1/models HTTP/1.1" 200 OK
+(APIServer pid=1) INFO:     127.0.0.1:49040 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(Worker_TP0 pid=1249) WARNING 09-06 00:40:23 [jit_monitor.py:135] Triton kernel JIT compilation during inference: _kpool_tail_seed_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(APIServer pid=1) INFO 09-06 00:40:26 [loggers.py:310] Engine 000: Avg prompt throughput: 3.4 tokens/s, Avg generation throughput: 0.1 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(Worker_TP0 pid=1249) INFO 09-06 00:40:27 [exl3.py:134] exl3 fat-expert P0: layers=84 fat_layers=84 (100.0%) fat_expert_slots=1255 max_rows=2048 avg_max_rows=1552.0 hist_le128=0 hist_gt128=84 hist=[0, 0, 0, 0, 2, 2, 17, 63, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:40:28 [exl3.py:134] exl3 fat-expert P0: layers=126 fat_layers=126 (100.0%) fat_expert_slots=2195 max_rows=2048 avg_max_rows=1353.3 hist_le128=0 hist_gt128=126 hist=[0, 0, 0, 0, 4, 5, 37, 80, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:40:30 [exl3.py:134] exl3 fat-expert P0: layers=168 fat_layers=168 (100.0%) fat_expert_slots=3207 max_rows=2048 avg_max_rows=1226.6 hist_le128=0 hist_gt128=168 hist=[0, 0, 0, 0, 6, 11, 62, 89, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:40:32 [exl3.py:134] exl3 fat-expert P0: layers=210 fat_layers=210 (100.0%) fat_expert_slots=4224 max_rows=2048 avg_max_rows=1128.6 hist_le128=0 hist_gt128=210 hist=[0, 0, 0, 0, 8, 19, 86, 97, 0]
+(Worker_TP0 pid=1249) WARNING 09-06 00:40:32 [jit_monitor.py:135] TileLang JIT compilation during inference: mhc_pre_big_fuse_with_norm_tilelang. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0 pid=1249) INFO 09-06 00:40:32 [exl3.py:134] exl3 fat-expert P0: layers=252 fat_layers=213 (84.5%) fat_expert_slots=4228 max_rows=2048 avg_max_rows=952.7 hist_le128=39 hist_gt128=213 hist=[0, 3, 15, 21, 11, 19, 86, 97, 0]
+(Worker_TP0 pid=1249) WARNING 09-06 00:40:33 [jit_monitor.py:135] Triton kernel JIT compilation during inference: _topk_topp_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(APIServer pid=1) INFO 09-06 00:40:36 [loggers.py:310] Engine 000: Avg prompt throughput: 819.1 tokens/s, Avg generation throughput: 12.8 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=1) INFO 09-06 00:40:36 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.97, Accepted throughput: 3.15 tokens/s, Drafted throughput: 7.42 tokens/s, Accepted: 95 tokens, Drafted: 224 tokens, Per-position acceptance rate: 0.875, 0.750, 0.625, 0.406, 0.188, 0.094, 0.031, Avg Draft acceptance rate: 42.4%
+(APIServer pid=1) INFO:     127.0.0.1:39536 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(Worker_TP0 pid=1249) INFO 09-06 00:40:37 [exl3.py:134] exl3 fat-expert P0: layers=294 fat_layers=255 (86.7%) fat_expert_slots=5200 max_rows=2048 avg_max_rows=948.2 hist_le128=39 hist_gt128=255 hist=[0, 3, 15, 21, 13, 24, 105, 113, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:40:39 [exl3.py:134] exl3 fat-expert P0: layers=336 fat_layers=297 (88.4%) fat_expert_slots=6225 max_rows=2048 avg_max_rows=922.0 hist_le128=39 hist_gt128=297 hist=[0, 3, 15, 21, 15, 33, 128, 121, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:40:40 [exl3.py:134] exl3 fat-expert P0: layers=378 fat_layers=339 (89.7%) fat_expert_slots=7243 max_rows=2048 avg_max_rows=904.9 hist_le128=39 hist_gt128=339 hist=[0, 3, 15, 21, 17, 43, 150, 129, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:40:42 [exl3.py:134] exl3 fat-expert P0: layers=420 fat_layers=381 (90.7%) fat_expert_slots=8251 max_rows=2048 avg_max_rows=885.7 hist_le128=39 hist_gt128=381 hist=[0, 3, 15, 21, 19, 54, 171, 137, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:40:42 [exl3.py:134] exl3 fat-expert P0: layers=462 fat_layers=386 (83.5%) fat_expert_slots=8256 max_rows=2048 avg_max_rows=812.1 hist_le128=76 hist_gt128=386 hist=[0, 5, 31, 40, 24, 54, 171, 137, 0]
+(APIServer pid=1) INFO:     127.0.0.1:39550 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1) INFO 09-06 00:40:46 [loggers.py:310] Engine 000: Avg prompt throughput: 819.0 tokens/s, Avg generation throughput: 12.8 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 4.5%, Prefix cache hit rate: 0.0%
+(APIServer pid=1) INFO 09-06 00:40:46 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.63, Accepted throughput: 9.20 tokens/s, Drafted throughput: 24.50 tokens/s, Accepted: 92 tokens, Drafted: 245 tokens, Per-position acceptance rate: 0.771, 0.657, 0.457, 0.257, 0.200, 0.171, 0.114, Avg Draft acceptance rate: 37.6%
+(Worker_TP0 pid=1249) INFO 09-06 00:40:47 [exl3.py:134] exl3 fat-expert P0: layers=504 fat_layers=428 (84.9%) fat_expert_slots=9267 max_rows=2048 avg_max_rows=826.6 hist_le128=76 hist_gt128=428 hist=[0, 5, 31, 40, 25, 59, 189, 155, 0]
+(APIServer pid=1) INFO:     Started server process [1]
+(APIServer pid=1) INFO:     Waiting for application startup.
+(APIServer pid=1) INFO:     Application startup complete.
+(Worker_TP0 pid=1249) INFO 09-06 00:40:49 [exl3.py:134] exl3 fat-expert P0: layers=546 fat_layers=470 (86.1%) fat_expert_slots=10247 max_rows=2048 avg_max_rows=828.4 hist_le128=76 hist_gt128=470 hist=[0, 5, 31, 40, 27, 65, 210, 168, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:40:50 [exl3.py:134] exl3 fat-expert P0: layers=588 fat_layers=512 (87.1%) fat_expert_slots=11207 max_rows=2048 avg_max_rows=824.1 hist_le128=76 hist_gt128=512 hist=[0, 5, 31, 40, 29, 71, 237, 175, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:40:52 [exl3.py:134] exl3 fat-expert P0: layers=630 fat_layers=554 (87.9%) fat_expert_slots=12148 max_rows=2048 avg_max_rows=818.3 hist_le128=76 hist_gt128=554 hist=[0, 5, 31, 40, 31, 80, 261, 182, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:40:52 [exl3.py:134] exl3 fat-expert P0: layers=672 fat_layers=558 (83.0%) fat_expert_slots=12153 max_rows=2048 avg_max_rows=772.3 hist_le128=114 hist_gt128=558 hist=[0, 7, 40, 67, 35, 80, 261, 182, 0]
+(APIServer pid=1) INFO:     127.0.0.1:35432 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1) INFO 09-06 00:40:56 [loggers.py:310] Engine 000: Avg prompt throughput: 819.1 tokens/s, Avg generation throughput: 12.8 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=1) INFO 09-06 00:40:56 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 4.48, Accepted throughput: 10.10 tokens/s, Drafted throughput: 20.30 tokens/s, Accepted: 101 tokens, Drafted: 203 tokens, Per-position acceptance rate: 0.931, 0.828, 0.586, 0.345, 0.345, 0.241, 0.207, Avg Draft acceptance rate: 49.8%
+(Worker_TP0 pid=1249) INFO 09-06 00:40:56 [exl3.py:134] exl3 fat-expert P0: layers=714 fat_layers=600 (84.0%) fat_expert_slots=13107 max_rows=2048 avg_max_rows=786.2 hist_le128=114 hist_gt128=600 hist=[0, 7, 40, 67, 37, 84, 277, 202, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:40:58 [exl3.py:134] exl3 fat-expert P0: layers=756 fat_layers=642 (84.9%) fat_expert_slots=14111 max_rows=2048 avg_max_rows=786.9 hist_le128=114 hist_gt128=642 hist=[0, 7, 40, 67, 39, 92, 298, 213, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:40:59 [exl3.py:134] exl3 fat-expert P0: layers=798 fat_layers=684 (85.7%) fat_expert_slots=15116 max_rows=2048 avg_max_rows=788.9 hist_le128=114 hist_gt128=684 hist=[0, 7, 40, 67, 41, 97, 323, 223, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:01 [exl3.py:134] exl3 fat-expert P0: layers=840 fat_layers=726 (86.4%) fat_expert_slots=16152 max_rows=2048 avg_max_rows=788.5 hist_le128=114 hist_gt128=726 hist=[0, 7, 40, 67, 43, 106, 345, 232, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:01 [exl3.py:134] exl3 fat-expert P0: layers=882 fat_layers=732 (83.0%) fat_expert_slots=16162 max_rows=2048 avg_max_rows=755.0 hist_le128=150 hist_gt128=732 hist=[1, 8, 52, 89, 49, 106, 345, 232, 0]
+(APIServer pid=1) INFO:     127.0.0.1:41986 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1) INFO:     127.0.0.1:42000 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1) INFO 09-06 00:41:06 [loggers.py:310] Engine 000: Avg prompt throughput: 819.1 tokens/s, Avg generation throughput: 12.8 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 4.5%, Prefix cache hit rate: 0.0%
+(APIServer pid=1) INFO 09-06 00:41:06 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.26, Accepted throughput: 8.80 tokens/s, Drafted throughput: 27.30 tokens/s, Accepted: 88 tokens, Drafted: 273 tokens, Per-position acceptance rate: 0.769, 0.513, 0.333, 0.256, 0.179, 0.128, 0.077, Avg Draft acceptance rate: 32.2%
+(Worker_TP0 pid=1249) INFO 09-06 00:41:06 [exl3.py:134] exl3 fat-expert P0: layers=924 fat_layers=774 (83.8%) fat_expert_slots=17162 max_rows=2048 avg_max_rows=764.8 hist_le128=150 hist_gt128=774 hist=[1, 8, 52, 89, 51, 110, 363, 250, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:08 [exl3.py:134] exl3 fat-expert P0: layers=966 fat_layers=816 (84.5%) fat_expert_slots=18169 max_rows=2048 avg_max_rows=767.8 hist_le128=150 hist_gt128=816 hist=[1, 8, 52, 89, 53, 116, 387, 260, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:09 [exl3.py:134] exl3 fat-expert P0: layers=1008 fat_layers=858 (85.1%) fat_expert_slots=19167 max_rows=2048 avg_max_rows=766.0 hist_le128=150 hist_gt128=858 hist=[1, 8, 52, 89, 55, 128, 409, 266, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:11 [exl3.py:134] exl3 fat-expert P0: layers=1050 fat_layers=900 (85.7%) fat_expert_slots=20160 max_rows=2048 avg_max_rows=763.9 hist_le128=150 hist_gt128=900 hist=[1, 8, 52, 89, 57, 138, 431, 274, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:12 [exl3.py:134] exl3 fat-expert P0: layers=1092 fat_layers=942 (86.3%) fat_expert_slots=21069 max_rows=2048 avg_max_rows=770.7 hist_le128=150 hist_gt128=942 hist=[1, 8, 52, 89, 59, 142, 450, 291, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:14 [exl3.py:134] exl3 fat-expert P0: layers=1134 fat_layers=984 (86.8%) fat_expert_slots=22018 max_rows=2048 avg_max_rows=771.8 hist_le128=150 hist_gt128=984 hist=[1, 8, 52, 89, 61, 150, 474, 299, 0]
+(APIServer pid=1) INFO 09-06 00:41:16 [loggers.py:310] Engine 000: Avg prompt throughput: 819.1 tokens/s, Avg generation throughput: 7.0 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 11.4%, Prefix cache hit rate: 0.0%
+(APIServer pid=1) INFO 09-06 00:41:16 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.29, Accepted throughput: 4.80 tokens/s, Drafted throughput: 14.70 tokens/s, Accepted: 48 tokens, Drafted: 147 tokens, Per-position acceptance rate: 0.810, 0.667, 0.333, 0.190, 0.190, 0.048, 0.048, Avg Draft acceptance rate: 32.7%
+(Worker_TP0 pid=1249) INFO 09-06 00:41:19 [exl3.py:134] exl3 fat-expert P0: layers=1176 fat_layers=1026 (87.2%) fat_expert_slots=23028 max_rows=2048 avg_max_rows=771.1 hist_le128=150 hist_gt128=1026 hist=[1, 8, 52, 89, 63, 159, 497, 307, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:20 [exl3.py:134] exl3 fat-expert P0: layers=1218 fat_layers=1068 (87.7%) fat_expert_slots=24084 max_rows=2048 avg_max_rows=769.5 hist_le128=150 hist_gt128=1068 hist=[1, 8, 52, 89, 65, 172, 516, 315, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:21 [exl3.py:134] exl3 fat-expert P0: layers=1260 fat_layers=1099 (87.2%) fat_expert_slots=24167 max_rows=2048 avg_max_rows=749.8 hist_le128=161 hist_gt128=1099 hist=[1, 8, 54, 98, 88, 180, 516, 315, 0]
+(APIServer pid=1) INFO:     127.0.0.1:35474 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1) INFO:     127.0.0.1:35488 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(Worker_TP0 pid=1249) INFO 09-06 00:41:25 [exl3.py:134] exl3 fat-expert P0: layers=1302 fat_layers=1141 (87.6%) fat_expert_slots=25088 max_rows=2048 avg_max_rows=757.4 hist_le128=161 hist_gt128=1141 hist=[1, 8, 54, 98, 90, 185, 533, 333, 0]
+(APIServer pid=1) INFO 09-06 00:41:26 [loggers.py:310] Engine 000: Avg prompt throughput: 819.1 tokens/s, Avg generation throughput: 18.6 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 6.9%, Prefix cache hit rate: 0.0%
+(APIServer pid=1) INFO 09-06 00:41:26 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 4.30, Accepted throughput: 14.50 tokens/s, Drafted throughput: 30.80 tokens/s, Accepted: 145 tokens, Drafted: 308 tokens, Per-position acceptance rate: 0.977, 0.773, 0.614, 0.364, 0.295, 0.182, 0.091, Avg Draft acceptance rate: 47.1%
+(Worker_TP0 pid=1249) INFO 09-06 00:41:27 [exl3.py:134] exl3 fat-expert P0: layers=1344 fat_layers=1183 (88.0%) fat_expert_slots=26075 max_rows=2048 avg_max_rows=761.4 hist_le128=161 hist_gt128=1183 hist=[1, 8, 54, 98, 92, 189, 555, 347, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:28 [exl3.py:134] exl3 fat-expert P0: layers=1386 fat_layers=1225 (88.4%) fat_expert_slots=27013 max_rows=2048 avg_max_rows=759.8 hist_le128=161 hist_gt128=1225 hist=[1, 8, 54, 98, 94, 201, 576, 354, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:30 [exl3.py:134] exl3 fat-expert P0: layers=1428 fat_layers=1267 (88.7%) fat_expert_slots=27973 max_rows=2048 avg_max_rows=760.4 hist_le128=161 hist_gt128=1267 hist=[1, 8, 54, 98, 96, 209, 600, 362, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:31 [exl3.py:134] exl3 fat-expert P0: layers=1470 fat_layers=1309 (89.0%) fat_expert_slots=28910 max_rows=2048 avg_max_rows=765.5 hist_le128=161 hist_gt128=1309 hist=[1, 8, 54, 98, 98, 213, 620, 378, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:33 [exl3.py:134] exl3 fat-expert P0: layers=1512 fat_layers=1351 (89.4%) fat_expert_slots=29892 max_rows=2048 avg_max_rows=768.9 hist_le128=161 hist_gt128=1351 hist=[1, 8, 54, 98, 100, 218, 640, 393, 0]
+(APIServer pid=1) INFO 09-06 00:41:36 [loggers.py:310] Engine 000: Avg prompt throughput: 819.1 tokens/s, Avg generation throughput: 11.0 tokens/s, Running: 2 reqs, Waiting: 0 reqs, GPU KV cache usage: 11.5%, Prefix cache hit rate: 0.0%
+(APIServer pid=1) INFO 09-06 00:41:36 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.89, Accepted throughput: 8.10 tokens/s, Drafted throughput: 19.60 tokens/s, Accepted: 81 tokens, Drafted: 196 tokens, Per-position acceptance rate: 0.821, 0.643, 0.571, 0.429, 0.250, 0.107, 0.071, Avg Draft acceptance rate: 41.3%
+(Worker_TP0 pid=1249) INFO 09-06 00:41:38 [exl3.py:134] exl3 fat-expert P0: layers=1554 fat_layers=1393 (89.6%) fat_expert_slots=30849 max_rows=2048 avg_max_rows=772.2 hist_le128=161 hist_gt128=1393 hist=[1, 8, 54, 98, 102, 222, 662, 407, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:39 [exl3.py:134] exl3 fat-expert P0: layers=1596 fat_layers=1435 (89.9%) fat_expert_slots=31860 max_rows=2048 avg_max_rows=773.7 hist_le128=161 hist_gt128=1435 hist=[1, 8, 54, 98, 104, 226, 690, 415, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:40 [exl3.py:134] exl3 fat-expert P0: layers=1638 fat_layers=1466 (89.5%) fat_expert_slots=31923 max_rows=2048 avg_max_rows=758.3 hist_le128=172 hist_gt128=1466 hist=[1, 8, 56, 107, 128, 233, 690, 415, 0]
+(APIServer pid=1) INFO:     127.0.0.1:36142 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1) INFO:     127.0.0.1:36144 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(Worker_TP0 pid=1249) INFO 09-06 00:41:45 [exl3.py:134] exl3 fat-expert P0: layers=1680 fat_layers=1508 (89.8%) fat_expert_slots=32871 max_rows=2048 avg_max_rows=762.9 hist_le128=172 hist_gt128=1508 hist=[1, 8, 56, 107, 130, 236, 709, 433, 0]
+(APIServer pid=1) INFO 09-06 00:41:46 [loggers.py:310] Engine 000: Avg prompt throughput: 819.1 tokens/s, Avg generation throughput: 14.6 tokens/s, Running: 1 reqs, Waiting: 1 reqs, GPU KV cache usage: 6.9%, Prefix cache hit rate: 0.0%
+(APIServer pid=1) INFO 09-06 00:41:46 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.34, Accepted throughput: 10.30 tokens/s, Drafted throughput: 30.80 tokens/s, Accepted: 103 tokens, Drafted: 308 tokens, Per-position acceptance rate: 0.795, 0.636, 0.455, 0.273, 0.068, 0.068, 0.045, Avg Draft acceptance rate: 33.4%
+(Worker_TP0 pid=1249) INFO 09-06 00:41:46 [exl3.py:134] exl3 fat-expert P0: layers=1722 fat_layers=1550 (90.0%) fat_expert_slots=33899 max_rows=2048 avg_max_rows=765.0 hist_le128=172 hist_gt128=1550 hist=[1, 8, 56, 107, 132, 240, 736, 442, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:48 [exl3.py:134] exl3 fat-expert P0: layers=1764 fat_layers=1592 (90.2%) fat_expert_slots=34872 max_rows=2048 avg_max_rows=766.7 hist_le128=172 hist_gt128=1592 hist=[1, 8, 56, 107, 134, 245, 762, 451, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:49 [exl3.py:134] exl3 fat-expert P0: layers=1806 fat_layers=1634 (90.5%) fat_expert_slots=35886 max_rows=2048 avg_max_rows=767.9 hist_le128=172 hist_gt128=1634 hist=[1, 8, 56, 107, 136, 252, 786, 460, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:51 [exl3.py:134] exl3 fat-expert P0: layers=1848 fat_layers=1676 (90.7%) fat_expert_slots=36771 max_rows=2048 avg_max_rows=772.4 hist_le128=172 hist_gt128=1676 hist=[1, 8, 56, 107, 138, 256, 804, 478, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:52 [exl3.py:134] exl3 fat-expert P0: layers=1890 fat_layers=1718 (90.9%) fat_expert_slots=37765 max_rows=2048 avg_max_rows=774.2 hist_le128=172 hist_gt128=1718 hist=[1, 8, 56, 107, 140, 260, 829, 489, 0]
+(APIServer pid=1) INFO 09-06 00:41:56 [loggers.py:310] Engine 000: Avg prompt throughput: 819.1 tokens/s, Avg generation throughput: 12.8 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 7.1%, Prefix cache hit rate: 0.0%
+(APIServer pid=1) INFO 09-06 00:41:56 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.58, Accepted throughput: 9.30 tokens/s, Drafted throughput: 25.20 tokens/s, Accepted: 93 tokens, Drafted: 252 tokens, Per-position acceptance rate: 0.861, 0.556, 0.444, 0.306, 0.194, 0.139, 0.083, Avg Draft acceptance rate: 36.9%
+(Worker_TP0 pid=1249) INFO 09-06 00:41:57 [exl3.py:134] exl3 fat-expert P0: layers=1932 fat_layers=1760 (91.1%) fat_expert_slots=38802 max_rows=2048 avg_max_rows=774.0 hist_le128=172 hist_gt128=1760 hist=[1, 8, 56, 107, 142, 269, 851, 498, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:58 [exl3.py:134] exl3 fat-expert P0: layers=1974 fat_layers=1802 (91.3%) fat_expert_slots=39868 max_rows=2048 avg_max_rows=773.5 hist_le128=172 hist_gt128=1802 hist=[1, 8, 56, 107, 144, 278, 873, 507, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:41:59 [exl3.py:134] exl3 fat-expert P0: layers=2016 fat_layers=1828 (90.7%) fat_expert_slots=39925 max_rows=2048 avg_max_rows=761.0 hist_le128=188 hist_gt128=1828 hist=[1, 8, 59, 120, 161, 287, 873, 507, 0]
+(APIServer pid=1) INFO:     127.0.0.1:50536 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1) INFO:     127.0.0.1:50546 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(Worker_TP0 pid=1249) INFO 09-06 00:42:04 [exl3.py:134] exl3 fat-expert P0: layers=2058 fat_layers=1870 (90.9%) fat_expert_slots=40849 max_rows=2048 avg_max_rows=766.6 hist_le128=188 hist_gt128=1870 hist=[1, 8, 59, 120, 163, 291, 889, 527, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:42:06 [exl3.py:134] exl3 fat-expert P0: layers=2100 fat_layers=1912 (91.0%) fat_expert_slots=41889 max_rows=2048 avg_max_rows=768.0 hist_le128=188 hist_gt128=1912 hist=[1, 8, 59, 120, 165, 297, 913, 537, 0]
+(APIServer pid=1) INFO 09-06 00:42:06 [loggers.py:310] Engine 000: Avg prompt throughput: 819.1 tokens/s, Avg generation throughput: 12.8 tokens/s, Running: 1 reqs, Waiting: 1 reqs, GPU KV cache usage: 9.3%, Prefix cache hit rate: 0.0%
+(APIServer pid=1) INFO 09-06 00:42:06 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.20, Accepted throughput: 9.00 tokens/s, Drafted throughput: 28.70 tokens/s, Accepted: 90 tokens, Drafted: 287 tokens, Per-position acceptance rate: 0.829, 0.537, 0.390, 0.244, 0.098, 0.073, 0.024, Avg Draft acceptance rate: 31.4%
+(Worker_TP0 pid=1249) INFO 09-06 00:42:07 [exl3.py:134] exl3 fat-expert P0: layers=2142 fat_layers=1954 (91.2%) fat_expert_slots=42878 max_rows=2048 avg_max_rows=770.5 hist_le128=188 hist_gt128=1954 hist=[1, 8, 59, 120, 166, 303, 938, 547, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:42:09 [exl3.py:134] exl3 fat-expert P0: layers=2184 fat_layers=1996 (91.4%) fat_expert_slots=43951 max_rows=2048 avg_max_rows=770.3 hist_le128=188 hist_gt128=1996 hist=[1, 8, 59, 120, 168, 314, 959, 555, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:42:10 [exl3.py:134] exl3 fat-expert P0: layers=2226 fat_layers=2038 (91.6%) fat_expert_slots=44916 max_rows=2048 avg_max_rows=775.7 hist_le128=188 hist_gt128=2038 hist=[1, 8, 59, 120, 170, 318, 974, 576, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:42:12 [exl3.py:134] exl3 fat-expert P0: layers=2268 fat_layers=2080 (91.7%) fat_expert_slots=45905 max_rows=2048 avg_max_rows=777.5 hist_le128=188 hist_gt128=2080 hist=[1, 8, 59, 120, 172, 323, 997, 588, 0]
+(APIServer pid=1) INFO 09-06 00:42:16 [loggers.py:310] Engine 000: Avg prompt throughput: 819.1 tokens/s, Avg generation throughput: 12.8 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 7.1%, Prefix cache hit rate: 0.0%
+(APIServer pid=1) INFO 09-06 00:42:16 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 4.19, Accepted throughput: 9.90 tokens/s, Drafted throughput: 21.70 tokens/s, Accepted: 99 tokens, Drafted: 217 tokens, Per-position acceptance rate: 0.903, 0.710, 0.613, 0.452, 0.226, 0.161, 0.129, Avg Draft acceptance rate: 45.6%
+(Worker_TP0 pid=1249) INFO 09-06 00:42:16 [exl3.py:134] exl3 fat-expert P0: layers=2310 fat_layers=2122 (91.9%) fat_expert_slots=46861 max_rows=2048 avg_max_rows=777.6 hist_le128=188 hist_gt128=2122 hist=[1, 8, 59, 120, 174, 330, 1023, 595, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:42:18 [exl3.py:134] exl3 fat-expert P0: layers=2352 fat_layers=2164 (92.0%) fat_expert_slots=47880 max_rows=2048 avg_max_rows=776.8 hist_le128=188 hist_gt128=2164 hist=[1, 8, 59, 120, 176, 339, 1048, 601, 0]
+(Worker_TP0 pid=1249) INFO 09-06 00:42:18 [exl3.py:134] exl3 fat-expert P0: layers=2394 fat_layers=2189 (91.4%) fat_expert_slots=47931 max_rows=2048 avg_max_rows=766.0 hist_le128=205 hist_gt128=2189 hist=[1, 9, 61, 134, 196, 344, 1048, 601, 0]
+(APIServer pid=1) INFO:     127.0.0.1:38540 - "GET /v1/models HTTP/1.1" 200 OK

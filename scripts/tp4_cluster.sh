@@ -118,6 +118,7 @@ common_env=(
     -e EXL3_MOE_DECODE_CONCURRENCY="${EXL3_MOE_DECODE_CONCURRENCY:-6}"
     -e EXL3_MOE_ROW_TILE="${EXL3_MOE_ROW_TILE:-0}"
     -e EXL3_TEMP_ROWS_FUSED="${EXL3_TEMP_ROWS_FUSED:-128}"
+    -e EXL3_TEMP_ROWS_DECODE="${EXL3_TEMP_ROWS_DECODE:-${EXL3_TEMP_ROWS_FUSED:-128}}"
     # ExLlamaV3 kernels share one per-device barrier/lock arena and assume a
     # single stream. vLLM's shared-experts aux stream (batches <= 256 tokens)
     # overlaps two EXL3 cooperative kernels and deadlocks them on GB10.

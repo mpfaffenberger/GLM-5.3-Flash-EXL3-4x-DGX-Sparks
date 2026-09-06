@@ -399,7 +399,7 @@ def build_exl3_fused_state(layer: torch.nn.Module, inners: list[dict[str, Any]])
     )
     rows = temp_rows_fused()
 
-    def get_temps(groups: int):
+    def get_temps(groups: int, rows: int = rows):
         key = (str(device), hidden, intermediate, groups, rows)
         temps = _FUSED_TEMP_CACHE.get(key)
         if temps is None:
@@ -413,7 +413,10 @@ def build_exl3_fused_state(layer: torch.nn.Module, inners: list[dict[str, Any]])
         return temps
 
     layer._exl3_fused_temps = get_temps(concurrency)
-    layer._exl3_fused_decode_temps = get_temps(decode_concurrency)
+    decode_rows = int(os.environ.get("EXL3_TEMP_ROWS_DECODE", rows))
+    if not 1 <= decode_rows <= rows:
+        raise ValueError("EXL3_TEMP_ROWS_DECODE must be between 1 and prefill rows")
+    layer._exl3_fused_decode_temps = get_temps(decode_concurrency, decode_rows)
     layer._exl3_fused_concurrency = concurrency
     layer._exl3_k = int(layer._exl3_bits)
 
@@ -546,8 +549,9 @@ def apply_exl3_fused_moe(
     temps = getattr(layer, "_exl3_fused_temps", None)
     if not ptrs or temps is None:
         raise RuntimeError("EXL3 fused pointer tables were not built after weight load")
-    if tokens <= int(temps[0].shape[1]):
-        temps = getattr(layer, "_exl3_fused_decode_temps", temps)
+    decode_temps = getattr(layer, "_exl3_fused_decode_temps", temps)
+    if tokens <= int(decode_temps[0].shape[1]):
+        temps = decode_temps
 
     local = map_topk_to_local(ids, n_exp, expert_map)
     topk = int(ids.shape[-1])
